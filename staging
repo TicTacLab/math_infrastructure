@@ -1,0 +1,10 @@
+[malt]
+malt-test01
+
+[malt_admin]
+malt-test01
+
+[all:vars]
+ansible_ssh_user=malt_deploy
+ansible_ssh_pass=M$HVkfa
+ansible_sudo_pass=M$HVkfa

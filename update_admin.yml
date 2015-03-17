@@ -1,0 +1,29 @@
+- name: Update admin app
+  hosts: malt_admin
+  tasks:
+    - name: Stop Service
+      service: name=malt_admin state=stopped
+      sudo: yes
+
+    - name: Clone project
+      git: repo=gitolite@git.favorit:malt_admin
+           dest=malt_admin
+           update=yes
+           version=master
+      register: project
+
+    - name: Build proto files
+      command: lein protobuf
+      args:
+        chdir: malt_admin
+      when: project.changed
+
+    - name: Make jar file
+      command: lein uberjar
+      args:
+        chdir: malt_admin
+      when: project.changed
+
+    - name: Start Service
+      service: name=malt_admin state=started
+      sudo: yes

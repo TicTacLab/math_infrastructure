@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# /etc/init.d/malt
+
+#set -x
+#set -v
+
+MALT_LOG_DIR="/var/log/malt_admin"
+MALT_PORT=3000
+MALT_PID="/tmp/malt.pid"
+MALT_HEAP_SIZE=30g
+JVM_OPTS="$JVM_OPTS -Xmx$MALT_HEAP_SIZE"
+
+export ENVIRON=$MALT_MODE
+
+case "$1" in
+  start)
+		if [ -f $MALT_PID ]
+		then
+			echo "Old PID file exists! " $MALT_PID
+		else
+			echo "Starting malt"
+            mkdir -p ${MALT_LOG_DIR}
+			#su --command "
+			cd /home/malt_deploy/malt_admin
+
+            export WEB_HOST=0.0.0.0
+            export WEB_PORT=80
+            export STORAGE_NODES=localhost
+            export STORAGE_KEYSPACE=malt
+            export CONFIGURATION_TABLE=configuration
+            export SETTINGS_TABLE=settings
+            export APP_ENV=production
+			nohup java -jar target/malt-admin-standalone.jar >> /var/log/malt_admin/malt_admin.out 2>&1 &
+		fi
+#" erlybet
+    ;;
+  stop)
+    echo "Stopping malt"
+	kill $(cat $MALT_PID)
+	rm $MALT_PID
+#    kill -9  `ps aux | grep -e '[Mm]alt-.*' | awk '{print $2}'`
+    ;;
+  restart)
+		echo "Stopping malt"
+#		kill -9  `ps aux | grep -e '[Mm]alt-.*' | awk '{print $2}'`
+		kill -9 $(cat $MALT_PID)
+		rm $MALT_PID
+		echo "Start malt"
+		cd /home/malt_deploy/malt_admin
+        nohup java -jar target/malt-admin-standalone.jar >> /var/log/malt_admin/malt_admin.out 2>&1 &
+		;;
+	*)
+    echo "Usage: /etc/init.d/malt {start|stop|restart|help}"
+        echo $STOP_CMD
+    exit 1
+    ;;
+esac
+
+exit 0
