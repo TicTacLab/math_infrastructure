@@ -1,0 +1,17 @@
+- name: Setup Malt
+  hosts: malt
+  tasks:
+    - include: common/tasks/oracle_jdk.yml
+    - include: common/tasks/lein.yml
+    - include: common/tasks/maven.yml
+    - include: common/tasks/build_utils.yml
+
+    - name: Install ant
+      yum: name=ant state=installed
+      sudo: yes
+
+    - name: Copy service file
+      template: src=malt/files/malt.sh dest=/etc/init.d/malt mode="a+x"
+      sudo: yes
+
+    #- include: common/tasks/poi.yml

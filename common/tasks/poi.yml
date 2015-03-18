@@ -1,0 +1,30 @@
+- name: Clone project
+  git: repo=gitolite@git.favorit:malt
+       dest=malt-poi
+       update=yes
+       version=alone
+  register: project
+
+#- name: Extract POI
+#  command: "tar xzf poi-3.9.tar.gz"
+#  args:
+#    chdir: malt-poi
+#
+#- name: Build POI
+#  shell: ant clean jar
+#  args:
+#    chdir: malt-poi/poi-3.9
+#
+#- name: Install POI to the local maven repo
+#  shell: |
+#    mvn install:install-file -Dfile=build/dist/poi-3.9-$(date +%Y%m%d).jar \
+#                             -DartifactId=poi \
+#                             -DgroupId=malt.poi \
+#                             -Dversion=3.9.1 \
+#                             -Dpackaging=jar
+#  args:
+#    chdir: malt-poi/poi-3.9
+#
+- name: Cleanup
+  file: path="~/malt-poi" state=absent
+

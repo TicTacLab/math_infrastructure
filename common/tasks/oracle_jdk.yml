@@ -18,14 +18,13 @@
   sudo: yes
 
 - name: Set java Env
-  copy: src=common/files/java.sh dest=/etc/profile.d/java.sh
+  copy: src=common/files/java.sh dest=/etc/profile.d/01-java.sh
   sudo: yes
 
 - name: Update alternatives
   alternatives: name="{{item}}" path="/opt/jdk1.7.0_71/bin/{{item}}" link="/usr/bin/{{item}}"
   with_items:
     - java
-    - jar
     - javac
   sudo: yes
 

@@ -1,0 +1,28 @@
+- name: Install wget
+  yum: pkg=wget state=installed
+  sudo: yes
+
+- name: Download
+  command: >
+    wget --no-cookies --no-check-certificate -c
+    "http://apache.ip-connect.vn.ua/maven/maven-3/3.3.1/binaries/apache-maven-3.3.1-bin.tar.gz"
+  args:
+    creates: /opt/apache-maven-3.3.1
+
+- name: Extract
+  command: "tar xzf {{ansible_env.HOME}}/apache-maven-3.3.1-bin.tar.gz"
+  args:
+    chdir: /opt
+    creates: /opt/apache-maven-3.3.1
+  sudo: yes
+
+- name: Set java Env
+  copy: src="common/files/maven.sh" dest="/etc/profile.d/02-maven.sh"
+  sudo: yes
+
+- name: Update alternatives
+  alternatives: name="mvn" path="/opt/apache-maven-3.3.1/bin/mvn" link="/usr/bin/mvn"
+  sudo: yes
+
+- name: Cleanup
+  file: path=apache-maven-3.3.1-bin.tar.gz state=absent
