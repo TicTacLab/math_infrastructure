@@ -1,0 +1,33 @@
+- name: Install wget
+  yum: pkg=wget state=installed
+  sudo: yes
+
+- name: Download oracle jdk 7
+  command: >
+    wget --no-cookies --no-check-certificate -c
+    --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"
+    "http://download.oracle.com/otn-pub/java/jdk/7u71-b14/jdk-7u71-linux-x64.tar.gz"
+  args:
+    creates: /opt/jdk1.7.0_71
+
+- name: Extract jdk
+  command: "tar xzf {{ansible_env.HOME}}/jdk-7u71-linux-x64.tar.gz"
+  args:
+    chdir: /opt
+    creates: /opt/jdk1.7.0_71
+  sudo: yes
+
+- name: Set java Env
+  copy: src=common/files/java.sh dest=/etc/profile.d/java.sh
+  sudo: yes
+
+- name: Update alternatives
+  alternatives: name="{{item}}" path="/opt/jdk1.7.0_71/bin/{{item}}" link="/usr/bin/{{item}}"
+  with_items:
+    - java
+    - jar
+    - javac
+  sudo: yes
+
+- name: Cleanup
+  file: path=jdk-7u71-linux-x64.tar.gz state=absent

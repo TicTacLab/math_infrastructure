@@ -1,0 +1,28 @@
+- name: Setup Cassandra
+  hosts: cassandra
+  tasks:
+    - include: common/tasks/oracle_jdk.yml
+    - name: Add datastax.repo
+      copy: src=cassandra/files/datastax.repo dest=/etc/yum.repos.d/datastax.repo
+      sudo: yes
+
+    - name: Install Cassandra
+      yum: name=dsc20 state=installed
+      sudo: yes
+
+    - name: Run Cassandra
+      service: name=cassandra state=started
+      sudo: yes
+
+    - name: Wait for cassandra starts
+      wait_for: port=9042 state=started
+
+    - name: Copy schema files
+      copy: src=cassandra/files/schema dest=/tmp
+
+    - name: Initialize schema
+      shell: >
+        cqlsh -f /tmp/schema/keyspace.cql localhost &&
+        cqlsh -f /tmp/schema/schema.cql -k malt localhost &&
+        cqlsh -f /tmp/schema/config.cql -k malt localhost &&
+        cqlsh -f /tmp/schema/settings.cql -k malt localhost

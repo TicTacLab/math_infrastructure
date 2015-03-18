@@ -1,0 +1,10 @@
+- name: Setup Malt Admin
+  hosts: malt_admin
+  tasks:
+    - include: common/tasks/oracle_jdk.yml
+    - include: common/tasks/lein.yml
+    - include: common/tasks/build_utils.yml
+
+    - name: Copy service file
+      template: src=malt_admin/templates/malt_admin.j2 dest=/etc/init.d/malt_admin mode="a+x"
+      sudo: yes

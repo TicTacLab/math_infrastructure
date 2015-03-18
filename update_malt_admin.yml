@@ -1,4 +1,4 @@
-- name: Update admin app
+- name: Update Malt Admin
   hosts: malt_admin
   tasks:
     - name: Stop Service
