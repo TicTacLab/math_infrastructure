@@ -21,7 +21,7 @@ case "$1" in
             export STORAGE_KEYSPACE=malt
             export CONFIGURATION_TABLE=configuration
             export APP_ENV=production
-			nohup java -jar target/malt-standalone.jar >> /var/log/malt/malt.out 2>&1 & echo $! > ${PID}
+			nohup java ${JVM_OPTS} -jar target/malt-standalone.jar >> /var/log/malt/malt.out 2>&1 & echo $! > ${PID}
 		fi
     ;;
   stop)

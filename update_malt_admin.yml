@@ -18,6 +18,10 @@
         chdir: malt_admin
       when: project.changed
 
+    - name: Cleanup target
+      file: path=malt_admin/target state=absent
+      when: project.changed
+
     - name: Make jar file
       command: lein uberjar
       args:
