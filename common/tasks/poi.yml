@@ -24,7 +24,3 @@
                              -Dpackaging=jar
   args:
     chdir: malt-poi/poi-3.9
-
-- name: Cleanup
-  file: path="~/malt-poi" state=absent
-

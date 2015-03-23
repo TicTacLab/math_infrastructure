@@ -9,7 +9,8 @@
       git: repo=gitolite@git.favorit:malt_admin
            dest=malt_admin
            update=yes
-           version=master
+           version="{{git_ref}}"
+           accept_hostkey=yes
       register: project
 
     - name: Build proto files

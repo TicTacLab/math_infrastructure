@@ -1,0 +1,3 @@
+cassandra_hosts: 'localhost'
+cassandra_password: 'CacNeck5'
+git_ref: master

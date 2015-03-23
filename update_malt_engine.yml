@@ -9,7 +9,8 @@
       git: repo=gitolite@git.favorit:malt_engine
            dest=malt_engine
            update=yes
-           version=stable
+           version="{{git_ref}}"
+           accept_hostkey=yes
       register: project
 
     - name: Build proto files

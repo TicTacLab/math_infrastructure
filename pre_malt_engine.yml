@@ -5,6 +5,7 @@
     - include: common/tasks/lein.yml
     - include: common/tasks/maven.yml
     - include: common/tasks/build_utils.yml
+    - include: common/tasks/copy_keys.yml
 
     - name: Install ant
       yum: name=ant state=installed

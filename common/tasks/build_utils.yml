@@ -5,4 +5,5 @@
     - make
     - gcc-c++
     - automake
+    - git
   sudo: yes
