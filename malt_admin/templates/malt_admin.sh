@@ -34,6 +34,7 @@ case "$1" in
         echo "Already started"
     else
         echo "Starting $name"
+        mkdir -p $(dirname $stdout_log)
         cd "$dir"
 
         export WEB_HOST=0.0.0.0

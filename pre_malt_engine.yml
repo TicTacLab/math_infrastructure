@@ -1,5 +1,5 @@
-- name: Setup Malt
-  hosts: malt
+- name: Setup Malt Engine
+  hosts: malt_engine
   tasks:
     - include: common/tasks/oracle_jdk.yml
     - include: common/tasks/lein.yml
@@ -11,7 +11,7 @@
       sudo: yes
 
     - name: Copy service file
-      template: src=malt/templates/malt.sh dest=/etc/init.d/malt mode="a+x"
+      template: src=malt_engine/templates/malt_engine.sh dest=/etc/init.d/malt_engine mode="a+x"
       sudo: yes
 
     - include: common/tasks/poi.yml

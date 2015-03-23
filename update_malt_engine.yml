@@ -1,33 +1,33 @@
-- name: Update Malt
-  hosts: malt
+- name: Update Malt Engine
+  hosts: malt_engine
   tasks:
     - name: Stop Service
-      service: name=malt state=stopped
+      service: name=malt_engine state=stopped
       sudo: yes
 
     - name: Clone project
-      git: repo=gitolite@git.favorit:malt
-           dest=malt
+      git: repo=gitolite@git.favorit:malt_engine
+           dest=malt_engine
            update=yes
-           version=alone
+           version=stable
       register: project
 
     - name: Build proto files
       command: lein protobuf
       args:
-        chdir: malt
+        chdir: malt_engine
       when: project.changed
 
     - name: Cleanup target
-      file: path=malt/target state=absent
+      file: path=malt_engine/target state=absent
       when: project.changed
 
     - name: Make jar file
       command: lein uberjar
       args:
-        chdir: malt
+        chdir: malt_engine
       when: project.changed
 
     - name: Start Service
-      service: name=malt state=started
+      service: name=malt_engine state=started
       sudo: yes

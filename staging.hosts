@@ -1,4 +1,4 @@
-[malt]
+[malt_engine]
 malt-test01
 
 [malt_admin]
@@ -8,7 +8,7 @@ malt-test01
 malt-test01
 
 [staging:children]
-malt
+malt_engine
 malt_admin
 cassandra
 

@@ -11,14 +11,14 @@
 
 MALT_HEAP_SIZE=30g
 JVM_OPTS="$JVM_OPTS -Xmx$MALT_HEAP_SIZE -Dlogback.configurationFile=resources/logback.production.xml"
-dir="/home/malt_deploy/malt"
+dir="/home/malt_deploy/malt_engine"
 user="malt_deploy"
 cmd="java ${JVM_OPTS} -jar target/malt-standalone.jar"
 
 name=`basename $0`
-pid_file="/var/run/malt.pid"
-stdout_log="/var/log/malt/malt.out"
-stderr_log="/var/log/malt/malt.err"
+pid_file="/var/run/malt_engine.pid"
+stdout_log="/var/log/malt_engine/malt_engine.out"
+stderr_log="/var/log/malt_engine/malt_engine.err"
 
 get_pid() {
     cat "$pid_file"
@@ -34,6 +34,7 @@ case "$1" in
         echo "Already started"
     else
         echo "Starting $name"
+        mkdir -p $(dirname $stdout_log)
         cd "$dir"
 
         export STORAGE_NODES='{{cassandra_hosts}}'
