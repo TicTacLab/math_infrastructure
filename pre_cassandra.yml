@@ -1,7 +1,5 @@
 - name: Setup Cassandra
   hosts: cassandra
-  vars:
-    cassandra_password: Karghik2
   tasks:
     - include: common/tasks/oracle_jdk.yml
 

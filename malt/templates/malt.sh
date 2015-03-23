@@ -36,8 +36,10 @@ case "$1" in
         echo "Starting $name"
         cd "$dir"
 
-        export STORAGE_NODES=localhost
+        export STORAGE_NODES='{{cassandra_hosts}}'
         export STORAGE_KEYSPACE=malt
+        export STORAGE_USER=malt
+        export STORAGE_PASSWORD='{{cassandra_password}}'
         export CONFIGURATION_TABLE=configuration
         export APP_ENV=production
 

@@ -6,5 +6,5 @@
     - include: common/tasks/build_utils.yml
 
     - name: Copy service file
-      template: src=malt_admin/files/malt_admin.sh dest=/etc/init.d/malt_admin mode="a+x"
+      template: src=malt_admin/templates/malt_admin.sh dest=/etc/init.d/malt_admin mode="a+x"
       sudo: yes

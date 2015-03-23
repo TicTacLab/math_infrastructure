@@ -38,8 +38,10 @@ case "$1" in
 
         export WEB_HOST=0.0.0.0
         export WEB_PORT=80
-        export STORAGE_NODES=localhost
+        export STORAGE_NODES='{{cassandra_hosts}}'
         export STORAGE_KEYSPACE=malt
+        export STORAGE_USER=malt
+        export STORAGE_PASSWORD='{{cassandra_password}}'
         export CONFIGURATION_TABLE=configuration
         export SETTINGS_TABLE=settings
         export APP_ENV=production

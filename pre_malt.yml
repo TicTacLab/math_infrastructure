@@ -11,7 +11,7 @@
       sudo: yes
 
     - name: Copy service file
-      template: src=malt/files/malt.sh dest=/etc/init.d/malt mode="a+x"
+      template: src=malt/templates/malt.sh dest=/etc/init.d/malt mode="a+x"
       sudo: yes
 
     - include: common/tasks/poi.yml
