@@ -1,7 +1,10 @@
 - name: Setup Cassandra
   hosts: cassandra
+  vars:
+    cassandra_password: Karghik2
   tasks:
     - include: common/tasks/oracle_jdk.yml
+
     - name: Add datastax.repo
       copy: src=cassandra/files/datastax.repo dest=/etc/yum.repos.d/datastax.repo
       sudo: yes
@@ -10,12 +13,21 @@
       yum: name=dsc20 state=installed
       sudo: yes
 
+    - name: Copy cassandra.yaml
+      copy: src=cassandra/files/cassandra.yaml dest=/etc/cassandra/conf/cassandra.yaml
+      sudo: yes
+
     - name: Run Cassandra
       service: name=cassandra state=started
       sudo: yes
 
     - name: Wait for cassandra starts
       wait_for: port=9042 state=started
+
+    - name: Create malt user
+      shell: >
+        cqlsh -u cassandra -p cassandra -e "CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"
+        cqlsh -u malt -p Karghik2 -e "ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER"
 
     - name: Copy schema files
       copy: src=cassandra/files/schema dest=/tmp
