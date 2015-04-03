@@ -9,8 +9,8 @@
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
 
-MALT_HEAP_SIZE=30g
-JVM_OPTS="$JVM_OPTS -Xmx$MALT_HEAP_SIZE -Dlogback.configurationFile=resources/logback.production.xml"
+HEAP_SIZE='{{malt_engine_heap_size}}'
+JVM_OPTS="$JVM_OPTS -Xmx$HEAP_SIZE -Dlogback.configurationFile=resources/logback.production.xml"
 dir="/home/malt_deploy/malt_engine"
 user="malt_deploy"
 cmd="java ${JVM_OPTS} -jar target/malt-standalone.jar"

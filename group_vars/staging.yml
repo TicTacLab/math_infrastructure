@@ -1,3 +1,5 @@
 cassandra_hosts: 'localhost'
 cassandra_password: 'Karghik2'
+malt_engine_heap_size: '2g'
+malt_admin_heap_size: '1g'
 git_ref: stable
