@@ -11,8 +11,3 @@ malt-test01
 malt_engine
 malt_admin
 cassandra
-
-[all:vars]
-ansible_ssh_user=malt_deploy
-ansible_ssh_pass=M$HVkfa
-ansible_sudo_pass=M$HVkfa
