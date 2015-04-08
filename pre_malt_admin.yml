@@ -9,3 +9,7 @@
     - name: Copy service file
       template: src=malt_admin/templates/malt_admin.sh dest=/etc/init.d/malt_admin mode="a+x"
       sudo: yes
+
+    - name: Set autostart
+      service: name=malt_admin enabled=yes
+      sudo: yes

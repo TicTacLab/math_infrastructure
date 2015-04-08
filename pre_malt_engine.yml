@@ -15,5 +15,9 @@
       template: src=malt_engine/templates/malt_engine.sh dest=/etc/init.d/malt_engine mode="a+x"
       sudo: yes
 
+    - name: Set autotstart
+      service: name=malt_engine enabled=yes
+      sudo: yes
+
     - include: common/tasks/poi.yml
       when: rebuild_poi|default(false)
