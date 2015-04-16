@@ -12,15 +12,12 @@
       sudo: yes
 
     - name: Copy cassandra.yaml
-      copy: src=cassandra/files/cassandra.yaml dest=/etc/cassandra/conf/cassandra.yaml
+      template: src=cassandra/templates/cassandra.yaml dest=/etc/cassandra/conf/cassandra.yaml
       sudo: yes
 
     - name: Run Cassandra
-      service: name=cassandra state=started
+      service: name=cassandra state=restarted
       sudo: yes
-
-    - name: Wait for cassandra starts
-      wait_for: port=9042 state=started
 
     - name: Create malt user
       shell: >
@@ -28,7 +25,10 @@
         cqlsh -u malt -p {{cassandra_password}} -e "ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER"
 
     - name: Copy schema files
-      copy: src=cassandra/files/schema dest=/tmp
+      copy: src=cassandra/templates/schema dest=/tmp
+
+    - name: Copy schema settings files
+      template: src=cassandra/templates/schema/settings.cql dest=/tmp/schema/settings.cql
 
     - name: Initialize schema
       shell: >

@@ -2,7 +2,7 @@ ansible_ssh_user: malt_deploy
 ansible_ssh_port: 2200
 ansible_ssh_pass: WynorOpt8
 
-cassandra_hosts: 'localhost'
+cassandra_hosts: '{{groups.cassandra|join(",")}}'
 cassandra_password: 'CacNeck5'
 malt_engine_heap_size: '2g'
 malt_admin_heap_size: '1g'

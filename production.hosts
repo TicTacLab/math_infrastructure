@@ -1,0 +1,13 @@
+[malt_engine]
+195.137.167.144
+
+[malt_admin]
+195.137.167.145
+
+[cassandra]
+195.137.167.146
+
+[production:children]
+malt_engine
+malt_admin
+cassandra
