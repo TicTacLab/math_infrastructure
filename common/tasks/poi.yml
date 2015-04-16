@@ -3,6 +3,7 @@
        dest=malt-poi
        update=yes
        version=alone
+       accept_hostkey=yes
   register: project
 
 - name: Extract POI

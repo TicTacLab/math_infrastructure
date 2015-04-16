@@ -10,7 +10,7 @@
            dest=malt_engine
            update=yes
            version="{{git_ref}}"
-           accept_hostkey=yes
+           accept_hostkey=True
       register: project
 
     - name: Build proto files
