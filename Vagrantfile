@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "chef/centos-6.6"
+  config.vm.box = "hansode/centos-7.1.1503-x86_64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -76,12 +76,12 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell" do |s|
     s.inline = <<-SHELL
-      adduser -d /home/malt_deploy -m -s /bin/bash -p WynorOpt8 -G wheel malt_deploy
+      adduser -d /home/malt_deploy -m -s /bin/bash -p "$(openssl passwd -crypt WynorOpt8)" -G wheel malt_deploy
+      sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
       echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
       echo "SELINUX=disabled" > /etc/sysconfig/selinux
       echo "SELINUXTYPE=targeted" >> /etc/sysconfig/selinux
-      echo 0 > /selinux/enforce
+      reboot
     SHELL
-    s.priviliged = true
   end
 end

@@ -1,5 +1,5 @@
 ansible_ssh_user: malt_deploy
-ansible_ssh_port: 2200
+ansible_ssh_port: 2201
 ansible_ssh_pass: WynorOpt8
 
 cassandra_hosts: '{{groups.cassandra|join(",")}}'
