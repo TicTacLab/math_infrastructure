@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "hansode/centos-7.1.1503-x86_64"
+  config.vm.box = "chef/centos-7.0"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -58,6 +58,7 @@ Vagrant.configure(2) do |config|
      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
    end
 
+  config.vm.hostname = "math-engine.local"
   config.vm.network "private_network", ip: "192.168.111.2"
   config.vm.provider "virtualbox" do |v|
     v.memory = 12288 
@@ -76,7 +77,7 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell" do |s|
     s.inline = <<-SHELL
-      adduser -d /home/malt_deploy -m -s /bin/bash -p "$(openssl passwd -crypt WynorOpt8)" -G wheel malt_deploy
+      adduser -d /home/malt_deploy -m -s /bin/bash -p "$(openssl passwd -1 WynorOpt8)" -G wheel malt_deploy
       sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
       echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
       echo "SELINUX=disabled" > /etc/sysconfig/selinux

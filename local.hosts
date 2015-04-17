@@ -1,11 +1,11 @@
 [malt_engine]
-localhost
+192.168.111.2
 
 [malt_admin]
-localhost
+192.168.111.2
 
 [cassandra]
-localhost
+192.168.111.2
 
 [local:children]
 malt_engine

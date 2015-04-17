@@ -19,10 +19,10 @@
       service: name=cassandra state=restarted
       sudo: yes
 
-    - name: Create malt user
-      shell: >
-        cqlsh -u cassandra -p cassandra -e "CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER" &&
-        cqlsh -u malt -p {{cassandra_password}} -e "ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER"
+    #- name: Create malt user
+    #  shell: >
+    #    cqlsh -u cassandra -p cassandra -e "CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{groups.cassandra[0]}} &&
+    #    cqlsh -u malt -p {{cassandra_password}} -e "ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{groups.cassandra[0]}}
 
     - name: Copy schema files
       copy: src=cassandra/templates/schema dest=/tmp
@@ -32,7 +32,7 @@
 
     - name: Initialize schema
       shell: >
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/keyspace.cql localhost &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/schema.cql -k malt localhost &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/config.cql -k malt localhost &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/settings.cql -k malt localhost
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/keyspace.cql  {{groups.cassandra[0]}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/schema.cql -k malt  {{groups.cassandra[0]}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/config.cql -k malt  {{groups.cassandra[0]}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/settings.cql -k malt  {{groups.cassandra[0]}}
