@@ -1,13 +1,17 @@
 [malt_engine]
-192.168.111.2
+192.168.167.144
+192.168.167.145
+192.168.167.146
 
 [malt_admin]
-192.168.111.2
+192.168.167.145
 
 [cassandra]
-192.168.111.2
+192.168.167.144
+192.168.167.145
+192.168.167.146
 
-[local:children]
+[virtual:children]
 malt_engine
 malt_admin
 cassandra
