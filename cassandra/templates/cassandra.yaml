@@ -103,10 +103,10 @@ partitioner: org.apache.cassandra.dht.Murmur3Partitioner
 # will spread data evenly across them, subject to the granularity of
 # the configured compaction strategy.
 data_file_directories:
-    - /var/lib/cassandra/data
+    - {{cassandra_data_dir}}
 
 # commit log
-commitlog_directory: /var/lib/cassandra/commitlog
+commitlog_directory: {{cassandra_data_dir}}/commitlog
 
 # policy for data disk failures:
 # stop_paranoid: shut down gossip and Thrift even for single-sstable errors.
@@ -190,7 +190,7 @@ row_cache_save_period: 0
 # memory_allocator: NativeAllocator
 
 # saved caches
-saved_caches_directory: /var/lib/cassandra/saved_caches
+saved_caches_directory: {{cassandra_data_dir}}/saved_caches
 
 # commitlog_sync may be either "periodic" or "batch." 
 # When in batch mode, Cassandra won't ack writes until the commit log
@@ -289,10 +289,6 @@ trickle_fsync_interval_in_kb: 10240
 # TCP port, for commands and data
 # For security reasons, you should not expose this port to the internet.  Firewall it if needed.
 storage_port: 7000
-
-# SSL port, for encrypted communication.  Unused unless enabled in
-# encryption_options
-# For security reasons, you should not expose this port to the internet.  Firewall it if needed.
 ssl_storage_port: 7001
 
 # Address to bind to and tell other Cassandra nodes to connect to. You

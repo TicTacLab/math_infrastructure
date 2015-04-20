@@ -4,6 +4,7 @@ ansible_sudo_pass: M$HVkfa
 
 cassandra_hosts: '{{groups.cassandra|join(",")}}'
 cassandra_password: 'Karghik2'
+cassandra_data_dir: '/data/cassandra'
 cache_on: false
 malt_engine_heap_size: '2g'
 malt_admin_heap_size: '1g'
