@@ -15,6 +15,14 @@
       template: src=cassandra/templates/cassandra.yaml dest=/etc/cassandra/conf/cassandra.yaml
       sudo: yes
 
+    - name: Remove cassandra data dir
+      file: path=/var/lib/cassandra state=absent
+      sudo: yes 
+
+    - name: Create cassandra data dir
+      file: path=/var/lib/cassandra state=directory owner=cassandra
+      sudo: yes
+
     - name: Run Cassandra
       service: name=cassandra state=restarted
       sudo: yes
