@@ -7,9 +7,9 @@
 192.168.167.145
 
 [cassandra]
-dc01m01.virtual
-dc01m02.virtual
-dc01m03.virtual
+192.168.167.144
+192.168.167.145
+192.168.167.146
 
 [virtual:children]
 malt_engine
