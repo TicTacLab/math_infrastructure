@@ -233,7 +233,7 @@ seed_provider:
       parameters:
           # seeds is actually a comma-delimited list of addresses.
           # Ex: "<ip1>,<ip2>,<ip3>"
-          - seeds: "{{','.join(groups.cassandra[0:2])}}"
+          - seeds: "{{cassandra[ansible_fqdn].listen_address}}"
 
 # For workloads with more data than can fit in memory, Cassandra's
 # bottleneck will be reads that need to fetch data from
@@ -306,7 +306,7 @@ ssl_storage_port: 7001
 #
 # Setting this to 0.0.0.0 is always wrong.
 #listen_address: {{groups.cassandra[0]}}
-listen_address: {{ansible_all_ipv4_addresses[1]}}
+listen_address: '{{cassandra[ansible_fqdn].listen_address}}'
 
 # Address to broadcast to other Cassandra nodes
 # Leaving this blank will set it to the same value as listen_address

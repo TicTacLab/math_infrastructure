@@ -11,6 +11,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define("vmalt01") do |node|
     node.vm.network "private_network", ip: "192.168.167.144"
+    node.vm.hostname = "dc01m01.favorit"
     node.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 2
@@ -19,6 +20,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define("vmalt02") do |node|
     node.vm.network "private_network", ip: "192.168.167.145"
+    node.vm.hostname = "dc01m02.favorit"
     node.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 2
@@ -27,6 +29,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define("vmalt03") do |node|
     node.vm.network "private_network", ip: "192.168.167.146"
+    node.vm.hostname = "dc01m03.favorit"
     node.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 2
@@ -41,9 +44,6 @@ Vagrant.configure(2) do |config|
       echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
       echo "SELINUX=disabled" > /etc/sysconfig/selinux
       echo "SELINUXTYPE=targeted" >> /etc/sysconfig/selinux
-      echo "192.168.167.144 dc01m01.virtual" >> /etc/hosts
-      echo "192.168.167.145 dc01m02.virtual" >> /etc/hosts
-      echo "192.168.167.146 dc01m03.virtual" >> /etc/hosts
       reboot
     SHELL
   end

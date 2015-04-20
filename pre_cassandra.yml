@@ -23,13 +23,17 @@
       file: path=/var/lib/cassandra state=directory owner=cassandra
       sudo: yes
 
+    - name: Move old logs
+      command: mv /var/log/cassandra/system.log /var/log/cassandra/system.log.old
+      sudo: yes
+      ignore_errors: yes
+
     - name: Run Cassandra
       service: name=cassandra state=restarted
       sudo: yes
 
     - name: Wait for Cassandra to start
-      wait_for: host={{ansible_hostname}} port=9160 state=started
-      sudo: yes
+      wait_for: host=/var/log/cassandra/system.log timeout=20 search_regex='.*Listening for thrift clients.*' state=present
 
 - name: Load data
   hosts: cassandra[0]

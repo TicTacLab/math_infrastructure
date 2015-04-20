@@ -4,6 +4,19 @@ ansible_ssh_pass: WynorOpt8
 
 cassandra_hosts: '{{groups.cassandra|join(",")}}'
 cassandra_password: 'CacNeck5'
+cassandra:
+  dc01m01.favorit:
+    listen_address: '192.168.167.144'
+    seed_nodes: '192.168.167.144,192.168.167.145'
+
+  dc01m02.favorit:
+    listen_address: '192.168.167.145'
+    seed_nodes: '192.168.167.144,192.168.167.145'
+
+  dc01m03.favorit:
+    listen_address: '192.168.167.146'
+    seed_nodes: '192.168.167.144,192.168.167.145'
+
 cache_on: false
 malt_engine_heap_size: '2g'
 malt_admin_heap_size: '1g'
