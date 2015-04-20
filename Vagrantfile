@@ -37,6 +37,16 @@ Vagrant.configure(2) do |config|
   end
 
 
+  config.vm.define("nginx") do |node|
+    node.vm.network "private_network", ip: "192.168.167.140"
+    node.vm.hostname = "nginx0"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 400
+      v.cpus = 2
+    end
+  end
+
+
   config.vm.provision "shell" do |s|
     s.inline = <<-SHELL
       adduser -d /home/malt_deploy -m -s /bin/bash -p "$(openssl passwd -1 WynorOpt8)" -G wheel malt_deploy

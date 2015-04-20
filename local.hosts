@@ -11,7 +11,11 @@
 192.168.167.145
 192.168.167.146
 
+[nginx]
+192.168.167.140
+
 [local:children]
 malt_engine
 malt_admin
 cassandra
+nginx

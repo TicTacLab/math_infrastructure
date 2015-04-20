@@ -1,0 +1,12 @@
+upstream malt_engines {
+  {% for h in groups.malt_engine %}
+  server {{h}}:3000;
+  {% endfor %}
+}
+
+server {
+  listen 80;
+  location / {
+    proxy_pass http://malt_engines;
+  }
+}
