@@ -40,6 +40,9 @@
     - name: Copy schema settings files
       template: src=cassandra/templates/schema/settings.cql dest=/tmp/schema/settings.cql
 
+    - name: Copy schema configuration files
+      template: src=cassandra/templates/schema/config.cql dest=/tmp/schema/config.cql
+
     - name: Initialize schema
       shell: >
         cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/keyspace.cql  {{groups.cassandra[0]}} &&
