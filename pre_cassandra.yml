@@ -19,10 +19,15 @@
       service: name=cassandra state=restarted
       sudo: yes
 
-    #- name: Create malt user
-    #  shell: >
-    #    cqlsh -u cassandra -p cassandra -e "CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{groups.cassandra[0]}} &&
-    #    cqlsh -u malt -p {{cassandra_password}} -e "ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{groups.cassandra[0]}}
+    - name: User exists?
+      command: cqlsh -u malt -p {{cassandra_password}} -e "LIST USERS" {{groups.cassandra[0]}}
+      register: user_check
+
+    - name: Create malt user
+      shell: >
+        cqlsh -u cassandra -p cassandra -e "CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{groups.cassandra[0]}} &&
+        cqlsh -u malt -p {{cassandra_password}} -e "ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{groups.cassandra[0]}}
+      when: user_check|failed
 
     - name: Copy schema files
       copy: src=cassandra/templates/schema dest=/tmp
