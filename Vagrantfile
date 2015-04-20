@@ -41,6 +41,9 @@ Vagrant.configure(2) do |config|
       echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
       echo "SELINUX=disabled" > /etc/sysconfig/selinux
       echo "SELINUXTYPE=targeted" >> /etc/sysconfig/selinux
+      echo "192.168.167.144 dc01m01.virtual" >> /etc/hosts
+      echo "192.168.167.145 dc01m02.virtual" >> /etc/hosts
+      echo "192.168.167.146 dc01m03.virtual" >> /etc/hosts
       reboot
     SHELL
   end
