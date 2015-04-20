@@ -19,9 +19,14 @@
       service: name=cassandra state=restarted
       sudo: yes
 
+    - name: Wait for Cassandra to start
+      wait_for: host={{groups.cassandra[0]}} port=9160 state=started
+      sudo: yes
+
     - name: User exists?
       command: cqlsh -u malt -p {{cassandra_password}} -e "LIST USERS" {{groups.cassandra[0]}}
       register: user_check
+      ignore_errors: yes
 
     - name: Create malt user
       shell: >
