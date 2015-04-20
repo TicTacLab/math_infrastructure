@@ -4,6 +4,18 @@ ansible_sudo_pass: M$HVkfa
 
 cassandra_hosts: '{{groups.cassandra|join(",")}}'
 cassandra_password: 'Karghik2'
+cassandra:
+  dc01m01.favorit:
+    listen_address: '195.137.167.144'
+    seed_nodes: '195.137.167.144,195.137.167.145'
+
+  dc01m02.favorit:
+    listen_address: '195.137.167.145'
+    seed_nodes: '195.137.167.144,195.137.167.145'
+
+  dc01m03.favorit:
+    listen_address: '195.137.167.146'
+    seed_nodes: '195.137.167.144,195.137.167.145'
 cassandra_data_dir: '/data/cassandra'
 cache_on: true
 malt_engine_heap_size: '60g'

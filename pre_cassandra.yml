@@ -33,7 +33,7 @@
       sudo: yes
 
     - name: Wait for Cassandra to start
-      wait_for: host=/var/log/cassandra/system.log timeout=20 search_regex='.*Listening for thrift clients.*' state=present
+      wait_for: path=/var/log/cassandra/system.log timeout=60 search_regex='.*Listening for thrift clients.*' state=present
 
 - name: Load data
   hosts: cassandra[0]
@@ -45,8 +45,8 @@
 
     - name: Create malt user
       shell: >
-        cqlsh -u cassandra -p cassandra -e "CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{groups.cassandra[0]}} &&
-        cqlsh -u malt -p {{cassandra_password}} -e "ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{groups.cassandra[0]}}
+        cqlsh -u cassandra -p cassandra -e "CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{cassandra[ansible_fqdn].listen_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -e "ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{cassandra[ansible_fqdn].listen_address}}
       when: user_check|failed
 
     - name: Copy schema files
@@ -60,7 +60,7 @@
 
     - name: Initialize schema
       shell: >
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/keyspace.cql  {{groups.cassandra[0]}} &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/schema.cql -k malt  {{groups.cassandra[0]}} &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/config.cql -k malt  {{groups.cassandra[0]}} &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/settings.cql -k malt  {{groups.cassandra[0]}}
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/keyspace.cql {{cassandra[ansible_fqdn].listen_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/schema.cql -k malt  {{cassandra[ansible_fqdn].listen_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/config.cql -k malt  {{cassandra[ansible_fqdn].listen_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/settings.cql -k malt {{cassandra[ansible_fqdn].listen_address}}

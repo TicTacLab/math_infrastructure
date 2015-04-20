@@ -7,9 +7,9 @@
 195.137.167.145
 
 [cassandra]
-dc01m01.favorit
-dc01m02.favorit
-dc01m03.favorit
+195.137.167.144
+195.137.167.145
+195.137.167.146
 
 [production:children]
 malt_engine
