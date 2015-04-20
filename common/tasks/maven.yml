@@ -16,7 +16,7 @@
     creates: /opt/apache-maven-3.3.1
   sudo: yes
 
-- name: Set java Env
+- name: Set mvn Env
   copy: src="common/files/maven.sh" dest="/etc/profile.d/02-maven.sh"
   sudo: yes
 
