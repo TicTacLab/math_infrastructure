@@ -11,6 +11,9 @@ dc01m01.favorit
 dc01m02.favorit
 dc01m03.favorit
 
+[nginx]
+195.137.167.144
+
 [production:children]
 malt_engine
 malt_admin
