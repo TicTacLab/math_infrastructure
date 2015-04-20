@@ -11,6 +11,9 @@
 195.137.167.145
 195.137.167.146
 
+[nginx]
+195.137.167.144
+
 [production:children]
 malt_engine
 malt_admin
