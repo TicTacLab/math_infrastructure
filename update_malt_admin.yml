@@ -13,21 +13,24 @@
            accept_hostkey=yes
       register: project
 
+    - stat: path=malt_admin/target/malt-admin-standalone.jar
+      register: jar
+
     - name: Build proto files
       command: lein protobuf
       args:
         chdir: malt_admin
-      when: project.changed
+      when: project.changed or not jar.stat.exists
 
     - name: Cleanup target
       file: path=malt_admin/target state=absent
-      when: project.changed
+      when: project.changed or not jar.stat.exists
 
     - name: Make jar file
       command: lein uberjar
       args:
         chdir: malt_admin
-      when: project.changed
+      when: project.changed or not jar.stat.exists
 
     - name: Start Service
       service: name=malt_admin state=started
