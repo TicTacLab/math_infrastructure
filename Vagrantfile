@@ -45,6 +45,15 @@ Vagrant.configure(2) do |config|
       v.cpus = 2
     end
   end
+ 
+  config.vm.define("zabbix") do |node|
+    node.vm.network "private_network", ip: "192.168.167.141"
+    node.vm.hostname = "zabbix"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 400
+      v.cpus = 2
+    end
+  end
 
 
   config.vm.provision "shell" do |s|

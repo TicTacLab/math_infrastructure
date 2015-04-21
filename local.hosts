@@ -14,8 +14,12 @@
 [nginx]
 192.168.167.140
 
+[zabbix]
+192.168.167.141
+
 [local:children]
 malt_engine
 malt_admin
 cassandra
 nginx
+zabbix

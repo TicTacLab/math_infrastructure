@@ -1,0 +1,27 @@
+- name: Install zabbix
+  hosts: zabbix
+  tasks:
+
+    - name: Update dev-mapper
+      yum: name=device-mapper-event-libs state=latest
+      sudo: yes
+    
+    - name: Install Docker
+      yum: name=docker-io state=installed
+      sudo: yes
+ 
+    - name: Install docker-py
+      yum: name=python-docker-py state=installed
+      sudo: yes
+    
+    - name: Start Docker service
+      service: name=docker state=started
+      sudo: yes
+
+    - name: Run zabbix image
+      docker: image="berngp/docker-zabbix"
+              ports="2812:2812,80:80,10051:10051"
+              name="zabbix"
+              state=running
+      sudo: yes
+    
