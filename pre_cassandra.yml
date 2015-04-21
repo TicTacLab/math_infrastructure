@@ -15,9 +15,17 @@
       template: src=cassandra/templates/cassandra.yaml dest=/etc/cassandra/conf/cassandra.yaml
       sudo: yes
 
+    - name: Copy log4j-server.properties
+      copy: src=cassandra/files/log4j-server.properties dest=/etc/cassandra/conf/log4j-server.properties owner=cassandra group=cassandra mode=755
+      sudo: yes
+
+    - name: Copy cassandra env
+      template: src=cassandra/templates/cassandra-env.sh dest=/etc/cassandra/conf/cassandra-env.sh owner=cassandra group=cassandra mode=755
+      sudo: yes
+
     - name: Remove cassandra data dir
       shell: rm -rf {{cassandra_data_dir}}/*
-      sudo: yes 
+      sudo: yes
 
     - name: Create cassandra data dir
       file: path={{cassandra_data_dir}}} state=directory owner=cassandra
@@ -45,8 +53,8 @@
 
     - name: Create malt user
       shell: >
-        cqlsh -u cassandra -p cassandra -e "CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{cassandra[ansible_fqdn].listen_address}} &&
-        cqlsh -u malt -p {{cassandra_password}} -e "ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{cassandra[ansible_fqdn].listen_address}}
+        cqlsh -u cassandra -p cassandra -e "CONSISTENCY ALL; CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{cassandra[ansible_fqdn].listen_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -e "CONSISTENCY ALL; ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{cassandra[ansible_fqdn].listen_address}}
       when: user_check|failed
 
     - name: Copy schema files

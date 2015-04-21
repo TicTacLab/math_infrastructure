@@ -1,3 +1,4 @@
+CONSISTENCY ALL;
 TRUNCATE configuration;
 
 INSERT INTO

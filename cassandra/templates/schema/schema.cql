@@ -1,3 +1,5 @@
+CONSISTENCY ALL;
+
 CREATE TABLE IF NOT EXISTS configuration (
        config varchar PRIMARY KEY
 );
