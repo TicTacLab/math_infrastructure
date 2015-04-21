@@ -38,6 +38,9 @@ case "$1" in
         cd "$dir"
 
         export STORAGE_NODES='{{cassandra_hosts}}'
+        export ZABBIX_HOST='{{zabbix_host}}'
+        export ZABBIX_PORT='{{zabbix_port}}'
+        export MONITORING_HOSTNAME='{{ansible_hostname}}'
         export STORAGE_KEYSPACE=malt
         export STORAGE_USER=malt
         export STORAGE_PASSWORD='{{cassandra_password}}'

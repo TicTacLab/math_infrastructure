@@ -39,6 +39,9 @@ case "$1" in
 
         export WEB_HOST=0.0.0.0
         export WEB_PORT=80
+        export ZABBIX_HOST='{{zabbix_host}}'
+        export ZABBIX_PORT='{{zabbix_port}}'
+        export MONITORING_HOSTNAME='{{ansible_hostname}}'
         export STORAGE_NODES='{{cassandra_hosts}}'
         export STORAGE_KEYSPACE=malt
         export STORAGE_USER=malt

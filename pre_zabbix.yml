@@ -20,7 +20,7 @@
 
     - name: Run zabbix image
       docker: image="berngp/docker-zabbix"
-              ports="2812:2812,80:80,10051:10051"
+              ports="2812:2812,80:80,{{zabbix_port}}:10051"
               name="zabbix"
               state=running
       sudo: yes
