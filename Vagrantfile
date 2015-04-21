@@ -55,6 +55,16 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define("zabbix2") do |node|
+    node.vm.network "private_network", ip: "192.168.167.142"
+    node.vm.hostname = "zabbix2"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 400
+      v.cpus = 2
+    end
+    node.vm.box = "ubuntu/trusty64-juju"
+    node.vm.provision "shell" do |s| puts "ok" end
+  end
 
   config.vm.provision "shell" do |s|
     s.inline = <<-SHELL
