@@ -39,7 +39,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define("nginx") do |node|
     node.vm.network "private_network", ip: "192.168.167.140"
-    node.vm.hostname = "nginx0"
+    node.vm.hostname = "nginx"
     node.vm.provider "virtualbox" do |v|
       v.memory = 400
       v.cpus = 2
