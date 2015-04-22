@@ -41,7 +41,7 @@ case "$1" in
         export WEB_PORT=80
         export ZABBIX_HOST='{{zabbix_host}}'
         export ZABBIX_PORT='{{zabbix_port}}'
-        export MONITORING_HOSTNAME='{{ansible_hostname}}'
+        export MONITORING_HOSTNAME='{{facter_fqdn}}'
         export STORAGE_NODES='{{cassandra_hosts}}'
         export STORAGE_KEYSPACE=malt
         export STORAGE_USER=malt
@@ -49,6 +49,8 @@ case "$1" in
         export CONFIGURATION_TABLE=configuration
         export SETTINGS_TABLE=settings
         export APP_ENV=production
+        export BAGIRA_USERNAME=erlybet
+        export BAGIRA_PRIVATE_KEY_FILE=/home/malt_deploy/.ssh/favfeed-deploy
 
         ${cmd} >> "$stdout_log" 2>> "$stderr_log" &
         echo $! > "$pid_file"
