@@ -1,10 +1,6 @@
-- name: Update Malt Admin
-  hosts: malt_admin
+- name: Build Malt Admin
+  hosts: ci
   tasks:
-    - name: Stop Service
-      service: name=malt_admin state=stopped
-      sudo: yes
-
     - name: Clone project
       git: repo=gitolite@git.favorit:malt_admin
            dest=malt_admin
@@ -13,24 +9,40 @@
            accept_hostkey=yes
       register: project
 
-    - stat: path=malt_admin/target/malt-admin-standalone.jar
-      register: jar
-
-    - name: Build proto files
-      command: lein protobuf
-      args:
-        chdir: malt_admin
-      when: project.changed or not jar.stat.exists
-
     - name: Cleanup target
       file: path=malt_admin/target state=absent
-      when: project.changed or not jar.stat.exists
+      when: project.changed
 
-    - name: Make jar file
-      command: lein uberjar
+    - name: Release new version
+      command: ./boot.sh release -v {{malt_admin_version}}
       args:
         chdir: malt_admin
-      when: project.changed or not jar.stat.exists
+      when: project.changed
+
+    - name: Push new tags
+      command: git push --all
+      args:
+        chdir: malt_admin
+      when: project.changed
+
+- name: Update Malt Admin
+  hosts: malt_admin
+  tasks:
+
+    - name: Download jar file
+      shell: curl -O http://nassau.favorit/repository/internal/malt_admin/malt_admin/{{malt_admin_version}}/malt_admin-{{malt_admin_version}}.jar
+      args:
+        chdir: malt_admin
+        creates: malt_admin-{{malt_admin_version}}.jar
+
+    - name: Stop Service
+      service: name=malt_admin state=stopped
+      sudo: yes
+
+    - name: Link to the latest version
+      file: src=/home/malt_deploy/malt_admin/malt_admin-{{malt_admin_version}}.jar
+            dest=/home/malt_deploy/malt_admin/malt_admin_latest.jar
+            state=link
 
     - name: Start Service
       service: name=malt_admin state=started

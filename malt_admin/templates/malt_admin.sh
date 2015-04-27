@@ -13,7 +13,7 @@ HEAP_SIZE='{{malt_admin_heap_size}}'
 JVM_OPTS="$JVM_OPTS -Xmx$HEAP_SIZE -Dlogback.configurationFile=resources/logback.production.xml"
 dir="/home/malt_deploy/malt_admin"
 user="malt_deploy"
-cmd="java ${JVM_OPTS} -jar target/malt-admin-standalone.jar"
+cmd="java ${JVM_OPTS} -jar malt_admin_latest.jar"
 
 name=`basename $0`
 pid_file="/var/run/malt_admin.pid"
@@ -41,7 +41,7 @@ case "$1" in
         export WEB_PORT=80
         export ZABBIX_HOST='{{zabbix_host}}'
         export ZABBIX_PORT='{{zabbix_port}}'
-        export MONITORING_HOSTNAME='{{facter_fqdn}}'
+        export MONITORING_HOSTNAME='{{ansible_nodename}}'
         export STORAGE_NODES='{{cassandra_hosts}}'
         export STORAGE_KEYSPACE=malt
         export STORAGE_USER=malt

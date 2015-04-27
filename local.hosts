@@ -17,9 +17,13 @@
 [zabbix]
 192.168.167.141
 
+[ci]
+nassau.favorit
+
 [local:children]
 malt_engine
 malt_admin
 cassandra
 nginx
 zabbix
+ci

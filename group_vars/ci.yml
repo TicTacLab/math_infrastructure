@@ -1,0 +1,2 @@
+ansible_ssh_user: ci
+ansible_ssh_pass: Cefendest4

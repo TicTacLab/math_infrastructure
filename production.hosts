@@ -14,7 +14,12 @@
 [nginx]
 195.137.167.144
 
+[ci]
+nassau.favorit
+
 [production:children]
 malt_engine
 malt_admin
 cassandra
+nginx
+ci
