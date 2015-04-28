@@ -13,3 +13,7 @@
     - name: Set autostart
       service: name=malt_admin enabled=yes
       sudo: yes
+
+    - name: Create malt admin dir
+      file: path=malt_admin state=directory
+
