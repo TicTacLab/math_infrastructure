@@ -10,10 +10,10 @@
 ### END INIT INFO
 
 HEAP_SIZE='{{malt_engine_heap_size}}'
-JVM_OPTS="$JVM_OPTS -Xmx$HEAP_SIZE -Dlogback.configurationFile=resources/logback.production.xml"
+LEIN_JVM_OPTS="$LEIN_JVM_OPTS -Xmx$HEAP_SIZE -Dlogback.configurationFile=resources/logback.production.xml"
 dir="/home/malt_deploy/malt_engine"
 user="malt_deploy"
-cmd="java ${JVM_OPTS} -jar malt-standalone.jar"
+cmd="lein trampoline run"
 
 name=`basename $0`
 pid_file="/var/run/malt_engine.pid"
@@ -40,7 +40,7 @@ case "$1" in
         export STORAGE_NODES='{{cassandra_hosts}}'
         export ZABBIX_HOST='{{zabbix_host}}'
         export ZABBIX_PORT='{{zabbix_port}}'
-        export MONITORING_HOSTNAME='{{facter_fqdn}}'
+        export MONITORING_HOSTNAME='{{ansible_nodename}}'
         export STORAGE_KEYSPACE=malt
         export STORAGE_USER=malt
         export STORAGE_PASSWORD='{{cassandra_password}}'

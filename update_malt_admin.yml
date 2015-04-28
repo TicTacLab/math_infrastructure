@@ -1,48 +1,26 @@
-- name: Build Malt Admin
-  hosts: ci
+- name: Update Malt Admin
+  hosts: malt_admin
   tasks:
+
     - name: Clone project
       git: repo=gitolite@git.favorit:malt_admin
-           dest=malt_admin
+           dest=new_malt_admin
            update=yes
            version="{{git_ref}}"
            accept_hostkey=yes
       register: project
 
-    - name: Cleanup target
-      file: path=malt_admin/target state=absent
-      when: project.changed
-
-    - name: Release new version
-      command: ./boot.sh release -v {{malt_admin_version}}
-      args:
-        chdir: malt_admin
-      when: project.changed
-
-    - name: Push new tags
-      command: git push --all
-      args:
-        chdir: malt_admin
-      when: project.changed
-
-- name: Update Malt Admin
-  hosts: malt_admin
-  tasks:
-
-    - name: Download jar file
-      shell: curl -O http://nassau.favorit/repository/internal/malt_admin/malt_admin/{{malt_admin_version}}/malt_admin-{{malt_admin_version}}.jar
-      args:
-        chdir: malt_admin
-        creates: malt_admin-{{malt_admin_version}}.jar
-
     - name: Stop Service
       service: name=malt_admin state=stopped
       sudo: yes
 
-    - name: Link to the latest version
-      file: src=/home/malt_deploy/malt_admin/malt_admin-{{malt_admin_version}}.jar
-            dest=/home/malt_deploy/malt_admin/malt_admin_latest.jar
-            state=link
+    - name: Remove old dir
+      command: rm -rf malt_admin
+      sudo: yes
+
+    - name: Move to the latest version
+      command: mv new_malt_admin malt_admin
+      sudo: yes
 
     - name: Start Service
       service: name=malt_admin state=started

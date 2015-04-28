@@ -10,10 +10,10 @@
 ### END INIT INFO
 
 HEAP_SIZE='{{malt_admin_heap_size}}'
-JVM_OPTS="$JVM_OPTS -Xmx$HEAP_SIZE -Dlogback.configurationFile=resources/logback.production.xml"
+LEIN_JVM_OPTS="$LEIN_JVM_OPTS -Xmx$HEAP_SIZE -Dlogback.configurationFile=resources/logback.production.xml"
 dir="/home/malt_deploy/malt_admin"
 user="malt_deploy"
-cmd="java ${JVM_OPTS} -jar malt_admin_latest.jar"
+cmd="lein trampoline run"
 
 name=`basename $0`
 pid_file="/var/run/malt_admin.pid"
