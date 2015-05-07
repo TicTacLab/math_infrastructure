@@ -15,6 +15,6 @@
       sudo: yes
 
     - name: Reload nginx
-      service: name=nginx state=reloaded
+      service: name=nginx state=reloaded enabled=yes
       sudo: yes
 
