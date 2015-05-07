@@ -46,6 +46,7 @@ case "$1" in
         export STORAGE_KEYSPACE=malt
         export STORAGE_USER=malt
         export STORAGE_PASSWORD='{{cassandra_password}}'
+	export SESSION_TTL=3600
         export CONFIGURATION_TABLE=configuration
         export SETTINGS_TABLE=settings
         export APP_ENV=production
