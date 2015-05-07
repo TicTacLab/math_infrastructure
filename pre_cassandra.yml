@@ -37,7 +37,7 @@
       ignore_errors: yes
 
     - name: Run Cassandra
-      service: name=cassandra state=restarted
+      service: name=cassandra state=restarted enabled=yes
       sudo: yes
 
     - name: Wait for Cassandra to start
