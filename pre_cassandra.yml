@@ -28,7 +28,7 @@
 #      sudo: yes
 
     - name: Create cassandra data dir
-      file: path={{cassandra_data_dir}}} state=directory owner=cassandra
+      file: path={{cassandra_data_dir}} state=directory owner=cassandra
       sudo: yes
 
     - name: Move old logs
