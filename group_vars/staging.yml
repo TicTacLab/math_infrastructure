@@ -12,7 +12,6 @@ zabbix_host: '{{groups.zabbix[0]}}'
 zabbix_port: '10051'
 git_ref: stable
 
-
 cassandra:
   malt-test01.favorit:
     listen_address: 'malt-test01'

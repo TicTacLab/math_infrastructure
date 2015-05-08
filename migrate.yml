@@ -1,0 +1,13 @@
+- name: Migrate database
+  hosts: malt_admin[0]
+  tasks:
+    - name: Migrate
+      shell: lein trampoline run -m mutagen
+      environment:
+        STORAGE_KEYSPACE: malt
+        STORAGE_NODES: "{{groups.cassandra[0]}}"
+        STORAGE_USER: malt
+        STORAGE_PASSWORD: "{{cassandra_password}}"
+        LEIN_ROOT: yes
+      args: { chdir: malt_admin }
+      sudo: yes
