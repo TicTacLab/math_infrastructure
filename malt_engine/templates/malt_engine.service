@@ -1,0 +1,24 @@
+[Unit]
+Description=Malt Engine
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/malt_deploy/malt_engine
+Environment="JVM_OPTS=-Xmx{{malt_engine_heap_size}} -Dlogback.configurationFile=resources/logback.production.xml"
+Environment="ZABBIX_HOST={{zabbix_host}}"
+Environment="ZABBIX_PORT={{zabbix_port}}"
+Environment="MONITORING_HOSTNAME={{ansible_nodename}}"
+Environment="STORAGE_NODES={{cassandra_hosts}}"
+Environment="STORAGE_KEYSPACE=malt"
+Environment="STORAGE_USER=malt"
+Environment="STORAGE_PASSWORD={{cassandra_password}}"
+Environment="CONFIGURATION_TABLE=configuration"
+Environment="APP_ENV=production"
+Environment="BAGIRA_USERNAME=erlybet"
+Environment="BAGIRA_PRIVATE_KEY_FILE=/home/malt_deploy/.ssh/favfeed-deploy"
+TimeoutStartSec=0
+ExecStart=/usr/bin/lein trampoline run
+
+[Install]
+WantedBy=multi-user.target

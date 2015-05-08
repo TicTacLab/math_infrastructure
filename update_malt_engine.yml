@@ -10,6 +10,10 @@
            accept_hostkey=yes
       register: project
 
+    - name: Replace logback.xml
+      command: mv resources/logback.production.xml resources/logback.xml
+      args: { chdir: new_malt_engine }
+
     - name: Stop Service
       service: name=malt_engine state=stopped
       sudo: yes
