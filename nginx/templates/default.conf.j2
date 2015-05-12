@@ -1,4 +1,5 @@
 upstream malt_engines {
+  hash $request_uri consistent;
   {% for h in groups.malt_engine %}
   server {{h}}:3000;
   {% endfor %}
