@@ -23,10 +23,6 @@
       template: src=cassandra/templates/cassandra-env.sh dest=/etc/cassandra/conf/cassandra-env.sh owner=cassandra group=cassandra mode=755
       sudo: yes
 
-    - name: Remove cassandra data dir
-      shell: rm -rf {{cassandra_data_dir}}/*
-      sudo: yes
-
     - name: Create cassandra data dir
       file: path={{cassandra_data_dir}} state=directory owner=cassandra
       sudo: yes
