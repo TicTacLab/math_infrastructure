@@ -26,6 +26,12 @@ CREATE TABLE IF NOT EXISTS users (
        is_admin boolean
 );
 
+CREATE TABLE IF NOT EXISTS in_params (
+       model_id int,
+       params blob,
+       PRIMARY KEY (model_id, params)
+);
+
 INSERT INTO
        users (login,name,password,status, is_admin)
 VALUES
