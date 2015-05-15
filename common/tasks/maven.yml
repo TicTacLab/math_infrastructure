@@ -1,13 +1,5 @@
-- name: Install wget
-  yum: pkg=wget state=installed
-  sudo: yes
-
-- name: Download
-  command: >
-    wget --no-cookies --no-check-certificate -c
-    "http://apache.ip-connect.vn.ua/maven/maven-3/3.3.1/binaries/apache-maven-3.3.1-bin.tar.gz"
-  args:
-    creates: /opt/apache-maven-3.3.1
+- name: Copy tar file
+  copy: src=common/files/apache-maven-3.3.1-bin.tar.gz dest={{ansible_env.HOME}}/apache-maven-3.3.1-bin.tar.gz
 
 - name: Extract
   command: "tar xzf {{ansible_env.HOME}}/apache-maven-3.3.1-bin.tar.gz"
