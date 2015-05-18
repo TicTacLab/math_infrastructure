@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS models (
        file_name varchar,
        content_type varchar,
        in_sheet_name varchar,
-       out_sheet_name varchar
+       out_sheet_name varchar,
+       rev varchar
 );
 
 CREATE TABLE IF NOT EXISTS users (
