@@ -52,11 +52,12 @@ CREATE TABLE IF NOT EXISTS sessions (
        login varchar
 );
 
-CREATE TABLE IF NOT EXISTS cache (
+CREATE TABLE IF NOT EXISTS caches (
       model_id int,
+      rev text,
       params blob,
       result blob,
-      PRIMARY KEY (model_id, params)
+      PRIMARY KEY ((model_id, rev), params)
 );
 
 CREATE TABLE IF NOT EXISTS calculation_log (
