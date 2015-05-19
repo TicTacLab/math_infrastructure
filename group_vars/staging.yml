@@ -16,3 +16,6 @@ cassandra:
   malt-test01.favorit:
     listen_address: 'malt-test01'
     seed_nodes: 'malt-test01'
+
+malt_engine_jmx_port: 7198
+cassandra_jmx_port: 7199

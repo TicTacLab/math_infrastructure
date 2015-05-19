@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/home/malt_deploy/malt_engine
-Environment="JVM_OPTS=-Xmx{{malt_engine_heap_size}} -Dlogback.configurationFile=resources/logback.production.xml"
+Environment="JVM_OPTS=-Xmx{{malt_engine_heap_size}} -Dlogback.configurationFile=resources/logback.production.xml -Dcom.sun.management.jmxremote.port={{malt_engine_jmx_port}} -Dcom.sun.management.jmxremote.rmi.port={{malt_engine_jmx_port}} -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname={{cassandra[ansible_fqdn].listen_address}}"
 Environment="ZABBIX_HOST={{zabbix_host}}"
 Environment="ZABBIX_PORT={{zabbix_port}}"
 Environment="MONITORING_HOSTNAME={{ansible_nodename}}"
