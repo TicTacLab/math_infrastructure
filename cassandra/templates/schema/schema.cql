@@ -34,6 +34,13 @@ CREATE TABLE IF NOT EXISTS in_params (
        PRIMARY KEY (model_id, params)
 );
 
+CREATE TABLE cache_q (
+  model_id int,
+  rev text,
+  params blob,
+  PRIMARY KEY ((model_id, rev), params)
+);
+
 INSERT INTO
        users (login,name,password,status, is_admin)
 VALUES
