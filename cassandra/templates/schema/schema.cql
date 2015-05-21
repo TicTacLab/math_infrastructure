@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS models (
        content_type varchar,
        in_sheet_name varchar,
        out_sheet_name varchar,
+       last_modified timestamp,
        rev varchar
 );
 
