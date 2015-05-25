@@ -4,18 +4,6 @@
     - name: Migrate
       shell: lein trampoline run -m {{task}}
       environment:
-        WEB_HOST: "0.0.0.0"
-        WEB_PORT: "80"
-        ZABBIX_HOST: "{{zabbix_host}}"
-        ZABBIX_PORT: "{{zabbix_port}}"
-        MONITORING_HOSTNAME: "{{ansible_nodename}}"
-        STORAGE_NODES: "{{cassandra_hosts}}"
-        STORAGE_KEYSPACE: "malt"
-        STORAGE_USER: "malt"
-        STORAGE_PASSWORD: "{{cassandra_password}}"
-        SESSION_TTL: "3600"
-        CONFIGURATION_TABLE: "configuration"
-        SETTINGS_TABLE: "settings"
         LEIN_ROOT: yes
       args: { chdir: malt_admin }
       sudo: yes
