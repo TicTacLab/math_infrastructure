@@ -59,9 +59,6 @@
     - name: Copy schema settings files
       template: src=cassandra/templates/schema/settings.cql dest=/tmp/schema/settings.cql
 
-    - name: Copy schema configuration files
-      template: src=cassandra/templates/schema/config.cql dest=/tmp/schema/config.cql
-
     - name: Copy schema keyspace files
       template: src=cassandra/templates/schema/keyspace.cql dest=/tmp/schema/keyspace.cql
 
