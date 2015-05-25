@@ -1,2 +1,21 @@
 ansible_ssh_user: ci
-ansible_ssh_pass: Cefendest4
+ansible_ssh_pass: CownAlwic9
+ansible_sudo_pass: CownAlwic9
+
+cassandra_hosts: '{{groups.cassandra|join(",")}}'
+cassandra_password: 'Karghik2'
+cassandra_data_dir: '/var/lib/cassandra/data'
+cache_on: false
+malt_engine_heap_size: '2g'
+malt_admin_heap_size: '1g'
+zabbix_host: '{{groups.zabbix[0]}}'
+zabbix_port: '10051'
+git_ref: stable
+
+cassandra:
+  nassau.favorit:
+    listen_address: 'nassau.favorit'
+    seed_nodes: 'nassa.favorit'
+
+malt_engine_jmx_port: 7198
+cassandra_jmx_port: 7199

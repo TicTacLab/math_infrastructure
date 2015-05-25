@@ -14,6 +14,10 @@
       command: mv resources/logback.production.xml resources/logback.xml
       args: { chdir: new_malt_admin }
 
+    - name: Write config
+      copy: dest=new_malt_admin/config.json
+            content="{{malt_admin_config|to_json|safe}}"
+
     - name: Stop Service
       service: name=malt_admin state=stopped
       sudo: yes

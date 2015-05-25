@@ -6,19 +6,6 @@ After=network.target
 Type=simple
 WorkingDirectory=/home/malt_deploy/malt_admin
 Environment="JVM_OPTS=-Xmx{{malt_admin_heap_size}} -Dlogback.configurationFile=resources/logback.production.xml"
-Environment="WEB_HOST=0.0.0.0"
-Environment="WEB_PORT=80"
-Environment="ZABBIX_HOST={{zabbix_host}}"
-Environment="ZABBIX_PORT={{zabbix_port}}"
-Environment="MONITORING_HOSTNAME={{ansible_nodename}}"
-Environment="STORAGE_NODES={{cassandra_hosts}}"
-Environment="STORAGE_KEYSPACE=malt"
-Environment="STORAGE_USER=malt"
-Environment="STORAGE_PASSWORD={{cassandra_password}}"
-Environment="SESSION_TTL=3600"
-Environment="CONFIGURATION_TABLE=configuration"
-Environment="SETTINGS_TABLE=settings"
-Environment="APP_ENV=production"
 Environment="BAGIRA_USERNAME=erlybet"
 Environment="BAGIRA_PRIVATE_KEY_FILE=/home/malt_deploy/.ssh/favfeed-deploy"
 TimeoutStartSec=0

@@ -15,6 +15,10 @@
       command: mv resources/logback.production.xml resources/logback.xml
       args: { chdir: new_malt_engine }
 
+    - name: Write config
+      copy: dest=new_malt_engine/config.json
+            content="{{malt_engine_config|to_json|safe}}"
+
     - name: Stop Service
       service: name=malt_engine state=stopped
       sudo: yes
@@ -32,4 +36,4 @@
       sudo: yes
 
     - name: Wait for service to start
-      wait_for: port=3000 state=present
+      wait_for: port="{{malt_engine_config.port}}" state=present
