@@ -28,7 +28,7 @@ malt_engine_config:
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
   "monitoring-hostname": "{{ansible_nodename}}"
-  "zabbix-host": "{{groups.zabbix[0]}}"
+  "zabbix-host": "zabbix.favbet.com"
   "zabbix-port": 10051
   "noilly-port": 1300
 
@@ -44,7 +44,7 @@ malt_admin_config:
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
   "monitoring-hostname": "{{ansible_nodename}}"
-  "zabbix-host": "{{groups.zabbix[0]}}"
+  "zabbix-host": "zabbix.favbet.com"
   "zabbix-port": 10051
 
 malt_engine_jmx_port: 7198
