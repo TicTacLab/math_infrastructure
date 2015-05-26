@@ -2,8 +2,9 @@ ansible_ssh_user: malt_deploy
 ansible_ssh_pass: M$HVkfa
 ansible_sudo_pass: M$HVkfa
 
-cassandra_hosts: '{{groups.cassandra|join(",")}}'
 cassandra_password: 'Karghik2'
+cassandra_data_dir: '/data/cassandra'
+
 cassandra:
   dc01m01.favorit:
     listen_address: '195.137.167.144'
@@ -16,12 +17,38 @@ cassandra:
   dc01m03.favorit:
     listen_address: '195.137.167.146'
     seed_nodes: '195.137.167.144,195.137.167.145'
-cassandra_data_dir: '/data/cassandra'
-cache_on: true
+
+malt_engine_config:
+  "cache-on": true
+  "port": 3000
+  "host": "0.0.0.0"
+  "session-ttl": 900
+  "storage-keyspace": malt
+  "storage-nodes": "{{groups.cassandra}}"
+  "storage-password": "{{cassandra_password}}"
+  "storage-user": malt
+  "monitoring-hostname": "{{ansible_nodename}}"
+  "zabbix-host": "{{groups.zabbix[0]}}"
+  "zabbix-port": 10051
+  "noilly-port": 1300
+
+malt_admin_config:
+  "host": "0.0.0.0"
+  "port": 80
+  "app-env": "production"
+  "noilly-port": 1301
+  "session-ttl": 3600
+  "settings-table": "settings"
+  "storage-keyspace": malt
+  "storage-nodes": "{{groups.cassandra}}"
+  "storage-password": "{{cassandra_password}}"
+  "storage-user": malt
+  "monitoring-hostname": "{{ansible_nodename}}"
+  "zabbix-host": "{{groups.zabbix[0]}}"
+  "zabbix-port": 10051
+
 malt_engine_jmx_port: 7198
 cassandra_jmx_port: 7199
 malt_engine_heap_size: '60g'
 malt_admin_heap_size: '1g'
-zabbix_host: 'zabbix.favbet.com'
-zabbix_port: '10051'
 git_ref: stable
