@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS in_params (
        PRIMARY KEY (model_id, params)
 );
 
-CREATE TABLE cache_q (
+CREATE TABLE IF NOT EXISTS cache_q (
   model_id int,
   rev text,
   params blob,

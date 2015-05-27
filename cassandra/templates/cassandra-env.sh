@@ -282,7 +282,7 @@ else
   JVM_OPTS="$JVM_OPTS -Dcom.sun.management.jmxremote.rmi.port=$JMX_PORT"
   JVM_OPTS="$JVM_OPTS -Dcom.sun.management.jmxremote.ssl=false"
   JVM_OPTS="$JVM_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
-  JVM_OPTS="$JVM_OPTS -Djava.rmi.server.hostname={{cassandra[ansible_fqdn].listen_address}}"
+  JVM_OPTS="$JVM_OPTS -Djava.rmi.server.hostname={{cassandra[ansible_hostname].listen_address}}"
 fi
 
 

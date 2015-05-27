@@ -49,8 +49,8 @@
 
     - name: Create malt user
       shell: >
-        cqlsh -u cassandra -p cassandra -e "CONSISTENCY ALL; CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{cassandra[ansible_fqdn].listen_address}} &&
-        cqlsh -u malt -p {{cassandra_password}} -e "CONSISTENCY ALL; ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{cassandra[ansible_fqdn].listen_address}}
+        cqlsh -u cassandra -p cassandra -e "CONSISTENCY ALL; CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{cassandra[ansible_hostname].listen_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -e "CONSISTENCY ALL; ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{cassandra[ansible_hostname].listen_address}}
       when: user_check|failed
 
     - name: Copy schema files
@@ -64,7 +64,7 @@
 
     - name: Initialize schema
       shell: >
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/keyspace.cql {{cassandra[ansible_fqdn].listen_address}} &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/schema.cql -k malt  {{cassandra[ansible_fqdn].listen_address}} &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/config.cql -k malt  {{cassandra[ansible_fqdn].listen_address}} &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/settings.cql -k malt {{cassandra[ansible_fqdn].listen_address}}
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/keyspace.cql {{cassandra[ansible_hostname].listen_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/schema.cql -k malt  {{cassandra[ansible_hostname].listen_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/config.cql -k malt  {{cassandra[ansible_hostname].listen_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/settings.cql -k malt {{cassandra[ansible_hostname].listen_address}}
