@@ -6,7 +6,7 @@ cassandra_password: 'Karghik2'
 cassandra_data_dir: '/var/lib/cassandra/data'
 
 cassandra:
-  malt-test01.favorit:
+  malt-test01:
     listen_address: 'malt-test01'
     seed_nodes: 'malt-test01'
 
@@ -41,6 +41,6 @@ malt_admin_config:
 
 malt_engine_jmx_port: 7198
 cassandra_jmx_port: 7199
-malt_engine_heap_size: '2g'
+malt_engine_heap_size: '3500m'
 malt_admin_heap_size: '1g'
 git_ref: stable
