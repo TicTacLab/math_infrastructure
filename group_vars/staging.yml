@@ -6,7 +6,7 @@ cassandra_password: 'Karghik2'
 cassandra_data_dir: '/var/lib/cassandra/data'
 
 cassandra:
-  malt-test01.favorit:
+  malt-test01:
     listen_address: 'malt-test01'
     seed_nodes: 'malt-test01'
 
