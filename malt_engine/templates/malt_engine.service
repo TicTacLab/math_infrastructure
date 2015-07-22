@@ -1,6 +1,8 @@
 [Unit]
 Description=Malt Engine
 After=network.target
+After=cassandra.service
+Requires=cassandra.service
 
 [Service]
 Type=simple

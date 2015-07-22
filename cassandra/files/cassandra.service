@@ -3,9 +3,9 @@ Description=Starts and stops Cassandra
 After=syslog.target
 After=network.target
 
+
 [Service]
-Type=forking
-PIDFile=/var/run/cassandra/cassandra.pid
+Type=simple
 WorkingDirectory=/usr/share/cassandra
 
 User=cassandra
@@ -14,13 +14,12 @@ Group=cassandra
 Environment=CASSANDRA_HOME=/usr/share/cassandra
 Environment=CASSANDRA_CONF=/etc/cassandra/conf
 
-
 OOMScoreAdjust=-1000
+ExecStart=/usr/sbin/cassandra -f
+TimeoutSec=10
 
-ExecStart=/usr/sbin/cassandra -p /var/run/cassandra/cassandra.pid
-ExecStop=/bin/sh -c 'kill $(cat /var/run/cassandra/cassandra.pid)'
-ExecReload=/bin/true
-TimeoutSec=300
 
 [Install]
 WantedBy=multi-user.target
+WantedBy=malt_engine.service
+WantedBy=malt_admin.service

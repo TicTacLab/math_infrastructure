@@ -32,6 +32,20 @@
       sudo: yes
       ignore_errors: yes
 
+    - name: Remove C* init.d file
+      file: path=/etc/init.d/cassandra state=absent
+      sudo: yes
+
+    - name: Copy C* systemd file
+      copy: src=cassandra/files/cassandra.service dest=/etc/systemd/system/cassandra.service
+      sudo: yes
+      register: cassandra_service
+
+    - name: Reload systemd configuration
+      command: systemctl daemon-reload
+      sudo: yes
+      when: cassandra_service.changed
+
     - name: Run Cassandra
       service: name=cassandra state=restarted enabled=yes
       sudo: yes
