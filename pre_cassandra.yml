@@ -1,5 +1,6 @@
 - name: Setup Cassandra
   hosts: cassandra
+  serial: 1
   tasks:
     - include: common/tasks/oracle_jdk.yml
 
