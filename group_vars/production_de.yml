@@ -39,6 +39,7 @@ malt_admin_config:
   "noilly-port": 1301
   "session-ttl": 3600
   "settings-table": "settings"
+  "offload-repo": null
   "storage-keyspace": malt
   "storage-nodes": "{{groups.cassandra}}"
   "storage-password": "{{cassandra_password}}"
