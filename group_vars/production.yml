@@ -43,6 +43,7 @@ malt_admin_config:
   "storage-nodes": "{{groups.cassandra}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
+  "offload-repo": "gitolite@git.favorit:mathmod"
   "monitoring-hostname": "{{ansible_nodename}}"
   "zabbix-host": "zabbix.favbet.com"
   "zabbix-port": 10051
