@@ -6,6 +6,7 @@ Requires=cassandra.service
 
 [Service]
 Type=simple
+User=malt_deploy
 WorkingDirectory=/home/malt_deploy/malt_admin
 Environment="JVM_OPTS=-Xmx{{malt_admin_heap_size}} -Dlogback.configurationFile=resources/logback.production.xml"
 Environment="BAGIRA_USERNAME=erlybet"
