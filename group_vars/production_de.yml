@@ -8,15 +8,24 @@ cassandra_data_dir: '/data/cassandra'
 cassandra:
   dc02malt01:
     listen_address: '10.2.49.40'
-    seed_nodes: '10.2.49.41,10.2.49.42'
+    seed_nodes: '10.2.49.40,10.2.49.42'
 
   dc02malt02:
     listen_address: '10.2.49.41'
-    seed_nodes: '10.2.49.41,10.2.49.42'
+    seed_nodes: '10.2.49.40,10.2.49.42'
 
   dc02malt03:
     listen_address: '10.2.49.42'
-    seed_nodes: '10.2.49.41,10.2.49.42'
+    seed_nodes: '10.2.49.40,10.2.49.42'
+  
+  dc02malt04:
+    listen_address: '10.2.49.43'
+    seed_nodes: '10.2.49.40,10.2.49.42'
+  
+  dc02malt05:
+    listen_address: '10.2.49.44'
+    seed_nodes: '10.2.49.40,10.2.49.42'
+  
 
 malt_engine_config:
   "cache-on": true
