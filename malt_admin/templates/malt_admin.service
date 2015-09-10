@@ -2,7 +2,6 @@
 Description=Malt Admin
 After=network.target
 After=cassandra.service
-Requires=cassandra.service
 
 [Service]
 Type=simple

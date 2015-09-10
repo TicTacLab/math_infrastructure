@@ -52,4 +52,4 @@ malt_engine_jmx_port: 7198
 cassandra_jmx_port: 7199
 malt_engine_heap_size: '30g'
 malt_admin_heap_size: '1g'
-git_ref: master
+git_ref: stable

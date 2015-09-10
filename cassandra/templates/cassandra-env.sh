@@ -135,8 +135,8 @@ esac
 # times. If in doubt, and if you do not particularly want to tweak, go with
 # 100 MB per physical CPU core.
 
-#MAX_HEAP_SIZE="4G"
-#HEAP_NEWSIZE="800M"
+MAX_HEAP_SIZE="16G"
+HEAP_NEWSIZE="2G"
 
 # Set this to control the amount of arenas per-thread in glibc
 #export MALLOC_ARENA_MAX=4
@@ -190,6 +190,7 @@ JVM_OPTS="$JVM_OPTS -Xmx${MAX_HEAP_SIZE}"
 JVM_OPTS="$JVM_OPTS -Xmn${HEAP_NEWSIZE}"
 JVM_OPTS="$JVM_OPTS -XX:+HeapDumpOnOutOfMemoryError"
 
+
 # set jvm HeapDumpPath with CASSANDRA_HEAPDUMP_DIR
 if [ "x$CASSANDRA_HEAPDUMP_DIR" != "x" ]; then
     JVM_OPTS="$JVM_OPTS -XX:HeapDumpPath=$CASSANDRA_HEAPDUMP_DIR/cassandra-`date +%s`-pid$$.hprof"
@@ -209,10 +210,13 @@ JVM_OPTS="$JVM_OPTS -XX:+UseParNewGC"
 JVM_OPTS="$JVM_OPTS -XX:+UseConcMarkSweepGC"
 JVM_OPTS="$JVM_OPTS -XX:+CMSParallelRemarkEnabled"
 JVM_OPTS="$JVM_OPTS -XX:SurvivorRatio=8"
-JVM_OPTS="$JVM_OPTS -XX:MaxTenuringThreshold=1"
+JVM_OPTS="$JVM_OPTS -XX:MaxTenuringThreshold=6"
 JVM_OPTS="$JVM_OPTS -XX:CMSInitiatingOccupancyFraction=75"
 JVM_OPTS="$JVM_OPTS -XX:+UseCMSInitiatingOccupancyOnly"
 JVM_OPTS="$JVM_OPTS -XX:+UseTLAB"
+
+# Young generation size
+JVM_OPTS="$JVM_OPTS -XX:MaxNewSize=4G"
 
 # note: bash evals '1.7.x' as > '1.7' so this is really a >= 1.7 jvm check
 if { [ "$JVM_VERSION" \> "1.7" ] && [ "$JVM_VERSION" \< "1.8.0" ] && [ "$JVM_PATCH_VERSION" -ge "60" ]; } || [ "$JVM_VERSION" \> "1.8" ] ; then
