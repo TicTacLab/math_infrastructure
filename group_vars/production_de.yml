@@ -57,8 +57,15 @@ malt_admin_config:
   "zabbix-host": "zp01internal.dc02.favorit"
   "zabbix-port": 10051
 
+
 malt_engine_jmx_port: 7198
+
 cassandra_jmx_port: 7199
+cassandra_max_heap_size: '16g'
+cassandra_new_heap_size: '2g'
+cassandra_max_new_size: '4g'
+
 malt_engine_heap_size: '30g'
 malt_admin_heap_size: '1g'
+
 git_ref: stable

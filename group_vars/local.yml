@@ -48,8 +48,15 @@ malt_admin_config:
   "zabbix-host": "{{groups.zabbix[0]}}"
   "zabbix-port": 10051
 
+
 malt_engine_jmx_port: 7198
+
 cassandra_jmx_port: 7199
-malt_engine_heap_size: '2g'
-malt_admin_heap_size: '1g'
+cassandra_max_heap_size: '500m'
+cassandra_new_heap_size: '100m'
+cassandra_max_new_size: '100m'
+
+malt_engine_heap_size: '1g'
+malt_admin_heap_size: '300m'
+
 git_ref: master

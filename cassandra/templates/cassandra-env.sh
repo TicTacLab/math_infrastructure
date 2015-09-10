@@ -135,8 +135,8 @@ esac
 # times. If in doubt, and if you do not particularly want to tweak, go with
 # 100 MB per physical CPU core.
 
-MAX_HEAP_SIZE="16G"
-HEAP_NEWSIZE="2G"
+MAX_HEAP_SIZE="{{cassandra_max_heap_size}}"
+HEAP_NEWSIZE="{{cassandra_new_heap_size}}"
 
 # Set this to control the amount of arenas per-thread in glibc
 #export MALLOC_ARENA_MAX=4
@@ -216,7 +216,7 @@ JVM_OPTS="$JVM_OPTS -XX:+UseCMSInitiatingOccupancyOnly"
 JVM_OPTS="$JVM_OPTS -XX:+UseTLAB"
 
 # Young generation size
-JVM_OPTS="$JVM_OPTS -XX:MaxNewSize=4G"
+JVM_OPTS="$JVM_OPTS -XX:MaxNewSize={{cassandra_max_new_size}}"
 
 # note: bash evals '1.7.x' as > '1.7' so this is really a >= 1.7 jvm check
 if { [ "$JVM_VERSION" \> "1.7" ] && [ "$JVM_VERSION" \< "1.8.0" ] && [ "$JVM_PATCH_VERSION" -ge "60" ]; } || [ "$JVM_VERSION" \> "1.8" ] ; then
