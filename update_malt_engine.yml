@@ -1,6 +1,6 @@
 - name: Update Malt Engine
   hosts: malt_engine
-#  serial: 1
+  serial: 1
   tasks:
 
     - name: Clone project
