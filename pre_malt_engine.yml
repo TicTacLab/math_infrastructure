@@ -1,6 +1,6 @@
 - name: Setup Malt Engine
   hosts: malt_engine
-#  serial: 1
+  serial: 1
   tasks:
     - include: common/tasks/oracle_jdk.yml
     - include: common/tasks/lein.yml
