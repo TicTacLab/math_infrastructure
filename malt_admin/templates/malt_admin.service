@@ -11,7 +11,6 @@ Environment="JVM_OPTS=-Xmx{{malt_admin_heap_size}} -Dlogback.configurationFile=r
 Environment="BAGIRA_USERNAME=erlybet"
 Environment="BAGIRA_PRIVATE_KEY_FILE=/home/malt_deploy/.ssh/favfeed-deploy"
 TimeoutStartSec=0
-ExecStartPre=/usr/bin/lein protobuf
 ExecStart=/usr/bin/lein trampoline run
 
 [Install]
