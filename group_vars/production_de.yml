@@ -36,7 +36,7 @@ malt_engine_config:
   "storage-nodes": "{{groups.cassandra}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
-  "monitoring-hostname": "{{ansible_fqdn}}"
+  "monitoring-hostname": "{{ansible_hostname}}"
   "zabbix-host": "zp01internal.dc02.favorit"
   "zabbix-port": 10051
   "noilly-port": 1300
@@ -53,7 +53,7 @@ malt_admin_config:
   "storage-nodes": "{{groups.cassandra}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
-  "monitoring-hostname": "{{ansible_fqdn}}"
+  "monitoring-hostname": "{{ansible_hostname}}"
   "zabbix-host": "zp01internal.dc02.favorit"
   "zabbix-port": 10051
 
