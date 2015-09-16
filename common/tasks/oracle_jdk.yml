@@ -18,6 +18,3 @@
     - java
     - javac
   sudo: yes
-
-- name: Cleanup
-  file: path={{ansible_env.HOME}}/jdk-7u71-linux-x64.tar.gz state=absent

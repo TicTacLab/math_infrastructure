@@ -1,0 +1,28 @@
+- name: Install archiva
+  hosts: ci
+  tasks:
+    - include: common/tasks/oracle_jdk.yml
+    
+    - name: Download archiva
+      command: wget -O "apache-archiva-2.2.0-bin.tar.gz" "http://apache.ip-connect.vn.ua/archiva/3.2.0/binaries/apache-archiva-2.2.0-bin.tar.gz"
+      args: {creates: "apache-archiva-2.2.0-bin.tar.gz"}
+
+    - name: Get file stats
+      stat: path="apache-archiva-2.2.0-bin.tar.gz"
+      register: archiva_file
+    
+    - name: Check checksum
+      fail: msg="File not valid. Maybe you need to download new md5 sum or file was replaced by thief!"
+      when: archiva_file.stat.md5 != "03485b14a303cefb4537b641b8143778" 
+
+    - name: Unpack archive
+      command: tar xf "apache-archiva-2.2.0-bin.tar.gz"
+      args: {creates: "apache-archiva-2.2.0"} 
+    
+    - name: Create service file
+      file: src=/etc/init.d/archiva dest="{{ansible_env.HOME}}/apache-archiva-2.2.0/bin/archiva"
+      sudo: yes
+  
+    - name: Restart archiva
+      service: name=archiva state=restarted
+      sudo: yes

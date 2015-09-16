@@ -1,0 +1,67 @@
+cassandra_password: 'Karghik2'
+cassandra_data_dir: '/data/cassandra'
+
+cassandra:
+  dc02malt01:
+    listen_address: '10.2.49.40'
+    seed_nodes: '10.2.49.40,10.2.49.42'
+
+  dc02malt02:
+    listen_address: '10.2.49.41'
+    seed_nodes: '10.2.49.40,10.2.49.42'
+
+  dc02malt03:
+    listen_address: '10.2.49.42'
+    seed_nodes: '10.2.49.40,10.2.49.42'
+  
+  dc02malt04:
+    listen_address: '10.2.49.43'
+    seed_nodes: '10.2.49.40,10.2.49.42'
+  
+  dc02malt05:
+    listen_address: '10.2.49.44'
+    seed_nodes: '10.2.49.40,10.2.49.42'
+  
+
+malt_engine_config:
+  "cache-on": true
+  "port": 3000
+  "host": "0.0.0.0"
+  "session-ttl": 900
+  "storage-keyspace": malt
+  "storage-nodes": "{{groups.cassandra}}"
+  "storage-password": "{{cassandra_password}}"
+  "storage-user": malt
+  "monitoring-hostname": "{{ansible_hostname}}"
+  "zabbix-host": "zp01internal.dc02.favorit"
+  "zabbix-port": 10051
+  "noilly-port": 1300
+
+malt_admin_config:
+  "host": "0.0.0.0"
+  "port": 8080
+  "app-env": "production"
+  "noilly-port": 1301
+  "session-ttl": 3600
+  "settings-table": "settings"
+  "offload-repo": null
+  "storage-keyspace": malt
+  "storage-nodes": "{{groups.cassandra}}"
+  "storage-password": "{{cassandra_password}}"
+  "storage-user": malt
+  "monitoring-hostname": "{{ansible_hostname}}"
+  "zabbix-host": "zp01internal.dc02.favorit"
+  "zabbix-port": 10051
+
+
+malt_engine_jmx_port: 7198
+
+cassandra_jmx_port: 7199
+cassandra_max_heap_size: '16g'
+cassandra_new_heap_size: '2g'
+cassandra_max_new_size: '4g'
+
+malt_engine_heap_size: '30g'
+malt_admin_heap_size: '1g'
+
+git_ref: stable
