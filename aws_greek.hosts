@@ -1,18 +1,18 @@
 [malt_engine]
-54.93.175.175
-54.93.175.155
-54.93.174.32
+ec2-54-93-210-168.eu-central-1.compute.amazonaws.com
+ec2-52-28-109-135.eu-central-1.compute.amazonaws.com
+ec2-54-93-184-39.eu-central-1.compute.amazonaws.com
 
 [malt_admin]
-54.93.175.155
+ec2-52-28-109-135.eu-central-1.compute.amazonaws.com
 
 [cassandra]
-54.93.175.175
-54.93.175.155
-54.93.174.32
+ec2-54-93-210-168.eu-central-1.compute.amazonaws.com
+ec2-52-28-109-135.eu-central-1.compute.amazonaws.com
+ec2-54-93-184-39.eu-central-1.compute.amazonaws.com
 
 [nginx]
-54.93.175.175
+ec2-54-93-210-168.eu-central-1.compute.amazonaws.com
 
 [ci]
 52.28.244.218 ansible_ssh_user=ubuntu
@@ -23,3 +23,4 @@ malt_admin
 cassandra
 nginx
 ci
+ansible_ssh_user="ec2-user"
