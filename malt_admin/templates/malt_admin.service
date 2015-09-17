@@ -5,11 +5,9 @@ After=cassandra.service
 
 [Service]
 Type=simple
-User=malt_deploy
-WorkingDirectory=/home/malt_deploy/malt_admin
+User={{ansible_ssh_user}}
+WorkingDirectory={{ansible_env.HOME}}/malt_admin
 Environment="JVM_OPTS=-Xmx{{malt_admin_heap_size}} -Dlogback.configurationFile=resources/logback.production.xml"
-Environment="BAGIRA_USERNAME=erlybet"
-Environment="BAGIRA_PRIVATE_KEY_FILE=/home/malt_deploy/.ssh/favfeed-deploy"
 TimeoutStartSec=0
 ExecStart=/usr/bin/lein trampoline run
 

@@ -1,5 +1,5 @@
 - name: Download lein
-  command: wget -O /usr/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+  command: curl -o /usr/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
   sudo: yes
   args:
     creates: /usr/bin/lein

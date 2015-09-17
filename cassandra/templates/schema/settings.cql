@@ -4,4 +4,4 @@ TRUNCATE settings;
 INSERT INTO
        settings (settings)
 VALUES
-	('{"profiling-malt-host":"{{groups.malt_engine[0]}}","profiling-malt-port":"3000","cache-filler-addr":"{{groups.malt_engine[0]}}"}');
+	('{"profiling-malt-host":"{{groups.tag_Nginx_Yes[0]}}","profiling-malt-port":"80"}');

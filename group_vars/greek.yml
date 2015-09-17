@@ -13,6 +13,7 @@ cassandra:
   "ip-172-31-31-4.eu-central-1.compute.internal":
     listen_address: 'ip-172-31-31-4.eu-central-1.compute.internal'
     seed_nodes: 'ip-172-31-31-2.eu-central-1.compute.internal,ip-172-31-31-3.eu-central-1.compute.internal'
+cassandra_nodes: "{% for host in groups.tag_Cassandra_Yes %}{{ hostvars[host].ec2_private_ip_address }}{% if not loop.last %},{% endif %}{% endfor %}"
   
 malt_engine_config:
   "cache-on": true
@@ -20,7 +21,7 @@ malt_engine_config:
   "host": "0.0.0.0"
   "session-ttl": 900
   "storage-keyspace": malt
-  "storage-nodes": "{{groups.cassandra}}"
+  "storage-nodes": "{{ cassandra_nodes.split(',')}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
   "monitoring-hostname": "{{ansible_hostname}}"
@@ -55,4 +56,4 @@ cassandra_max_new_size: '125m'
 malt_engine_heap_size: '1g'
 malt_admin_heap_size: '500m'
 
-git_ref: aws-master
+git_ref: aws-stable

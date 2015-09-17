@@ -54,17 +54,17 @@
       wait_for: path=/var/log/cassandra/system.log timeout=60 search_regex='.*Listening for thrift clients.*' state=present
 
 - name: Load data
-  hosts: cassandra[0]
+  hosts: tag_Cassandra_Yes[0]
   tasks:
     - name: User exists?
-      command: cqlsh -u malt -p {{cassandra_password}} -e "LIST USERS" {{ec2_public_dns_name}}
+      command: cqlsh -u malt -p {{cassandra_password}} -e "LIST USERS" {{ec2_private_ip_address}}
       register: user_check
       ignore_errors: yes
 
     - name: Create malt user
       shell: >
-        cqlsh -u cassandra -p cassandra -e "CONSISTENCY ALL; CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{ec2_public_dns_name}} &&
-        cqlsh -u malt -p {{cassandra_password}} -e "CONSISTENCY ALL; ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{ec2_public_dns_name}}
+        cqlsh -u cassandra -p cassandra -e "CONSISTENCY ALL; CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{ec2_private_ip_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -e "CONSISTENCY ALL; ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{ec2_private_ip_address}}
       when: user_check|failed
 
     - name: Copy schema files
@@ -78,7 +78,7 @@
 
     - name: Initialize schema
       shell: >
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/keyspace.cql {{ec2_public_dns_name}} &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/schema.cql -k malt  {{ec2_public_dns_name}} &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/config.cql -k malt  {{ec2_public_dns_name}} &&
-        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/settings.cql -k malt {{ec2_public_dns_name}}
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/keyspace.cql {{ec2_private_ip_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/schema.cql -k malt  {{ec2_private_ip_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/config.cql -k malt  {{ec2_private_ip_address}} &&
+        cqlsh -u malt -p {{cassandra_password}} -f /tmp/schema/settings.cql -k malt {{ec2_private_ip_address}}
