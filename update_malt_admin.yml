@@ -1,9 +1,9 @@
 - name: Update Malt Admin
-  hosts: malt_admin
+  hosts: tag_MaltAdmin_Yes
   tasks:
 
     - name: Clone project
-      git: repo=gitolite@git.favorit:malt_admin
+      git: repo=git@bitbucket.org:favfeed/malt_admin.git
            dest=new_malt_admin
            update=yes
            version="{{git_ref}}"

@@ -1,7 +1,7 @@
 upstream malt_engines {
   hash $request_uri consistent;
-  {% for h in groups.malt_engine %}
-  server {{h}}:3000;
+  {% for h in groups.tag_MaltEngine_Yes %}
+  server {{ hostvars[h].ec2_private_ip_address }}:3000;
   {% endfor %}
 }
 

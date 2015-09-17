@@ -1,5 +1,5 @@
 - name: Setup Nginx
-  hosts: nginx
+  hosts: tag_Nginx_Yes
   tasks:
 
     - name: Install nginx repo

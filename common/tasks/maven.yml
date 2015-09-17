@@ -15,6 +15,3 @@
 - name: Update alternatives
   alternatives: name="mvn" path="/opt/apache-maven-3.3.1/bin/mvn" link="/usr/bin/mvn"
   sudo: yes
-
-- name: Cleanup
-  file: path=apache-maven-3.3.1-bin.tar.gz state=absent

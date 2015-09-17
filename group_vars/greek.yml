@@ -1,18 +1,6 @@
 cassandra_password: 'SoHoorain6'
 cassandra_data_dir: '/data/cassandra'
 
-cassandra:
-  "ip-172-31-31-2.eu-central-1.compute.internal":
-    listen_address: 'ip-172-31-31-2.eu-central-1.compute.internal'
-    seed_nodes: 'ip-172-31-31-2.eu-central-1.compute.internal,ip-172-31-31-3.eu-central-1.compute.internal'
-
-  "ip-172-31-31-3.eu-central-1.compute.internal":
-    listen_address: 'ip-172-31-31-3.eu-central-1.compute.internal'
-    seed_nodes: 'ip-172-31-31-2.eu-central-1.compute.internal,ip-172-31-31-3.eu-central-1.compute.internal'
-
-  "ip-172-31-31-4.eu-central-1.compute.internal":
-    listen_address: 'ip-172-31-31-4.eu-central-1.compute.internal'
-    seed_nodes: 'ip-172-31-31-2.eu-central-1.compute.internal,ip-172-31-31-3.eu-central-1.compute.internal'
 cassandra_nodes: "{% for host in groups.tag_Cassandra_Yes %}{{ hostvars[host].ec2_private_ip_address }}{% if not loop.last %},{% endif %}{% endfor %}"
   
 malt_engine_config:
@@ -38,7 +26,7 @@ malt_admin_config:
   "settings-table": "settings"
   "offload-repo": null
   "storage-keyspace": malt
-  "storage-nodes": "{{groups.cassandra}}"
+  "storage-nodes": "{{ cassandra_nodes.split(',')}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
   "monitoring-hostname": "{{ansible_hostname}}"
@@ -49,11 +37,11 @@ malt_admin_config:
 malt_engine_jmx_port: 7198
 
 cassandra_jmx_port: 7199
-cassandra_max_heap_size: '500m'
-cassandra_new_heap_size: '200m'
-cassandra_max_new_size: '125m'
+cassandra_max_heap_size: '5g'
+cassandra_new_heap_size: '2g'
+cassandra_max_new_size: '1250m'
 
-malt_engine_heap_size: '1g'
-malt_admin_heap_size: '500m'
+malt_engine_heap_size: '5g'
+malt_admin_heap_size: '2g'
 
 git_ref: aws-stable

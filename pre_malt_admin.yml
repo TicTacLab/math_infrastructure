@@ -1,5 +1,5 @@
 - name: Setup Malt Admin
-  hosts: malt_admin
+  hosts: tag_MaltAdmin_Yes
   tasks:
     - include: common/tasks/oracle_jdk.yml
     - include: common/tasks/lein.yml
@@ -22,4 +22,8 @@
 
     - name: Create malt admin dir
       file: path=malt_admin state=directory
+
+    - name: Create log dir
+      file: path=/var/log/malt_admin state=directory owner="{{ansible_ssh_user}}"
+      sudo: yes
 
