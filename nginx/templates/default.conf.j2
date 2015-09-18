@@ -7,13 +7,16 @@ upstream malt_engines {
 
 server {
   listen 80;
-  location / {
-    proxy_pass http://malt_engines;
-  }
-	location /nginx_stats {
-   	stub_status on;
+  location /nginx_stats {
+    stub_status on;
     access_log off;
     allow 127.0.0.1;
     deny all;
-    }
+  }
+  location /api/ {
+    proxy_pass http://malt_engines/;
+  }
+  location / {
+    proxy_pass http://172.31.22.123:8080;
+  }
 }
