@@ -7,6 +7,7 @@
       command: wget -O "apache-archiva-2.2.0-bin.tar.gz" "http://apache.ip-connect.vn.ua/archiva/3.2.0/binaries/apache-archiva-2.2.0-bin.tar.gz"
       args: {creates: "apache-archiva-2.2.0-bin.tar.gz"}
 
+
     - name: Get file stats
       stat: path="apache-archiva-2.2.0-bin.tar.gz"
       register: archiva_file
