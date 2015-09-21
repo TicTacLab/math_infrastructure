@@ -3,7 +3,8 @@
   tasks:
 
     - name: Clone project
-      git: repo=git@bitbucket.org:favfeed/malt_admin.git
+      git: repo=git@github.com:TicTacLab/math_admin.git
+           key_file=.ssh/math_admin
            dest=new_malt_admin
            update=yes
            version="{{git_ref}}"

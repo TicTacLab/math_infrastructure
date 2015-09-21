@@ -6,7 +6,15 @@
     - include: common/tasks/lein.yml
     - include: common/tasks/maven.yml
     - include: common/tasks/build_utils.yml
-    - include: common/tasks/copy_keys.yml
+
+    - name: Create keys dir
+      file: path=.ssh state=directory
+    
+    - name: Copy Keys
+      copy: src="malt_engine/files/keys/{{item}}" dest=".ssh/{{item}}" mode="600"
+      with_items:
+        - math_engine
+        - math_engine.pub
 
     - name: Install ant
       yum: name=ant state=installed

@@ -1,11 +1,12 @@
 - name: Copy tar file
-  copy: src=common/files/jdk-7u71-linux-x64.tar.gz dest={{ansible_env.HOME}}/jdk-7u71-linux-x64.tar.gz
+  shell:  'curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz > jdk-7u79-linux-x64.tar.gz'
+  args: {creates: "jdk-7u79-linux-x64.tar.gz"}
 
 - name: Extract jdk
-  command: "tar xzf {{ansible_env.HOME}}/jdk-7u71-linux-x64.tar.gz"
+  command: "tar xzf {{ansible_env.HOME}}/jdk-7u79-linux-x64.tar.gz"
   args:
     chdir: /opt
-    creates: /opt/jdk1.7.0_71
+    creates: /opt/jdk1.7.0_79
   sudo: yes
 
 - name: Set java Env
@@ -13,7 +14,7 @@
   sudo: yes
 
 - name: Update alternatives
-  alternatives: name="{{item}}" path="/opt/jdk1.7.0_71/bin/{{item}}" link="/usr/bin/{{item}}"
+  alternatives: name="{{item}}" path="/opt/jdk1.7.0_79/bin/{{item}}" link="/usr/bin/{{item}}"
   with_items:
     - java
     - javac

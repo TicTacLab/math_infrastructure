@@ -4,7 +4,8 @@
   tasks:
 
     - name: Clone project
-      git: repo=git@bitbucket.org:favfeed/malt_engine.git
+      git: repo=git@github.com:TicTacLab/math_engine.git
+           key_file=.ssh/math_engine
            dest=new_malt_engine
            update=yes
            version="{{git_ref}}"
