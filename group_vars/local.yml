@@ -4,48 +4,62 @@ ansible_ssh_pass: WynorOpt8
 
 cassandra_password: 'CacNeck5'
 cassandra_data_dir: '/data/cassandra'
+cassandra_seed_nodes: '192.168.167.144,192.168.167.145'
+cassandra_nodes: ['192.168.167.144', '192.168.167.145', '192.168.167']
 
-cassandra:
-  "dc01m01":
-    listen_address: '192.168.167.144'
-    seed_nodes: '192.168.167.144,192.168.167.145'
+nginx_listen_address: '192.168.167.140'
 
-  "dc01m02":
-    listen_address: '192.168.167.145'
-    seed_nodes: '192.168.167.144,192.168.167.145'
+malt_admin_host: '192.168.167.145'
 
-  "dc01m03":
-    listen_address: '192.168.167.146'
-    seed_nodes: '192.168.167.144,192.168.167.145'
+config:
+  "vmalt01":
+    cassandra_listen_address: '192.168.167.144'
+    cassandra_rmi_host: '192.168.167.144'
+    malt_engine_rmi_host: '192.168.167.144'
+    malt_engine_host: '192.168.167.144'
+
+  "vmalt02":
+    cassandra_listen_address: '192.168.167.145'
+    cassandra_rmi_host: '192.168.167.145'
+    malt_engine_rmi_host: '192.168.167.145'
+    malt_engine_host: '192.168.167.145'
+
+  "vmalt03":
+    cassandra_listen_address: '192.168.167.146'
+    cassandra_rmi_host: '192.168.167.146'
+    malt_engine_rmi_host: '192.168.167.146'
+    malt_engine_host: '192.168.167.146'
+
 
 malt_engine_config:
   "cache-on": false
   "port": 3000
-  "host": "0.0.0.0"
+  "host": "{{config[ansible_hostname].malt_engine_host}}"
   "session-ttl": 900
   "storage-keyspace": malt
-  "storage-nodes": "{{groups.cassandra}}"
+  "storage-nodes": "{{cassandra_nodes}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
   "monitoring-hostname": "{{ansible_nodename}}"
-  "zabbix-host": "{{groups.zabbix[0]}}"
+  "zabbix-host": null
   "zabbix-port": 10051
   "noilly-port": 1300
 
 malt_admin_config:
-  "host": "0.0.0.0"
+  "host": "{{malt_admin_host}}"
   "port": 8080
+  "api-addr": "{{nginx_listen_address}}/api"
   "app-env": "production"
   "noilly-port": 1301
   "session-ttl": 3600
   "settings-table": "settings"
   "offload-repo": null
   "storage-keyspace": malt
-  "storage-nodes": "{{groups.cassandra}}"
+  "storage-nodes": "{{cassandra_nodes}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
   "monitoring-hostname": "{{ansible_nodename}}"
-  "zabbix-host": "{{groups.zabbix[0]}}"
+  "zabbix-host": null
   "zabbix-port": 10051
 
 

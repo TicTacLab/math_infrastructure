@@ -1,0 +1,40 @@
+- name: Install perl script for memory monitoring
+  hosts: tag_Cassandra_Yes[0]
+  tasks:
+    - name: Install yum packages
+      yum: name="{{item}}" state=installed
+      with_items:
+        - perl-CPAN
+        - perl-DateTime
+        - perl-Sys-Syslog
+        - perl-Digest-SHA
+        - perl-URI
+        - perl-libwww-perl
+        - perl-Crypt-SSLeay
+        - perl-XML-LibXML
+        - unzip
+      sudo: yes
+
+    - name: Install perl module
+      shell: PERL_MM_USE_DEFAULT=1 perl -MCPAN -e "install {{item}}"
+      with_items:
+        - Bundle::LWP6
+        - Bundle::LWP
+        - LWP::Protocol::https
+        - URI::Escape
+        - LWP::Simple
+        - MIME::Base64
+      sudo: yes
+
+    - name: Copy monitoring perl-script
+      copy: src=common/files/cloud_watch_memory_monitoring/CloudWatchMonitoringScripts-1.2.1.zip
+            dest=.
+      register: script_file
+
+    - name: Extract
+      command: unzip CloudWatchMonitoringScripts-1.2.1.zip
+      when: script_file|changed
+
+    - name: Copy Config
+      copy: src=common/files/cloud_watch_memory_monitoring/awscreds.conf.j2
+            dest=aws-scripts-mon/awscreds.conf

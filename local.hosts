@@ -1,17 +1,21 @@
-[malt_engine]
+[tag_MaltEngine_Yes]
 192.168.167.144
 192.168.167.145
 192.168.167.146
 
-[malt_admin]
+[tag_MaltAdmin_Yes]
 192.168.167.145
 
-[cassandra]
+[tag_Cassandra_Yes]
 192.168.167.144
 192.168.167.145
 192.168.167.146
 
-[nginx]
+[tag_CassandraSeed_Yes]
+192.168.167.144
+192.168.167.145
+
+[tag_Nginx_Yes]
 192.168.167.140
 
 [zabbix]
@@ -21,9 +25,10 @@
 nassau.favorit
 
 [local:children]
-malt_engine
-malt_admin
-cassandra
-nginx
+tag_MaltEngine_Yes
+tag_MaltAdmin_Yes
+tag_Cassandra_Yes
+tag_CassandraSeed_Yes
+tag_Nginx_Yes
 zabbix
 ci

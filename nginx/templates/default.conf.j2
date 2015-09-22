@@ -1,12 +1,13 @@
 upstream malt_engines {
   hash $request_uri consistent;
-  {% for h in groups.tag_MaltEngine_Yes %}
-  server {{ hostvars[h].ec2_private_ip_address }}:3000;
+  {% for host, cfg in config.iteritems() %}
+  server {{ cfg.malt_engine_host }}:3000;
   {% endfor %}
 }
 
 server {
   listen 80;
+  client_max_body_size 50m;
   location /nginx_stats {
     stub_status on;
     access_log off;
@@ -17,6 +18,6 @@ server {
     proxy_pass http://malt_engines/;
   }
   location / {
-    proxy_pass http://172.31.22.123:8080;
+    proxy_pass http://{{malt_admin_config.host}}:{{malt_admin_config.port}};
   }
 }

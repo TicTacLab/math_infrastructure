@@ -5,6 +5,7 @@
     - name: Clone project
       git: repo=git@github.com:TicTacLab/math_admin.git
            key_file=.ssh/math_admin
+           force=yes
            dest=new_malt_admin
            update=yes
            version="{{git_ref}}"
@@ -34,3 +35,6 @@
     - name: Start Service
       service: name=malt_admin state=started
       sudo: yes
+
+    - name: Wait for service to start
+      wait_for: port="{{malt_admin_config.port}}" host="{{malt_admin_config.host}}" state=present

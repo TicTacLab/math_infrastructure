@@ -1,37 +1,60 @@
 cassandra_password: 'SoHoorain6'
 cassandra_data_dir: '/data/cassandra'
+cassandra_seed_nodes: "{% for host in groups.tag_CassandraSeed_Yes %}{{ hostvars[host].ec2_private_ip_address }}{% if not loop.last %},{% endif %}{% endfor %}"
+cassandra_nodes: ['172.31.22.122', '172.31.22.123', '172.31.22.124']
 
-cassandra_nodes: "{% for host in groups.tag_Cassandra_Yes %}{{ hostvars[host].ec2_private_ip_address }}{% if not loop.last %},{% endif %}{% endfor %}"
-  
+nginx_listen_address: '{{hostvars[groups.tag_Nginx_Yes[0]].ec2_private_ip_address}}'
+
+malt_admin_host: '{{hostvars[groups.tag_MaltAdmin_Yes[0]].ec2_private_ip_address}}'
+
+config:
+  "ip-172-31-22-122":
+    cassandra_listen_address: '172.31.22.122'
+    cassandra_rmi_host: '172.31.22.122'
+    malt_engine_rmi_host: '172.31.22.122'
+    malt_engine_host: '172.31.22.122'
+
+  "ip-172-31-22-123":
+    cassandra_listen_address: '172.31.22.123'
+    cassandra_rmi_host: '172.31.22.123'
+    malt_engine_rmi_host: '172.31.22.123'
+    malt_engine_host: '172.31.22.123'
+
+  "ip-172-31-22-124":
+    cassandra_listen_address: '172.31.22.124'
+    cassandra_rmi_host: '172.31.22.124'
+    malt_engine_rmi_host: '172.31.22.124'
+    malt_engine_host: '172.31.22.124'
+
 malt_engine_config:
   "cache-on": true
   "port": 3000
-  "host": "0.0.0.0"
+  "host": "{{config[ansible_hostname].malt_engine_host}}"
   "session-ttl": 900
   "storage-keyspace": malt
-  "storage-nodes": "{{ cassandra_nodes.split(',')}}"
+  "storage-nodes": "{{cassandra_nodes}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
-  "monitoring-hostname": "{{ansible_hostname}}"
-  "zabbix-host": "zp01internal.dc02.favorit"
+  "monitoring-hostname": "{{ansible_nodename}}"
+  "zabbix-host": null
   "zabbix-port": 10051
   "noilly-port": 1300
 
 malt_admin_config:
-  "host": "0.0.0.0"
+  "host": "{{malt_admin_host}}"
   "port": 8080
-  "api-addr": "{{groups.tag_Nginx_Yes[0]}}:80/api/"
+  "api-addr": "{{nginx_listen_address}}/api"
   "app-env": "production"
   "noilly-port": 1301
   "session-ttl": 3600
   "settings-table": "settings"
   "offload-repo": null
   "storage-keyspace": malt
-  "storage-nodes": "{{ cassandra_nodes.split(',')}}"
+  "storage-nodes": "{{cassandra_nodes}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
-  "monitoring-hostname": "{{ansible_hostname}}"
-  "zabbix-host": "zp01internal.dc02.favorit"
+  "monitoring-hostname": "{{ansible_nodename}}"
+  "zabbix-host": null
   "zabbix-port": 10051
 
 
