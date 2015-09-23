@@ -1,5 +1,6 @@
 cassandra_password: 'SoHoorain6'
 cassandra_data_dir: '/data/cassandra'
+cassandra_replication_factor: 2
 cassandra_seed_nodes: "{% for host in groups.tag_CassandraSeed_Yes %}{{ hostvars[host].ec2_private_ip_address }}{% if not loop.last %},{% endif %}{% endfor %}"
 cassandra_nodes: ['172.31.22.122', '172.31.22.123', '172.31.22.124']
 

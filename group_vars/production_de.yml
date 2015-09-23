@@ -4,6 +4,7 @@ ansible_sudo_pass: M$HVkfa
 
 cassandra_password: 'Karghik2'
 cassandra_data_dir: '/data/cassandra'
+cassandra_replication_factor: 2
 
 cassandra:
   dc02malt01:

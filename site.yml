@@ -1,4 +1,4 @@
-#- include: disable_selinux.yml
+- include: disable_selinux.yml
 #- include: aws_memory_monitoring.yml
 - include: pre_cassandra.yml
 - include: pre_malt_admin.yml

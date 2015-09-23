@@ -4,6 +4,7 @@ ansible_sudo_pass: M$HVkfa
 
 cassandra_password: 'Karghik2'
 cassandra_data_dir: '/var/lib/cassandra/data'
+cassandra_replication_factor: 1
 
 cassandra:
   malt-test01:
