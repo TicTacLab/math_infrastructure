@@ -11,6 +11,10 @@
            accept_hostkey=yes
       register: project
 
+    - name: Remove static content
+      file: path=/usr/share/nginx/html state=absent
+      sudo: yes
+
     - name: Copy _site to the index static content
       command: cp -r landing/_site /usr/share/nginx/html
       sudo: yes
@@ -26,4 +30,3 @@
     - name: Reload nginx
       service: name=nginx state=reloaded
       sudo: yes
-      when: project|changed
