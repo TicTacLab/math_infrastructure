@@ -1,0 +1,23 @@
+- name: Install prerequisits for landing site
+  hosts: tag_Name_landing
+  tasks:
+    - include: common/tasks/nginx.yml
+
+    - name: Create keys dir
+      file: path=.ssh state=directory
+
+    - name: Copy Keys
+      copy: src="landing/files/keys/{{item}}" dest=".ssh/{{item}}" mode="600"
+      with_items:
+        - landing
+        - landing.pub
+
+    - name: Install packets
+      yum: name="{{item}}" state=installed
+      with_items:
+        - git
+      sudo: yes
+
+    - name: Clean nginx dir
+      file: path=/usr/share/nginx/html state=absent
+      sudo: yes

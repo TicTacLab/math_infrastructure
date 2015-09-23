@@ -1,8 +1,0 @@
-- name: Create keys dir
-  file: path=.ssh state=directory
-
-- name: Copy Keys
-  copy: src="common/files/keys/{{item}}" dest=".ssh/{{item}}" mode="600"
-  with_items:
-    - id_rsa
-    - id_rsa.pub
