@@ -1,0 +1,37 @@
+- name: Setup Malt Admin
+  hosts: tag_Demo3_Yes:&tag_MaltAdmin_Yes
+  tasks:
+    - include: common/tasks/oracle_jdk.yml
+    - include: common/tasks/lein.yml
+    - include: common/tasks/build_utils.yml
+
+    - name: Create keys dir
+      file: path=.ssh state=directory
+    
+    - name: Copy Keys
+      copy: src="malt_admin/files/keys/{{item}}" dest=".ssh/{{item}}" mode="600"
+      with_items:
+        - math_admin
+        - math_admin.pub
+
+    - name: Copy service file
+      template: src=malt_admin/templates/malt_admin.service dest=/etc/systemd/system/malt_admin.service
+      sudo: yes
+      register: service_file
+
+    - name: Reload service file in systemd
+      command: systemctl daemon-reload
+      sudo: yes
+      when: service_file|changed
+
+    - name: Set autostart
+      service: name=malt_admin enabled=yes
+      sudo: yes
+
+    - name: Create malt admin dir
+      file: path=malt_admin state=directory
+
+    - name: Create log dir
+      file: path=/var/log/malt_admin state=directory owner="{{ansible_ssh_user}}"
+      sudo: yes
+

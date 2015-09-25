@@ -1,0 +1,40 @@
+- name: Update Malt Admin
+  hosts: tag_Demo3_Yes:&tag_MaltAdmin_Yes
+  tasks:
+
+    - name: Clone project
+      git: repo=git@github.com:TicTacLab/math_admin.git
+           key_file=.ssh/math_admin
+           force=yes
+           dest=new_malt_admin
+           update=yes
+           version="{{git_ref}}"
+           accept_hostkey=yes
+      register: project
+
+    - name: Replace logback.xml
+      command: mv resources/logback.production.xml resources/logback.xml
+      args: { chdir: new_malt_admin }
+
+    - name: Write config
+      copy: dest=new_malt_admin/config.json
+            content="{{malt_admin_config|to_json|safe}}"
+
+    - name: Stop Service
+      service: name=malt_admin state=stopped
+      sudo: yes
+
+    - name: Remove old dir
+      command: rm -rf malt_admin
+      sudo: yes
+
+    - name: Move to the latest version
+      command: mv new_malt_admin malt_admin
+      sudo: yes
+
+    - name: Start Service
+      service: name=malt_admin state=started
+      sudo: yes
+
+    - name: Wait for service to start
+      wait_for: port="{{malt_admin_config.port}}" host="{{malt_admin_config.host}}" state=present

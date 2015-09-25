@@ -1,5 +1,5 @@
 - name: Setup Cassandra
-  hosts: tag_Demo2_Yes:&tag_Cassandra_Yes
+  hosts: tag_Demo3_Yes:&tag_Cassandra_Yes
   tasks:
     - include: common/tasks/oracle_jdk.yml
 
@@ -54,7 +54,7 @@
       wait_for: path=/var/log/cassandra/system.log timeout=60 search_regex='.*Listening for thrift clients.*' state=present
 
 - name: Load data
-  hosts: tag_Demo2_Yes:&(tag_Cassandra_Yes[0])
+  hosts: tag_Demo3_Yes:&tag_Cassandra_Yes
   tasks:
     - name: User exists?
       command: cqlsh -u malt -p {{cassandra_password}} -e "LIST USERS" {{config[ansible_hostname].cassandra_listen_address}}
