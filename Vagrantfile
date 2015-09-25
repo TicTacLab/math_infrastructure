@@ -4,10 +4,6 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "chef/centos-7.0"
 
-  config.hostmanager.enabled = true
-  config.hostmanager.manage_host = true
-  config.vm.provision :hostmanager
-
   config.vm.provider "virtualbox" do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
