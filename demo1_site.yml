@@ -1,0 +1,7 @@
+- include: demo1_disable_selinux.yml
+- include: demo1_pre_cassandra.yml
+- include: demo1_pre_malt_admin.yml
+- include: demo1_update_malt_admin.yml
+- include: demo1_pre_malt_engine.yml
+- include: demo1_update_malt_engine.yml
+- include: demo1_pre_nginx.yml

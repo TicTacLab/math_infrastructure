@@ -60,13 +60,13 @@ malt_admin_heap_size: '1g'
 ### All hosts update
 
 ```
-$ ansible-playbook -i production_de.hosts update_malt_admin.yml
+$ ansible-playbook -i ec2.py -u ec2-user -e @group_vars/demo.yml --private-key <path to private key> update_malt_admin.yml
 ```
 
 ### Some host update
 
 ```
-$ ansible-playbook -i production_de.hosts --limit '10.2.49.43,10.2.49.44'  update_malt_admin.yml
+$ ansible-playbook -i ec2.py -u ec2-user -e @group_vars/demo.yml --private-key <path to private key> --limit '10.2.49.43,10.2.49.44'  update_malt_admin.yml
 ```
 
 ### Update configuration on fly
@@ -85,7 +85,7 @@ $ http bla bla
 $ cd malt_infrastructure
 $ git checkout a69a42d0a3cd3708a71a2d905a275c4329fee66d 
 
-$ ansible-playbook -i production_de.hosts -e git_ref=ebdf5cfd02e66b391b4ed3e303282e747dd8bcf2 pre_malt_admin.yml update_malt_admin.yml
+$ ansible-playbook -i ec2.py -u ec2-user -e @group_vars/demo.yml --private-key <path to private key> -e git_ref=ebdf5cfd02e66b391b4ed3e303282e747dd8bcf2 pre_malt_admin.yml update_malt_admin.yml
 
 ```
 

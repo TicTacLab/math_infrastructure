@@ -4,9 +4,9 @@ cassandra_replication_factor: 1
 cassandra_seed_nodes: '172.31.31.36'
 cassandra_nodes: ['172.31.31.36']
 
-nginx_listen_address: '{{hostvars[groups.tag_Nginx_Yes[0]].ec2_private_ip_address}}'
+nginx_listen_address: '52.29.10.122'
 
-malt_admin_host: '{{hostvars[groups.tag_MaltAdmin_Yes[0]].ec2_private_ip_address}}'
+malt_admin_host: '172.31.31.36'
 
 config:
   "ip-172-31-31-36":
@@ -14,6 +14,10 @@ config:
     cassandra_rmi_host: '172.31.31.36'
     malt_engine_rmi_host: '172.31.31.36'
     malt_engine_host: '172.31.31.36'
+
+  "ip-172-31-16-255":
+    malt_engine_rmi_host: '172.31.16.255'
+    malt_engine_host: '172.31.16.255'
 
 malt_engine_config:
   "cache-on": true

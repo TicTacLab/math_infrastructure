@@ -1,6 +1,6 @@
 - name: Setup Malt Engine
-  hosts: tag_MaltEngine_Yes
-  serial: 3
+  hosts: tag_Demo1_Yes:&tag_MaltEngine_Yes
+  serial: 1
   tasks:
     - include: common/tasks/oracle_jdk.yml
     - include: common/tasks/lein.yml

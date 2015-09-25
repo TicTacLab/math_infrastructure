@@ -1,5 +1,5 @@
 - name: Setup Nginx
-  hosts: tag_Nginx_Yes
+  hosts: tag_Demo1_Yes:&tag_Nginx_Yes
   tasks:
 
     - include: common/tasks/nginx.yml

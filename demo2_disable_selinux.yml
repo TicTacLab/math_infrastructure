@@ -1,5 +1,5 @@
 - name: Disables SELinux permanently
-  hosts: all
+  hosts: tag_Demo2_Yes:&all
   tasks:
     - name: Disable
       selinux: state=disabled

@@ -1,5 +1,5 @@
 - name: Update Malt Admin
-  hosts: tag_MaltAdmin_Yes
+  hosts: tag_Demo2_Yes:&tag_MaltAdmin_Yes
   tasks:
 
     - name: Clone project
