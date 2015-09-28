@@ -1,6 +1,12 @@
+- name: Ensure utils
+  yum: name={{item}} state=installed
+  sudo: yes
+  with_items:
+    - wget
+    - tar
+
 - name: Copy tar file
-  shell:  'wget -C -O jdk-7u79-linux-x64.tar.gz https://s3.eu-central-1.amazonaws.com/bedeps/jdk-7u79-linux-x64.tar.gz'
-  args: {creates: "jdk-7u79-linux-x64.tar.gz"}
+  shell:  'wget -c -O jdk-7u79-linux-x64.tar.gz https://s3.eu-central-1.amazonaws.com/bedeps/jdk-7u79-linux-x64.tar.gz'
 
 - name: Extract jdk
   command: "tar xzf {{ansible_env.HOME}}/jdk-7u79-linux-x64.tar.gz"

@@ -54,7 +54,7 @@
       wait_for: path=/var/log/cassandra/system.log timeout=60 search_regex='.*Listening for thrift clients.*' state=present
 
 - name: Load data
-  hosts: tag_Demo4_Yes:&tag_Cassandra_Yes[0]
+  hosts: tag_Demo4_Yes:&tag_Cassandra_Yes
   tasks:
     - name: User exists?
       command: cqlsh -u malt -p {{cassandra_password}} -e "LIST USERS" {{config[ansible_hostname].cassandra_listen_address}}
