@@ -1,5 +1,5 @@
 - name: Copy tar file
-  shell:  'curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz > jdk-7u79-linux-x64.tar.gz'
+  shell:  'wget -C -O jdk-7u79-linux-x64.tar.gz https://s3.eu-central-1.amazonaws.com/bedeps/jdk-7u79-linux-x64.tar.gz'
   args: {creates: "jdk-7u79-linux-x64.tar.gz"}
 
 - name: Extract jdk
