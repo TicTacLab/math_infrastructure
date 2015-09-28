@@ -1,0 +1,38 @@
+- name: Setup Malt Engine
+  hosts: tag_MaltEngine_Yes
+  serial: 1
+  tasks:
+    - include: common/tasks/oracle_jdk.yml
+    - include: common/tasks/lein.yml
+    - include: common/tasks/maven.yml
+    - include: common/tasks/build_utils.yml
+
+    - name: Create keys dir
+      file: path=.ssh state=directory
+    
+    - name: Copy Keys
+      copy: src="malt_engine/files/keys/{{item}}" dest=".ssh/{{item}}" mode="600"
+      with_items:
+        - math_engine
+        - math_engine.pub
+
+    - name: Install ant
+      yum: name=ant state=installed
+      sudo: yes
+
+    - name: Copy service file
+      template: src=malt_engine/templates/malt_engine.service dest=/etc/systemd/system/malt_engine.service
+      sudo: yes
+      register: service_file
+
+    - name: Reload service file in systemd
+      command: systemctl daemon-reload
+      sudo: yes
+      when: service_file|changed
+
+    - name: Set autotstart
+      service: name=malt_engine enabled=yes
+      sudo: yes
+
+    - include: common/tasks/poi.yml
+      when: rebuild_poi|default(false)
