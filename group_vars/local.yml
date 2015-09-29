@@ -6,7 +6,7 @@ cassandra_password: 'CacNeck5'
 cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 2
 cassandra_seed_nodes: '192.168.167.144,192.168.167.145'
-cassandra_nodes: ['192.168.167.144', '192.168.167.145', '192.168.167']
+cassandra_nodes: ['192.168.167.144', '192.168.167.145', '192.168.167.146']
 
 nginx_listen_address: '192.168.167.140'
 
