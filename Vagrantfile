@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "chef/centos-7.0"
+  config.vm.box = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
   config.vm.provider "virtualbox" do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
@@ -48,12 +48,9 @@ Vagrant.configure(2) do |config|
  
   config.vm.provision "shell" do |s|
     s.inline = <<-SHELL
-      adduser -d /home/malt_deploy -m -s /bin/bash -p "$(openssl passwd -1 WynorOpt8)" -G wheel malt_deploy
+      useradd -d /home/malt_deploy -m -s /bin/bash -p "$(openssl passwd -1 WynorOpt8)" -G sudo malt_deploy
       sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
-      echo "%wheel        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
-      echo "SELINUX=disabled" > /etc/sysconfig/selinux
-      echo "SELINUXTYPE=targeted" >> /etc/sysconfig/selinux
-      reboot
+      echo "%sudo        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
     SHELL
   end
 end
