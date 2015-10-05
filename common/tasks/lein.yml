@@ -4,9 +4,9 @@
   args:
     creates: /usr/bin/lein
 
-- name: Self-install lein
-  command: lein version
-
 - name: Set it to be executable
   file: path=/usr/bin/lein mode=a+x state=file
   sudo: yes
+
+- name: Self-install lein
+  command: lein version
