@@ -1,9 +1,9 @@
 - name: Install packages
-  yum: name="{{item}}" state=installed
+  apt: name="{{item}}" state=installed
   with_items:
     - gcc
     - make
-    - gcc-c++
+    - g++
     - automake
     - git
   sudo: yes
