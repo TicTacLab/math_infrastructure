@@ -3,24 +3,41 @@
   tasks:
     - include: common/tasks/oracle_jdk.yml
 
-    - name: Add datastax.repo
-      copy: src=cassandra/files/datastax.repo dest=/etc/yum.repos.d/datastax.repo
+    - name: Add cassandra repo
+      shell: echo "deb http://debian.datastax.com/community stable main" | tee -a /etc/apt/sources.list.d/cassandra.sources.list
+      sudo: yes
+
+    - name: Add key
+      apt_key: url=http://debian.datastax.com/debian/repo_key
+               state=present
       sudo: yes
 
     - name: Install Cassandra
-      yum: name=dsc20 state=installed
+      apt: name="{{item}}" state=installed  update_cache=yes
+      with_items:
+        - dsc20=2.0.11-1
+        - cassandra=2.0.11
       sudo: yes
 
     - name: Copy cassandra.yaml
-      template: src=cassandra/templates/cassandra.yaml dest=/etc/cassandra/conf/cassandra.yaml
+      template: src=cassandra/templates/cassandra.yaml
+                dest=/etc/cassandra/cassandra.yaml
       sudo: yes
 
     - name: Copy log4j-server.properties
-      copy: src=cassandra/files/log4j-server.properties dest=/etc/cassandra/conf/log4j-server.properties owner=cassandra group=cassandra mode=755
+      copy: src=cassandra/files/log4j-server.properties
+            dest=/etc/cassandra/log4j-server.properties
+            owner=cassandra
+            group=cassandra
+            mode=755
       sudo: yes
 
     - name: Copy cassandra env
-      template: src=cassandra/templates/cassandra-env.sh dest=/etc/cassandra/conf/cassandra-env.sh owner=cassandra group=cassandra mode=755
+      template: src=cassandra/templates/cassandra-env.sh
+                dest=/etc/cassandra/cassandra-env.sh
+                owner=cassandra
+                group=cassandra
+                mode=755
       sudo: yes
 
     - name: Create cassandra data dir
@@ -31,20 +48,6 @@
       command: mv /var/log/cassandra/system.log /var/log/cassandra/system.log.old
       sudo: yes
       ignore_errors: yes
-
-    - name: Remove C* init.d file
-      file: path=/etc/init.d/cassandra state=absent
-      sudo: yes
-
-    - name: Copy C* systemd file
-      copy: src=cassandra/files/cassandra.service dest=/etc/systemd/system/cassandra.service
-      sudo: yes
-      register: cassandra_service
-
-    - name: Reload systemd configuration
-      command: systemctl daemon-reload
-      sudo: yes
-      when: cassandra_service.changed
 
     - name: Run Cassandra
       service: name=cassandra state=restarted enabled=yes
