@@ -1,5 +1,5 @@
 - name: Ensure utils
-  yum: name={{item}} state=installed
+  apt: name={{item}} state=installed
   sudo: yes
   with_items:
     - wget
