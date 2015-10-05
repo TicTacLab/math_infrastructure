@@ -15,14 +15,9 @@
         - math_admin.pub
 
     - name: Copy service file
-      template: src=malt_admin/templates/malt_admin.service dest=/etc/systemd/system/malt_admin.service
+      template: src=malt_admin/templates/malt_admin.upstart.conf dest=/etc/init/malt_admin.conf
       sudo: yes
       register: service_file
-
-    - name: Reload service file in systemd
-      command: systemctl daemon-reload
-      sudo: yes
-      when: service_file|changed
 
     - name: Set autostart
       service: name=malt_admin enabled=yes
