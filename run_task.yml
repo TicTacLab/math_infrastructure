@@ -1,9 +1,0 @@
-- name: Run lein task at malt_admin
-  hosts: malt_admin[0]
-  tasks:
-    - name: Migrate
-      shell: lein trampoline run -m {{task}}
-      environment:
-        LEIN_ROOT: yes
-      args: { chdir: malt_admin }
-      sudo: yes

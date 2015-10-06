@@ -1,0 +1,5 @@
+- name: Setup Malt Engine
+  hosts: tag_Demo2_Yes:&tag_MaltEngine_Yes
+  serial: 1
+  tasks:
+    - include: ../malt_engine/tasks/pre.yml

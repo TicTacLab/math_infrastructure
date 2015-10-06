@@ -1,0 +1,9 @@
+- name: Setup Cassandra
+  hosts: tag_Demo3_Yes:&tag_Cassandra_Yes
+  tasks:
+    - include: ../cassandra/tasks/pre.yml
+
+- name: Load data
+  hosts: tag_Demo3_Yes:&tag_Cassandra_Yes
+  tasks:
+    - include: ../cassandra/tasks/load_schema.yml

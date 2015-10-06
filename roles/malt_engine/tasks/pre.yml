@@ -1,0 +1,24 @@
+- name: Create keys dir
+  file: path=.ssh state=directory
+
+- name: Copy Keys
+  copy: src="keys/{{item}}" dest=".ssh/{{item}}" mode="600"
+  with_items:
+    - math_engine
+    - math_engine.pub
+
+- name: Install ant
+  apt: name=ant state=installed
+  sudo: yes
+  when: rebuild_poi|default(false)
+
+- name: Copy service file
+  template: src=malt_engine.upstart.conf dest=/etc/init/malt_engine.conf
+  sudo: yes
+
+- name: Set autotstart
+  service: name=malt_engine enabled=yes
+  sudo: yes
+
+- include: poi.yml
+  when: rebuild_poi|default(false)

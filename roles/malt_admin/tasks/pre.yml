@@ -1,0 +1,25 @@
+- name: Create keys dir
+  file: path=.ssh state=directory
+
+- name: Copy Keys
+  copy: src="keys/{{item}}" dest=".ssh/{{item}}" mode="600"
+  with_items:
+    - math_admin
+    - math_admin.pub
+
+- name: Copy service file
+  template: src=malt_admin.upstart.conf dest=/etc/init/malt_admin.conf
+  sudo: yes
+  register: service_file
+
+- name: Set autostart
+  service: name=malt_admin enabled=yes
+  sudo: yes
+
+- name: Create malt admin dir
+  file: path=malt_admin state=directory
+
+- name: Create log dir
+  file: path=/var/log/malt_admin state=directory owner="{{ansible_ssh_user}}"
+  sudo: yes
+
