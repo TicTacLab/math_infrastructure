@@ -9,11 +9,31 @@
       sudo: yes
 
     - name: Mkdir docroot dir
-      file: path=/var/www state=directory owner=nginx group=nginx mode=0775
+      file: path=/var/www/error state=directory owner=nginx group=nginx mode=0775
+      sudo: yes
+
+    - name: Mkdir img dir
+      file: path=/var/www/error/img state=directory owner=nginx group=nginx mode=0775
+      sudo: yes
+
+    - name: Mkdir css dir
+      file: path=/var/www/error/css state=directory owner=nginx group=nginx mode=0775
       sudo: yes
 
     - name: Copy Under Constraction page
-      copy: src=nginx/error503.html dest=/var/www owner=nginx group=nginx mode=0775
+      copy: src=nginx/error503.html dest=/var/www/error owner=nginx group=nginx mode=0775
+      sudo: yes
+
+    - name: Copy Under Constraction page style
+      copy: src=nginx/landing-page.css dest=/var/www/error/css/ owner=nginx group=nginx mode=0775
+      sudo: yes
+    
+    - name: Copy Under Constraction page background
+      copy: src=nginx/intro-bg.jpg dest=/var/www/error/img/ owner=nginx group=nginx mode=0775
+      sudo: yes
+
+    - name: Copy Under Construction bootstrap
+      copy: src=nginx/bootstrap.min.css dest=/var/www/error/css/ owner=nginx group=nginx mode=0775
       sudo: yes
 
     - name: Reload nginx
