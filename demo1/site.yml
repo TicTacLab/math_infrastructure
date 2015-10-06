@@ -1,6 +1,4 @@
-- include: pre_cassandra.yml
-- include: pre_malt_admin.yml
-- include: update_malt_admin.yml
-- include: pre_malt_engine.yml
-- include: update_malt_engine.yml
-- include: pre_nginx.yml
+- include: cassandra.yml
+- include: malt_admin.yml
+- include: malt_engine.yml
+- include: load_balancer.yml

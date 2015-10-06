@@ -1,0 +1,4 @@
+- name: Setup Load Balancer
+  hosts: tag_Demo4_Yes:&tag_Nginx_Yes
+  roles:
+    - load_balancer

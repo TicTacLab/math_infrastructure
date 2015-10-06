@@ -1,5 +1,4 @@
 - name: Setup Malt Admin
   hosts: tag_Demo2_Yes:&tag_MaltAdmin_Yes
-  tasks:
-    - include: ../malt_admin/tasks/pre.yml
-
+  roles:
+    - malt_admin
