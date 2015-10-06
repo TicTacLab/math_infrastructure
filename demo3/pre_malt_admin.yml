@@ -1,0 +1,5 @@
+- name: Setup Malt Admin
+  hosts: tag_Demo3_Yes:&tag_MaltAdmin_Yes
+  tasks:
+    - include: ../malt_admin/tasks/pre.yml
+

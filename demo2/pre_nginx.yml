@@ -1,0 +1,4 @@
+- name: Setup Nginx
+  hosts: tag_Demo2_Yes:&tag_Nginx_Yes
+  tasks:
+    - include: ../nginx/tasks/pre.yml

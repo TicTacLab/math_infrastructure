@@ -1,6 +1,0 @@
-- name: Disables SELinux permanently
-  hosts: tag_Demo4_Yes:&all
-  tasks:
-    - name: Disable
-      selinux: state=disabled
-      sudo: yes

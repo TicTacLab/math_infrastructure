@@ -1,7 +1,0 @@
-- include: demo4_disable_selinux.yml
-- include: demo4_pre_cassandra.yml
-- include: demo4_pre_malt_admin.yml
-- include: demo4_update_malt_admin.yml
-- include: demo4_pre_malt_engine.yml
-- include: demo4_update_malt_engine.yml
-- include: demo4_pre_nginx.yml

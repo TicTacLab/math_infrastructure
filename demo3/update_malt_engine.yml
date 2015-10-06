@@ -1,0 +1,5 @@
+- name: Update Malt Engine
+  hosts: tag_Demo3_Yes:&tag_MaltEngine_Yes
+  serial: 1
+  tasks:
+    - include: ../malt_engine/tasks/update.yml

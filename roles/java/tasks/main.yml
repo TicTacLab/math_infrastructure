@@ -1,0 +1,27 @@
+- name: Ensure utils
+  apt: name={{item}} state=installed
+  sudo: yes
+  with_items:
+    - wget
+    - tar
+
+- name: Copy tar file
+  shell:  'wget -c -O jdk-7u79-linux-x64.tar.gz https://s3.eu-central-1.amazonaws.com/bedeps/jdk-7u79-linux-x64.tar.gz'
+
+- name: Extract jdk
+  command: "tar xzf {{ansible_env.HOME}}/jdk-7u79-linux-x64.tar.gz"
+  args:
+    chdir: /opt
+    creates: /opt/jdk1.7.0_79
+  sudo: yes
+
+- name: Set java Env
+  copy: src=java.sh dest=/etc/profile.d/01-java.sh
+  sudo: yes
+
+- name: Update alternatives
+  alternatives: name="{{item}}" path="/opt/jdk1.7.0_79/bin/{{item}}" link="/usr/bin/{{item}}"
+  with_items:
+    - java
+    - javac
+  sudo: yes

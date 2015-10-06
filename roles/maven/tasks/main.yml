@@ -1,0 +1,17 @@
+- name: Copy tar file
+  copy: src=apache-maven-3.3.1-bin.tar.gz dest={{ansible_env.HOME}}/apache-maven-3.3.1-bin.tar.gz
+
+- name: Extract
+  command: "tar xzf {{ansible_env.HOME}}/apache-maven-3.3.1-bin.tar.gz"
+  args:
+    chdir: /opt
+    creates: /opt/apache-maven-3.3.1
+  sudo: yes
+
+- name: Set mvn Env
+  copy: src="maven.sh" dest="/etc/profile.d/02-maven.sh"
+  sudo: yes
+
+- name: Update alternatives
+  alternatives: name="mvn" path="/opt/apache-maven-3.3.1/bin/mvn" link="/usr/bin/mvn"
+  sudo: yes
