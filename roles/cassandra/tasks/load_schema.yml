@@ -9,8 +9,11 @@
     cqlsh -u malt -p {{cassandra_password}} -e "CONSISTENCY ALL; ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{config[ansible_hostname].cassandra_listen_address}}
   when: user_check|failed
 
+- name: Create schema dir
+  file: path=/tmp/schema state=directory
+
 - name: Copy schema settings files
-  template: src="schema/{{item}}" dest=/tmp/schema/settings.cql
+  template: src="schema/{{item}}" dest="/tmp/schema/{{item}}"
   with_items:
     - settings.cql
     - keyspace.cql

@@ -3,19 +3,19 @@ demo_password: ''
 cassandra_password: 'VendekDam4'
 cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 1
-cassandra_seed_nodes: '172.31.22.239'
-cassandra_nodes: ['172.31.22.239']
+cassandra_seed_nodes: '172.31.24.66'
+cassandra_nodes: ['172.31.24.66']
 
 nginx_listen_address: '52.29.12.61'
 
-malt_admin_host: '172.31.22.239'
+malt_admin_host: '172.31.24.66'
 
 config:
-  "ip-172-31-22-239":
-    cassandra_listen_address: '172.31.22.239'
-    cassandra_rmi_host: '172.31.22.239'
-    malt_engine_rmi_host: '172.31.22.239'
-    malt_engine_host: '172.31.22.239'
+  "ip-172-31-24-66":
+    cassandra_listen_address: '172.31.24.66'
+    cassandra_rmi_host: '172.31.24.66'
+    malt_engine_rmi_host: '172.31.24.66'
+    malt_engine_host: '172.31.24.66'
 
 malt_engine_config:
   "cache-on": true

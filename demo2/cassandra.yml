@@ -5,6 +5,6 @@
     - cassandra
 
 - name: Load data
-  hosts: tag_Demo2_Yes:&tag_Cassandra_Yes[0]
+  hosts: tag_Demo2_Yes:&tag_Cassandra_Yes
   tasks:
     - include: ../roles/cassandra/tasks/load_schema.yml
