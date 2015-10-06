@@ -8,6 +8,14 @@ upstream malt_engines {
 server {
   listen 80;
   client_max_body_size 50m;
+
+  error_page   500 502 503 504 /error503.html;
+  location = /error503.html {
+        root /var/www/;
+        internal;
+  }
+
+
   location /nginx_stats {
     stub_status on;
     access_log off;
