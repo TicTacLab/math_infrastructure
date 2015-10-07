@@ -1,21 +1,21 @@
-demo_password: 'BoltonLane@BlendLands47'
+demo_password: ''
 
-cassandra_password: 'krafecJak2'
+cassandra_password: 'DorHu3slie'
 cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 1
-cassandra_seed_nodes: '172.31.26.242'
-cassandra_nodes: ['172.31.26.242']
+cassandra_seed_nodes: '172.31.25.186'
+cassandra_nodes: ['172.31.25.186']
 
-nginx_listen_address: '52.29.32.158'
+nginx_listen_address: '52.28.168.64'
 
-malt_admin_host: '172.31.26.242'
+malt_admin_host: '172.31.25.186'
 
 config:
-  "ip-172-31-26-242":
-    cassandra_listen_address: '172.31.26.242'
-    cassandra_rmi_host: '172.31.26.242'
-    malt_engine_rmi_host: '172.31.26.242'
-    malt_engine_host: '172.31.26.242'
+  "ip-172-31-25-186":
+    cassandra_listen_address: '172.31.25.186'
+    cassandra_rmi_host: '172.31.25.186'
+    malt_engine_rmi_host: '172.31.25.186'
+    malt_engine_host: '172.31.25.186'
 
 malt_engine_config:
   "cache-on": true
@@ -52,11 +52,11 @@ malt_admin_config:
 malt_engine_jmx_port: 7198
 
 cassandra_jmx_port: 7199
-cassandra_max_heap_size: '5g'
-cassandra_new_heap_size: '2g'
-cassandra_max_new_size: '1250m'
+cassandra_max_heap_size: '2500m'
+cassandra_new_heap_size: '1g'
+cassandra_max_new_size: '625m'
 
-malt_engine_heap_size: '5g'
-malt_admin_heap_size: '2g'
+malt_engine_heap_size: '2500m'
+malt_admin_heap_size: '1g'
 
 git_ref: stable
