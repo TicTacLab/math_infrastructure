@@ -1,32 +1,33 @@
-- name: Update landing site to new version
-  hosts: tag_Name_landing
-  tasks:
-    - name: Update project
-      git: repo=git@github.com:TicTacLab/landing.git
-           key_file=.ssh/landing
-           force=yes
-           dest=landing
-           update=yes
-           version=master
-           accept_hostkey=yes
-      register: project
+- name: Update project
+  git: repo=git@github.com:TicTacLab/landing.git
+       key_file=.ssh/landing
+       force=yes
+       dest=landing
+       update=yes
+       version=master
+       accept_hostkey=yes
+  register: project
 
-    - name: Remove static content
-      file: path=/usr/share/nginx/html state=absent
-      sudo: yes
+- name: Build site
+  command: jekyll build
+  args: {chdir: landing}
 
-    - name: Copy _site to the index static content
-      command: cp -r landing/_site /usr/share/nginx/html
-      sudo: yes
+- name: Remove static content
+  file: path=/usr/share/nginx/html state=absent
+  sudo: yes
 
-    - name: Set nginx owner
-      file: path=/usr/share/nginx/html
-            recurse=yes
-            owner=nginx
-            group=nginx
-            state=directory
-      sudo: yes
+- name: Copy _site to the index static content
+  command: cp -r landing/_site /usr/share/nginx/html
+  sudo: yes
 
-    - name: Reload nginx
-      service: name=nginx state=reloaded
-      sudo: yes
+- name: Set nginx owner
+  file: path=/usr/share/nginx/html
+        recurse=yes
+        owner=nginx
+        group=nginx
+        state=directory
+  sudo: yes
+
+- name: Reload nginx
+  service: name=nginx state=reloaded
+  sudo: yes

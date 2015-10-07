@@ -8,11 +8,18 @@
     - landing.pub
 
 - name: Install packets
-  yum: name="{{item}}" state=installed
+  apt: name="{{item}}" state=installed
   with_items:
     - git
+    - ruby
+    - ruby-dev
+
   sudo: yes
 
 - name: Clean nginx dir
   file: path=/usr/share/nginx/html state=absent
+  sudo: yes
+
+- name: Install jekyll
+  gem: name=jekyll state=present
   sudo: yes

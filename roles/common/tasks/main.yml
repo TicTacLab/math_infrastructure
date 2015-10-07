@@ -1,5 +1,9 @@
+- name: Change source list from AWS to public
+  command: sed -i 's;eu-central-1b.clouds.archive.ubuntu.com;de.archive.ubuntu.com;' /etc/apt/sources.list
+  sudo: yes
+
 - name: Install packages
-  apt: name="{{item}}" state=installed
+  apt: name="{{item}}" state=installed update_cache=yes
   with_items:
     - gcc
     - make

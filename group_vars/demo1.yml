@@ -1,23 +1,21 @@
-cassandra_password: 'Amukwum2'
+demo_password: ''
+
+cassandra_password: 'CrasErjud3'
 cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 1
-cassandra_seed_nodes: '172.31.31.36'
-cassandra_nodes: ['172.31.31.36']
+cassandra_seed_nodes: '172.31.30.168'
+cassandra_nodes: ['172.31.30.168']
 
-nginx_listen_address: '52.29.10.122'
+nginx_listen_address: '52.29.54.210'
 
-malt_admin_host: '172.31.31.36'
+malt_admin_host: '172.31.30.168'
 
 config:
-  "ip-172-31-31-36":
-    cassandra_listen_address: '172.31.31.36'
-    cassandra_rmi_host: '172.31.31.36'
-    malt_engine_rmi_host: '172.31.31.36'
-    malt_engine_host: '172.31.31.36'
-
-  "ip-172-31-16-255":
-    malt_engine_rmi_host: '172.31.16.255'
-    malt_engine_host: '172.31.16.255'
+  "ip-172-31-30-168":
+    cassandra_listen_address: '172.31.30.168'
+    cassandra_rmi_host: '172.31.30.168'
+    malt_engine_rmi_host: '172.31.30.168'
+    malt_engine_host: '172.31.30.168'
 
 malt_engine_config:
   "cache-on": true
@@ -54,11 +52,11 @@ malt_admin_config:
 malt_engine_jmx_port: 7198
 
 cassandra_jmx_port: 7199
-cassandra_max_heap_size: '5g'
-cassandra_new_heap_size: '2g'
-cassandra_max_new_size: '1250m'
+cassandra_max_heap_size: '2500m'
+cassandra_new_heap_size: '1g'
+cassandra_max_new_size: '625m'
 
-malt_engine_heap_size: '5g'
-malt_admin_heap_size: '2g'
+malt_engine_heap_size: '2500m'
+malt_admin_heap_size: '1g'
 
 git_ref: stable

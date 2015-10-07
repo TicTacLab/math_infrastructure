@@ -44,18 +44,13 @@
   sudo: yes
   ignore_errors: yes
 
-- name: Move cassandra init script
-  command: mv /etc/init.d/cassandra /usr/share/cassandra/cassandra-init.sh
-  sudo: yes
-  ignore_errors: yes
-
-- name: Copy cassandra upstart conf
-  copy: src=cassandra.upstart.conf dest=/etc/init/cassandra.conf
+- name: Copy init script
+  copy: src=cassandra dest=/etc/init.d/cassandra
   sudo: yes
 
 - name: Run Cassandra
-  service: name=cassandra state=started enabled=yes
+  service: name=cassandra state=restarted enabled=yes
   sudo: yes
 
 - name: Wait for Cassandra to start
-  wait_for: path=/var/log/cassandra/system.log timeout=60 search_regex='.*Listening for thrift clients.*' state=present
+  wait_for: path=/var/log/cassandra/system.log timeout=180 search_regex='.*Listening for thrift clients.*' state=present

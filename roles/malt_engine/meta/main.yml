@@ -1,6 +1,5 @@
 ---
 dependencies:
-  - role: common
   - role: java
   - role: lein
   - role: maven
