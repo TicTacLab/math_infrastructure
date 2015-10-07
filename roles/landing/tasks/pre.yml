@@ -13,7 +13,7 @@
     - git
     - ruby
     - ruby-dev
-
+    - nodejs
   sudo: yes
 
 - name: Clean nginx dir
@@ -21,5 +21,5 @@
   sudo: yes
 
 - name: Install jekyll
-  gem: name=jekyll state=present
+  shell: gem install jekyll --no-rdoc --no-ri
   sudo: yes

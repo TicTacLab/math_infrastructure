@@ -1,4 +1,5 @@
 - name: Install landing
   hosts: tag_Name_landing
   roles:
+    - common
     - landing
