@@ -6,7 +6,7 @@ cassandra_replication_factor: 1
 cassandra_seed_nodes: '172.31.24.66'
 cassandra_nodes: ['172.31.24.66']
 
-nginx_listen_address: '52.29.12.61'
+nginx_listen_address: '52.28.99.245'
 
 malt_admin_host: '172.31.24.66'
 

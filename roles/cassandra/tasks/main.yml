@@ -44,6 +44,15 @@
   sudo: yes
   ignore_errors: yes
 
+- name: Move cassandra init script
+  command: mv /etc/init.d/cassandra /usr/share/cassandra/cassandra-init.sh
+  sudo: yes
+  ignore_errors: yes
+
+- name: Copy cassandra upstart conf
+  copy: src=cassandra.upstart.conf dest=/etc/init/cassandra.conf
+  sudo: yes
+
 - name: Run Cassandra
   service: name=cassandra state=restarted enabled=yes
   sudo: yes
