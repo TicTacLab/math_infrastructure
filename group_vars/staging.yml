@@ -1,6 +1,4 @@
 ansible_ssh_user: malt_deploy
-ansible_ssh_pass: M$HVkfa
-ansible_sudo_pass: M$HVkfa
 
 cassandra_password: 'Karghik2'
 cassandra_data_dir: '/var/lib/cassandra/data'
