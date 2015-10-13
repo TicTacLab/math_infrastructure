@@ -4,7 +4,7 @@ ansible_ssh_pass: WynorOpt8
 
 cassandra_password: 'CacNeck5'
 cassandra_data_dir: '/data/cassandra'
-cassandra_replication_factor: 2
+cassandra_replication_factor: 1
 cassandra_seed_nodes: '192.168.167.2'
 cassandra_nodes: ['192.168.167.2']
 
