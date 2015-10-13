@@ -45,6 +45,15 @@ Vagrant.configure(2) do |config|
       v.cpus = 2
     end
   end
+
+  config.vm.define("dev") do |node|
+    node.vm.network "private_network", ip: "192.168.167.2"
+    node.vm.hostname = "dev.local"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 2048
+      v.cpus = 2
+    end
+  end
  
   config.vm.provision "shell" do |s|
     s.inline = <<-SHELL
