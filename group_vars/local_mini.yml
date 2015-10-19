@@ -50,6 +50,12 @@ malt_admin_config:
   "zabbix-host": null
   "zabbix-port": 10051
 
+malt_balancer_config:
+  "engines":
+   - "server": "{{config[ansible_hostname].malt_engine_host}}:3000"
+     "sessions-limit": 1
+  "poll-interval-ms": 5000
+
 
 malt_engine_jmx_port: 7198
 

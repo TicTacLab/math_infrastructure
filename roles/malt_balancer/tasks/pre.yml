@@ -1,0 +1,16 @@
+- name: Create keys dir
+  file: path=.ssh state=directory
+
+- name: Copy Keys
+  copy: src="keys/{{item}}" dest=".ssh/{{item}}" mode="600"
+  with_items:
+    - math_balancer
+    - math_balancer.pub
+
+- name: Create malt balancer dir
+  file: path=malt_balancer state=directory
+
+- name: Create log dir
+  file: path=/var/log/malt_balancer state=directory owner="{{ansible_ssh_user}}"
+  sudo: yes
+

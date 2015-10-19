@@ -1,0 +1,41 @@
+- name: Clone project
+  git: repo=git@github.com:TicTacLab/math_balancer.git
+       key_file={{ansible_env.HOME}}/.ssh/math_balancer
+       force=yes
+       dest=new_malt_balancer
+       update=yes
+       version="{{git_ref}}"
+       accept_hostkey=yes
+  register: project
+
+- name: Replace logback.xml
+  command: mv resources/logback.production.xml resources/logback.xml
+  args: { chdir: new_malt_balancer }
+
+- name: Create uberjar
+  command: lein uberjar
+  args:
+    chdir: new_malt_balancer
+
+- name: Move uberjar to nginx directory
+  command: 'mv target/uberjar/math_balancer-0.1.0-SNAPSHOT-standalone.jar /etc/nginx/jars/math_balancer.jar'
+  sudo: yes
+  args:
+    chdir: new_malt_balancer
+
+- name: Write config
+  copy: dest=/etc/nginx/conf/math-balancer.json
+        content="{{malt_balancer_config|to_json|safe}}"
+  sudo: yes
+
+- name: Remove old dir
+  command: rm -rf malt_balancer
+  sudo: yes
+
+- name: Move to the latest version
+  command: mv new_malt_balancer malt_balancer
+  sudo: yes
+
+- name: Reload nginx
+  service: name=nginx state=reloaded enabled=yes
+  sudo: yes

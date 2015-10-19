@@ -1,0 +1,4 @@
+- name: Setup Malt Balancer
+  hosts: tag_Nginx_Yes
+  roles:
+    - malt_balancer

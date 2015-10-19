@@ -1,0 +1,3 @@
+- include: pre.yml
+- include: update_nginx.yml
+- include: update_balancer.yml

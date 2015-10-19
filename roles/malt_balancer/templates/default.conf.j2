@@ -1,0 +1,54 @@
+master_process off;
+user  nginx;
+worker_processes 1;
+
+error_log  /var/log/nginx/error.log;
+pid        /var/run/nginx.pid;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  access_log  /var/log/nginx/access.log;
+
+  jvm_path '/opt/jdk1.7.0_79/jre/lib/amd64/server/libjvm.so';
+  jvm_handler_type 'clojure';
+  jvm_init_handler_name 'math-balancer.handler/init-handler';
+  jvm_var other_jars '/etc/nginx/jars/math_balancer.jar';
+  jvm_options "-Djava.class.path=/etc/nginx/jars/nginx-clojure-0.4.2.jar:#{other_jars}";
+  jvm_options "-Dbalancer.config=/etc/nginx/conf/math-balancer.json";
+
+  server {
+    listen 80;
+    client_max_body_size 50m;
+
+    error_page   500 502 503 504 /error503.html;
+
+    location = /error503.html {
+          root /var/www/;
+          internal;
+    }
+
+    location /error/ {
+          root /var/www/;
+    }
+
+    location /nginx_stats {
+      stub_status on;
+      access_log off;
+      allow 127.0.0.1;
+      deny all;
+    }
+
+    set $engine "";
+    location /api/ {
+      rewrite_handler_type 'clojure';
+      rewrite_handler_name 'math-balancer.handler/handler';
+      proxy_pass $engine;
+    }
+    location / {
+      proxy_pass http://{{malt_admin_config.host}}:{{malt_admin_config.port}};
+    }
+  }
+}

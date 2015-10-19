@@ -1,6 +1,6 @@
 - name: Clone project
   git: repo=git@github.com:TicTacLab/math_admin.git
-       key_file=.ssh/math_admin
+       key_file={{ansible_env.HOME}}/.ssh/math_admin
        force=yes
        dest=new_malt_admin
        update=yes

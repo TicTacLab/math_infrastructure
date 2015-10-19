@@ -1,6 +1,6 @@
 - name: Clone project
   git: repo=git@github.com:TicTacLab/math_engine.git
-       key_file=.ssh/math_engine
+       key_file={{ansible_env.HOME}}/.ssh/math_engine
        force=yes
        dest=new_malt_engine
        update=yes

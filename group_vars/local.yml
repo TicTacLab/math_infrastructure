@@ -63,6 +63,16 @@ malt_admin_config:
   "zabbix-host": null
   "zabbix-port": 10051
 
+malt_balancer_config:
+  "poll-interval-ms": 5000
+  "engines":
+   - "server": "192.168.167.144:3000"
+     "sessions-limit": 10
+   - "server": "192.168.167.145:3000"
+     "sessions-limit": 10
+   - "server": "192.168.167.146:3000"
+     "sessions-limit": 10
+
 
 malt_engine_jmx_port: 7198
 
