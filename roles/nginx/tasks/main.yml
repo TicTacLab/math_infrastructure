@@ -29,6 +29,18 @@
   args:
     chdir: "{{ansible_env.HOME}}/nginx-clojure-0.4.2/nginx-1.8.0"
 
+- name: Set init
+  template: src=default.init.d dest=/etc/init.d/nginx mode=u+rwx
+  sudo: yes
+
+- name: Create group
+  group: name=nginx state=present
+  sudo: yes
+
+- name: Create nginx user
+  user: name=nginx group=nginx state=present
+  sudo: yes
+
 - name: Stop nginx
   command: 'service nginx stop'
   sudo: yes
@@ -48,7 +60,7 @@
   sudo: yes
 
 - name: Create logs directory
-  file: path=/etc/nginx/logs state=directory mode=644
+  file: path=/var/log/nginx state=directory mode=644
   sudo: yes
 
 - name: Create temp directory
@@ -60,7 +72,3 @@
   sudo: yes
   args:
     chdir: "{{ansible_env.HOME}}/nginx-clojure-0.4.2/nginx-1.8.0"
-
-- name: Set init
-  template: src=default.init.d dest=/etc/init.d/nginx mode=u+rwx
-  sudo: yes

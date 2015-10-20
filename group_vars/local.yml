@@ -65,6 +65,7 @@ malt_admin_config:
 
 malt_balancer_config:
   "poll-interval-ms": 5000
+  "poll-timeout-ms": 1000
   "engines":
    - "server": "192.168.167.144:3000"
      "sessions-limit": 10

@@ -55,6 +55,7 @@ malt_balancer_config:
    - "server": "{{config[ansible_hostname].malt_engine_host}}:3000"
      "sessions-limit": 1
   "poll-interval-ms": 5000
+  "poll-timeout-ms": 1000
 
 
 malt_engine_jmx_port: 7198
