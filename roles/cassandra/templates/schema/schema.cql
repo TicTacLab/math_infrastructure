@@ -75,3 +75,8 @@ CREATE TABLE IF NOT EXISTS calculation_log (
       out_params blob,
       PRIMARY KEY ((session_id, model_id))
 );
+
+CREATE TABLE IF NOT EXISTS event_log (
+      id varchar PRIMARY KEY,
+      log_item list<text>
+);
