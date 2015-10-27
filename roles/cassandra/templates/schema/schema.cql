@@ -20,6 +20,12 @@ CREATE TABLE IF NOT EXISTS models (
        rev varchar
 );
 
+CREATE TABLE IF NOT EXISTS sengine_models (
+       id int PRIMARY KEY,
+       file blob,
+       file_name varchar
+);
+
 CREATE TABLE IF NOT EXISTS users (
        login varchar PRIMARY KEY,
        name varchar,
