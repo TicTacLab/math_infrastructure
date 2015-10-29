@@ -20,9 +20,9 @@ CREATE TABLE IF NOT EXISTS models (
        rev varchar
 );
 
-CREATE TABLE IF NOT EXISTS sengine_models (
+CREATE TABLE IF NOT EXISTS sengine_files (
        id int PRIMARY KEY,
-       file blob,
+       raw_file blob,
        file_name varchar
 );
 
