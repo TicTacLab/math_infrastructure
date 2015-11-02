@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS models (
 CREATE TABLE IF NOT EXISTS sengine_files (
        id int PRIMARY KEY,
        raw_file blob,
-       file_name varchar
+       file_name varchar,
+       last_modified timestamp
 );
 
 CREATE TABLE IF NOT EXISTS users (
