@@ -1,5 +1,7 @@
 - name: Install landing
   hosts: tag_Name_landing
+  vars:
+    gir_ref: master
   roles:
     - common
     - landing

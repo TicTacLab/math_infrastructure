@@ -1,0 +1,7 @@
+- name: Install landing with sengine
+  hosts: tag_Name_sengine_landing
+  vars:
+    git_ref: s-engine
+  roles:
+    - common
+    - landing

@@ -4,7 +4,7 @@
        force=yes
        dest=landing
        update=yes
-       version=master
+       version={{git_ref}}
        accept_hostkey=yes
   register: project
 
