@@ -30,7 +30,3 @@
   shell: gem install middleman -v 3.4.0 --no-rdoc --no-ri
   sudo: yes
 
-- name: Install bundle deps
-  shell: bundle install
-  args:
-    chdir: landing2

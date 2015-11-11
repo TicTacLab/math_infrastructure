@@ -8,6 +8,11 @@
        accept_hostkey=yes
   register: project
 
+- name: Install bundle deps
+  shell: bundle install
+  args:
+    chdir: landing2
+
 - name: Build site
   command: bundle exec middleman build
   args: {chdir: landing2}
