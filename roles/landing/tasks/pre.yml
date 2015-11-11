@@ -6,6 +6,8 @@
   with_items:
     - landing
     - landing.pub
+    - landing2
+    - landing2.pub
 
 - name: Install packets
   apt: name="{{item}}" state=installed
@@ -14,12 +16,21 @@
     - ruby
     - ruby-dev
     - nodejs
+    - build-essential
+    - libxml2-dev
+    - libxslt1-dev
+    - zlib1g-dev
   sudo: yes
 
 - name: Clean nginx dir
   file: path=/usr/share/nginx/html state=absent
   sudo: yes
 
-- name: Install jekyll
-  shell: gem install jekyll -v 2.5.3 --no-rdoc --no-ri
+- name: Install middleman
+  shell: gem install middleman -v 3.4.0 --no-rdoc --no-ri
   sudo: yes
+
+- name: Install bundle deps
+  shell: bundle install
+  args:
+    chdir: landing2

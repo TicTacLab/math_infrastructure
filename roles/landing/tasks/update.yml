@@ -1,23 +1,23 @@
 - name: Update project
-  git: repo=git@github.com:TicTacLab/landing.git
-       key_file=.ssh/landing
+  git: repo=git@github.com:TicTacLab/landing2.git
+       key_file=.ssh/landing2
        force=yes
-       dest=landing
+       dest=landing2
        update=yes
        version={{git_ref}}
        accept_hostkey=yes
   register: project
 
 - name: Build site
-  command: jekyll build
-  args: {chdir: landing}
+  command: bundle exec middleman build
+  args: {chdir: landing2}
 
 - name: Remove static content
   file: path=/usr/share/nginx/html state=absent
   sudo: yes
 
-- name: Copy _site to the index static content
-  command: cp -r landing/_site /usr/share/nginx/html
+- name: Copy site to the index static content
+  command: cp -r landing2/build /usr/share/nginx/html
   sudo: yes
 
 - name: Set nginx owner
