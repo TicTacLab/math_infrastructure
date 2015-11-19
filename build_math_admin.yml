@@ -2,8 +2,8 @@
   hosts: ci
   roles: [common, java, lein, nodejs]
   vars:
-    access_key: "AKIAINEA6MIO25BFTNXQ"
-    secret_key: "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"
+    access_key: "AKIAJEBD7YEIWC4VJPDA"
+    secret_key: "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"
   tasks:
     - name: Print version
       debug: msg="NEW VERSION STRING {{ math_admin_version | mandatory }}"
@@ -32,26 +32,26 @@
     - name: Install npm packages
       npm: path=math_admin/node_modules state=present
 
-#    - name: Clean dir
-#      shell: lein clean && grunt clean
-#      environment:
-#        LEIN_USERNAME: admin
-#        LEIN_PASSWORD: NeOpBac8
-#      args:
-#        chdir: math_admin
+    - name: Clean dir
+      shell: lein clean && grunt clean
+      environment:
+        LEIN_USERNAME: admin
+        LEIN_PASSWORD: NeOpBac8
+      args:
+        chdir: math_admin
 
     - name: Build assets
       command: grunt build
       args:
         chdir: math_admin
 
-#    - name: Build Uberjar
-#      command: lein uberjar
-#      environment:
-#        LEIN_USERNAME: admin
-#        LEIN_PASSWORD: NeOpBac8
-#      args:
-#        chdir: math_admin
+    - name: Build Uberjar
+      command: lein uberjar
+      environment:
+        LEIN_USERNAME: admin
+        LEIN_PASSWORD: NeOpBac8
+      args:
+        chdir: math_admin
 
     - name: Bump version
       replace: dest=math_admin/project.clj
@@ -95,17 +95,18 @@
         chdir: dist
 
     - name: Install PIP
-      apt: name="python-pip" state=installed update_cache=yes
+      apt: name="python-pip" state=installed
       sudo: yes
 
-    - name: Install boto
-      pip: name=boto state=present
+    - name: Install awscli
+      pip: name="awscli" state=present
       sudo: yes
 
     - name: PUT dist to S3
-      s3: bucket=com.betengines.releases
-          object="math_admin-{{ math_admin_version }}"
-          src="dist/math_admin-{{ math_admin_version }}.zip"
-          mode=put
-          aws_access_key="{{access_key}}"
-          aws_secret_key="{{secret_key}}"
+      command: >
+        aws s3 cp --region eu-central-1
+         dist/math_admin-{{ math_admin_version }}.zip
+         s3://com.betengines.releases/math_admin-{{ math_admin_version }}.zip
+      environment:
+          AWS_ACCESS_KEY_ID: "{{access_key}}"
+          AWS_SECRET_ACCESS_KEY: "{{secret_key}}"
