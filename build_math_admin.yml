@@ -1,7 +1,10 @@
 - name: Bulid MathAdmin release
   hosts: ci
-  #roles: [common, java, lein, nodejs]
+  roles: [common, java, lein, nodejs]
   tasks:
+    - name: Print version
+      debug: msg="NEW VERSION STRING {{ math_admin_version | mandatory }}"
+
     - name: Create keys dir
       file: path=.ssh state=directory
 
@@ -28,6 +31,9 @@
 
     - name: Clean dir
       shell: lein clean && grunt clean
+      environment:
+        LEIN_USERNAME: admin
+        LEIN_PASSWORD: NeOpBac8
       args:
         chdir: math_admin
 
@@ -44,30 +50,43 @@
       args:
         chdir: math_admin
 
+    - name: Bump version
+      replace: dest=math_admin/project.clj
+               regexp='^(\(defproject malt_admin ).*$'
+               replace='\1"{{math_admin_version | mandatory}}"'
+
     - name: Create dist dir
       file: path="{{item}}" state=directory
       with_items:
-        - dist/math_admin
-        - dist/math_admin/conf
-        - dist/math_admin/bin
-        - dist/math_admin/lib
+        - dist/math_admin-{{ math_admin_version }}
+        - dist/math_admin-{{ math_admin_version }}/conf
+        - dist/math_admin-{{ math_admin_version }}/bin
+        - dist/math_admin-{{ math_admin_version }}/lib
 
     - name: Copy config.json
       command: >
-        cp math_admin/config.json
-           dist/math_admin/conf/config.json
+        cp math_admin/config.example.json
+           dist/math_admin-{{ math_admin_version }}/conf/config.json
 
     - name: Copy logger-conf.xml
       command: >
         cp math_admin/resources/logback.production.xml
-           dist/math_admin/conf/logger-conf.xml
+           dist/math_admin-{{ math_admin_version }}/conf/logger-conf.xml
 
     - name: Copy executable script
       copy: src=roles/common/files/math_admin.sh
-            dest=dist/math_admin/bin/math_admin.sh
+            dest=dist/math_admin-{{ math_admin_version }}/bin/math_admin.sh
             mode='a+x'
 
     - name: Copy jar
       command: >
         cp math_admin/target/math_admin_standalone.jar
-           dist/math_admin/lib/math_admin.jar
+           dist/math_admin-{{ math_admin_version }}/lib/math_admin.jar
+
+    - name: Clean old zip dist
+      file: path="dist/math_admin-{{ math_admin_version }}.zip" state=absent
+
+    - name: Zip dist
+      command: zip -r math_admin-{{ math_admin_version }}.zip math_admin-{{ math_admin_version }}
+      args:
+        chdir: dist

@@ -10,4 +10,5 @@
     - g++
     - automake
     - git
+    - zip
   sudo: yes
