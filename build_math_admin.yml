@@ -1,6 +1,6 @@
 - name: Bulid MathAdmin release
   hosts: ci
-  roles: [common, java, lein, nodejs]
+  #roles: [common, java, lein, nodejs]
   tasks:
     - name: Create keys dir
       file: path=.ssh state=directory
@@ -53,7 +53,21 @@
         - dist/math_admin/lib
 
     - name: Copy config.json
-      command: cp math_admin/config.json dist/math_admin/conf/config.json
+      command: >
+        cp math_admin/config.json
+           dist/math_admin/conf/config.json
 
     - name: Copy logger-conf.xml
-      command: cp math_admin/resources/logback.production.xml dist/math_admin/conf/logger-conf.xml
+      command: >
+        cp math_admin/resources/logback.production.xml
+           dist/math_admin/conf/logger-conf.xml
+
+    - name: Copy executable script
+      copy: src=roles/common/files/math_admin.sh
+            dest=dist/math_admin/bin/math_admin.sh
+            mode='a+x'
+
+    - name: Copy jar
+      command: >
+        cp math_admin/target/math_admin_standalone.jar
+           dist/math_admin/lib/math_admin.jar
