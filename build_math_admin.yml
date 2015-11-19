@@ -1,6 +1,9 @@
 - name: Bulid MathAdmin release
   hosts: ci
   roles: [common, java, lein, nodejs]
+  vars:
+    access_key: "AKIAINEA6MIO25BFTNXQ"
+    secret_key: "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"
   tasks:
     - name: Print version
       debug: msg="NEW VERSION STRING {{ math_admin_version | mandatory }}"
