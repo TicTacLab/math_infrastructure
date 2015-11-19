@@ -1,9 +1,6 @@
 - name: Bulid MathAdmin release
   hosts: ci
-  roles: [common, java, lein, nodejs]
-  vars:
-    access_key: "AKIAJEBD7YEIWC4VJPDA"
-    secret_key: "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"
+  roles: [ci]
   tasks:
     - name: Print version
       debug: msg="NEW VERSION STRING {{ math_admin_version | mandatory }}"
@@ -94,19 +91,11 @@
       args:
         chdir: dist
 
-    - name: Install PIP
-      apt: name="python-pip" state=installed
-      sudo: yes
-
-    - name: Install awscli
-      pip: name="awscli" state=present
-      sudo: yes
-
     - name: PUT dist to S3
       command: >
         aws s3 cp --region eu-central-1
          dist/math_admin-{{ math_admin_version }}.zip
-         s3://com.betengines.releases/math_admin-{{ math_admin_version }}.zip
+         s3://com.betengines.releases/math_admin/math_admin-{{ math_admin_version }}.zip
       environment:
           AWS_ACCESS_KEY_ID: "{{access_key}}"
           AWS_SECRET_ACCESS_KEY: "{{secret_key}}"

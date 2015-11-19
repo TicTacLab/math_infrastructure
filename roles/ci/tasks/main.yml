@@ -1,0 +1,10 @@
+- name: Create dist dir
+  file: path=dist state=directory
+
+- name: Install PIP
+  apt: name="python-pip" state=installed
+  sudo: yes
+
+- name: Install awscli
+  pip: name="awscli" state=present
+  sudo: yes
