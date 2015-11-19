@@ -32,26 +32,26 @@
     - name: Install npm packages
       npm: path=math_admin/node_modules state=present
 
-    - name: Clean dir
-      shell: lein clean && grunt clean
-      environment:
-        LEIN_USERNAME: admin
-        LEIN_PASSWORD: NeOpBac8
-      args:
-        chdir: math_admin
+#    - name: Clean dir
+#      shell: lein clean && grunt clean
+#      environment:
+#        LEIN_USERNAME: admin
+#        LEIN_PASSWORD: NeOpBac8
+#      args:
+#        chdir: math_admin
 
     - name: Build assets
       command: grunt build
       args:
         chdir: math_admin
 
-    - name: Build Uberjar
-      command: lein uberjar
-      environment:
-        LEIN_USERNAME: admin
-        LEIN_PASSWORD: NeOpBac8
-      args:
-        chdir: math_admin
+#    - name: Build Uberjar
+#      command: lein uberjar
+#      environment:
+#        LEIN_USERNAME: admin
+#        LEIN_PASSWORD: NeOpBac8
+#      args:
+#        chdir: math_admin
 
     - name: Bump version
       replace: dest=math_admin/project.clj
@@ -93,3 +93,19 @@
       command: zip -r math_admin-{{ math_admin_version }}.zip math_admin-{{ math_admin_version }}
       args:
         chdir: dist
+
+    - name: Install PIP
+      apt: name="python-pip" state=installed update_cache=yes
+      sudo: yes
+
+    - name: Install boto
+      pip: name=boto state=present
+      sudo: yes
+
+    - name: PUT dist to S3
+      s3: bucket=com.betengines.releases
+          object="math_admin-{{ math_admin_version }}"
+          src="dist/math_admin-{{ math_admin_version }}.zip"
+          mode=put
+          aws_access_key="{{access_key}}"
+          aws_secret_key="{{secret_key}}"
