@@ -1,0 +1,59 @@
+- name: Bulid MathAdmin release
+  hosts: ci
+  roles: [common, java, lein, nodejs]
+  tasks:
+    - name: Create keys dir
+      file: path=.ssh state=directory
+
+    - name: Copy Keys
+      copy: src="roles/malt_admin/files/keys/{{item}}"
+            dest=".ssh/{{item}}"
+            mode="600"
+      with_items:
+        - math_admin
+        - math_admin.pub
+
+    - name: Clone project
+      git: repo=git@github.com:TicTacLab/math_admin.git
+           key_file=.ssh/math_admin
+           force=yes
+           dest=math_admin
+           update=yes
+           version="{{git_ref}}"
+           accept_hostkey=yes
+      register: project
+
+    - name: Install npm packages
+      npm: path=math_admin/node_modules state=present
+
+    - name: Clean dir
+      shell: lein clean && grunt clean
+      args:
+        chdir: math_admin
+
+    - name: Build assets
+      command: grunt build
+      args:
+        chdir: math_admin
+
+    - name: Build Uberjar
+      command: lein uberjar
+      environment:
+        LEIN_USERNAME: admin
+        LEIN_PASSWORD: NeOpBac8
+      args:
+        chdir: math_admin
+
+    - name: Create dist dir
+      file: path="{{item}}" state=directory
+      with_items:
+        - dist/math_admin
+        - dist/math_admin/conf
+        - dist/math_admin/bin
+        - dist/math_admin/lib
+
+    - name: Copy config.json
+      command: cp math_admin/config.json dist/math_admin/conf/config.json
+
+    - name: Copy logger-conf.xml
+      command: cp math_admin/resources/logback.production.xml dist/math_admin/conf/logger-conf.xml
