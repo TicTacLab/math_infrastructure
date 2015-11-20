@@ -1,48 +1,40 @@
-- name: Build MathAdmin release
+- name: Bulid MathAdmin release
   hosts: ci
   roles: [ci]
   vars:
-    dist_name: "math_admin-{{ math_admin_version | mandatory }}"
+    dist_name: "math_engine-{{ math_engine_version | mandatory }}"
   tasks:
     - name: Print version
-      debug: msg="NEW VERSION STRING {{ math_admin_version | mandatory }}"
+      debug: msg="NEW VERSION STRING {{ math_engine_version | mandatory }}"
 
     - name: Create keys dir
       file: path=.ssh state=directory
 
     - name: Copy Keys
-      copy: src="roles/malt_admin/files/keys/{{item}}"
+      copy: src="roles/malt_engine/files/keys/{{item}}"
             dest=".ssh/{{item}}"
             mode="600"
       with_items:
-        - math_admin
-        - math_admin.pub
+        - math_engine
+        - math_engine.pub
 
     - name: Clone project
-      git: repo=git@github.com:TicTacLab/math_admin.git
-           key_file=.ssh/math_admin
+      git: repo=git@github.com:TicTacLab/math_engine.git
+           key_file=.ssh/math_engine
            force=yes
-           dest=math_admin
+           dest=math_engine
            update=yes
            version="{{git_ref}}"
            accept_hostkey=yes
       register: project
 
-    - name: Install npm packages
-      npm: path=math_admin/node_modules state=present
-
     - name: Clean dir
-      shell: lein clean && grunt clean
+      shell: lein clean
       environment:
         LEIN_USERNAME: admin
         LEIN_PASSWORD: NeOpBac8
       args:
-        chdir: math_admin
-
-    - name: Build assets
-      command: grunt build
-      args:
-        chdir: math_admin
+        chdir: math_engine
 
     - name: Build Uberjar
       command: lein uberjar
@@ -50,12 +42,12 @@
         LEIN_USERNAME: admin
         LEIN_PASSWORD: NeOpBac8
       args:
-        chdir: math_admin
+        chdir: math_engine
 
     - name: Bump version
-      replace: dest=math_admin/project.clj
-               regexp='^(\(defproject malt_admin ).*$'
-               replace='\1"{{math_admin_version}}"'
+      replace: dest=math_engine/project.clj
+               regexp='^(\(defproject malt_engine ).*$'
+               replace='\1"{{math_engine_version}}"'
 
     - name: Create dist dir
       file: path="{{item}}" state=directory
@@ -67,23 +59,23 @@
 
     - name: Copy config.json
       command: >
-        cp math_admin/config.example.json
+        cp math_engine/config.example.json
            dist/{{dist_name}}/conf/config.json
 
     - name: Copy logger-conf.xml
       command: >
-        cp math_admin/resources/logback.production.xml
+        cp math_engine/resources/logback.production.xml
            dist/{{dist_name}}/conf/logger-conf.xml
 
     - name: Copy executable script
-      copy: src=roles/common/files/math_admin.sh
-            dest=dist/{{dist_name}}/bin/math_admin.sh
+      copy: src=roles/common/files/math_engine.sh
+            dest=dist/{{dist_name}}/bin/math_engine.sh
             mode='a+x'
 
     - name: Copy jar
       command: >
-        cp math_admin/target/math_admin_standalone.jar
-           dist/{{dist_name}}/lib/math_admin.jar
+        cp math_engine/target/math_engine_standalone.jar
+           dist/{{dist_name}}/lib/math_engine.jar
 
     - name: Clean old zip dist
       file: path="dist/{{dist_name}}.zip" state=absent
@@ -97,7 +89,7 @@
       command: >
         aws s3 cp --region eu-central-1
          dist/{{dist_name}}.zip
-         s3://com.betengines.releases/math_admin/{{dist_name}}.zip
+         s3://com.betengines.releases/math_engine/{{dist_name}}.zip
       environment:
           AWS_ACCESS_KEY_ID: "{{access_key}}"
           AWS_SECRET_ACCESS_KEY: "{{secret_key}}"
