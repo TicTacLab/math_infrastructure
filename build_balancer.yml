@@ -1,6 +1,6 @@
 - name: Build balancer release
   hosts: ci
-  #roles: [ci]
+  roles: [ci]
   vars:
     dist_name: "balancer-{{ balancer_version | mandatory }}"
   tasks:
