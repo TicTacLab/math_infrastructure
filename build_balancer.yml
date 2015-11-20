@@ -1,0 +1,60 @@
+- name: Build balancer release
+  hosts: ci
+  #roles: [ci]
+  vars:
+    dist_name: "balancer-{{ balancer_version | mandatory }}"
+  tasks:
+    - name: Print version
+      debug: msg="NEW VERSION STRING {{ balancer_version | mandatory }}"
+
+    - name: Create dist dir
+      file: path="{{item}}" state=directory
+      with_items:
+        - dist/{{dist_name}}
+
+    - name: Copy nginx config
+      copy: src="roles/load_balancer/templates/default.conf.j2"
+                dest="dist/{{dist_name}}/math_engine.conf"
+
+    - name: Rename malt_engine into math_engine
+      replace: dest="dist/{{dist_name}}/math_engine.conf"
+               regexp='malt'
+               replace='math'
+
+    - name: Humanize placeholders
+      replace: dest="dist/{{dist_name}}/math_engine.conf"
+               regexp='(\s*)\{\% for host, cfg in config.iteritems\(\) \%\}\s*'
+               replace='\1// Specify all your MathEngine nodes\1// server math_engine1:3000\1// server math_engine2:3000\1// ...\1'
+
+    - name: Humanize placeholders
+      replace: dest="dist/{{dist_name}}/math_engine.conf"
+               regexp='server \{\{ cfg.math_engine_host \}\}:3000;'
+               replace=''
+
+    - name: Humanize placeholders
+      replace: dest="dist/{{dist_name}}/math_engine.conf"
+               regexp='\{\% endfor \%\}'
+               replace=''
+
+    - name: Humanize placeholders
+      replace: dest="dist/{{dist_name}}/math_engine.conf"
+               regexp='(\s*)proxy_pass http://\{\{math_admin_config.host\}\}:\{\{math_admin_config.port\}\};'
+               replace='\1// Here you should specify address for MathAdmin\1// proxy_pass http://math_admin:8080'
+
+
+    - name: Clean old zip dist
+      file: path="dist/{{dist_name}}.zip" state=absent
+
+    - name: Zip dist
+      command: zip -r {{dist_name}}.zip {{dist_name}}
+      args:
+        chdir: dist
+
+    - name: PUT dist to S3
+      command: >
+        aws s3 cp --region eu-central-1
+         dist/{{dist_name}}.zip
+         s3://com.betengines.releases/balancer/{{dist_name}}.zip
+      environment:
+          AWS_ACCESS_KEY_ID: "{{access_key}}"
+          AWS_SECRET_ACCESS_KEY: "{{secret_key}}"

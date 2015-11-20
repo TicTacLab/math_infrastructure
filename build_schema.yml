@@ -7,9 +7,6 @@
     - name: Print version
       debug: msg="NEW VERSION STRING {{ schema_version | mandatory }}"
 
-    - name: Create keys dir
-      file: path=.ssh state=directory
-
     - name: Create dist dir
       file: path="{{item}}" state=directory
       with_items:
