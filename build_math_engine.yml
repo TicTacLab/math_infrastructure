@@ -56,6 +56,7 @@
         - dist/{{dist_name}}/conf
         - dist/{{dist_name}}/bin
         - dist/{{dist_name}}/lib
+        - dist/{{dist_name}}/schema
 
     - name: Copy config.json
       command: >
@@ -76,6 +77,24 @@
       command: >
         cp math_engine/target/math_engine_standalone.jar
            dist/{{dist_name}}/lib/math_engine.jar
+
+    - name: Copy database schema
+      copy: src="roles/cassandra/templates/schema/{{item}}"
+                dest="dist/{{dist_name}}/schema/{{item}}"
+      with_items:
+        - keyspace.cql
+        - schema.cql
+
+    - name: Set replication factor
+      replace: dest="dist/{{dist_name}}/schema/keyspace.cql"
+               regexp='\{\{cassandra_replication_factor\}\}'
+               replace='2'
+
+    - name: Set cluster size stub
+      replace: dest="dist/{{dist_name}}/schema/keyspace.cql"
+               regexp='\{\{groups\.tag_Cassandra_Yes.length\}\}'
+               replace='<cluster-size>'
+
 
     - name: Clean old zip dist
       file: path="dist/{{dist_name}}.zip" state=absent
