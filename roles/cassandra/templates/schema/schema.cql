@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS models (
        last_modified timestamp,
        rev varchar
 );
-DROP TABLE sengine_files;
+
 CREATE TABLE IF NOT EXISTS sengine_files (
        id int PRIMARY KEY,
        raw_file blob,
