@@ -1,8 +1,8 @@
 - name: Update project
   git: repo=git@github.com:TicTacLab/landing2.git
-       key_file=.ssh/landing2
+       key_file=.ssh/landing
        force=yes
-       dest=landing2
+       dest=landing
        update=yes
        version={{git_ref}}
        accept_hostkey=yes
@@ -11,18 +11,18 @@
 - name: Install bundle deps
   shell: bundle install
   args:
-    chdir: landing2
+    chdir: landing
 
 - name: Build site
   command: bundle exec middleman build
-  args: {chdir: landing2}
+  args: {chdir: landing}
 
 - name: Remove static content
   file: path=/usr/share/nginx/html state=absent
   sudo: yes
 
 - name: Copy site to the index static content
-  command: cp -r landing2/build /usr/share/nginx/html
+  command: cp -r landing/build /usr/share/nginx/html
   sudo: yes
 
 - name: Set nginx owner
