@@ -1,5 +1,5 @@
 - name: Install landing
-  hosts: tag_Name_landing
+  hosts: tag_Name_middleman_landing
   vars:
     git_ref: master
   roles:

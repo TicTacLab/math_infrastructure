@@ -46,6 +46,15 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define("landing") do |node|
+    node.vm.network "private_network", ip: "192.168.167.120"
+    node.vm.hostname = "landing.local"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 1
+    end
+  end
+
   config.vm.define("ci") do |node|
     node.vm.network "private_network", ip: "192.168.167.2"
     node.vm.hostname = "ci.local"
