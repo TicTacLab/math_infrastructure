@@ -45,7 +45,7 @@
         chdir: math_admin
 
     - name: Build Uberjar
-      command: lein uberjar
+      command: lein with-profile production uberjar
       environment:
         LEIN_USERNAME: admin
         LEIN_PASSWORD: NeOpBac8
