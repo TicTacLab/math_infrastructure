@@ -3,7 +3,7 @@
   roles:
     - common
 
-- include: cassandra.yml
+#- include: cassandra.yml
 - include: malt_admin.yml
-- include: malt_engine.yml
-- include: load_balancer.yml
+#- include: malt_engine.yml
+#- include: load_balancer.yml

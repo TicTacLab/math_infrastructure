@@ -16,6 +16,14 @@
   copy: dest=new_malt_admin/config.json
         content="{{malt_admin_config|to_json|safe}}"
 
+- name: Install nodejs packages
+  command: npm install
+  args: { chdir: new_malt_admin }
+
+- name: Compile coffee
+  command: grunt build
+  args: { chdir: new_malt_admin }
+
 - name: Stop Service
   service: name=malt_admin state=stopped
   sudo: yes

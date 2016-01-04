@@ -36,8 +36,13 @@
       args:
         chdir: math_engine
 
+    - name: Download deps for obfuscating
+      shell: ./boot fetch-obfuscating-deps
+      args:
+        chdir: math_engine
+
     - name: Build Uberjar
-      command: lein with-profile production uberjar
+      shell: ./boot build
       environment:
         LEIN_USERNAME: admin
         LEIN_PASSWORD: NeOpBac8
@@ -85,11 +90,11 @@
       args:
         chdir: dist
 
-    - name: PUT dist to S3
-      command: >
-        aws s3 cp --region eu-central-1
-         dist/{{dist_name}}.zip
-         s3://com.betengines.releases/math_engine/{{dist_name}}.zip
-      environment:
-          AWS_ACCESS_KEY_ID: "{{access_key}}"
-          AWS_SECRET_ACCESS_KEY: "{{secret_key}}"
+    #- name: PUT dist to S3
+    #  command: >
+    #    aws s3 cp --region eu-central-1
+    #     dist/{{dist_name}}.zip
+    #     s3://com.betengines.releases/math_engine/{{dist_name}}.zip
+    #  environment:
+    #      AWS_ACCESS_KEY_ID: "{{access_key}}"
+    #      AWS_SECRET_ACCESS_KEY: "{{secret_key}}"
