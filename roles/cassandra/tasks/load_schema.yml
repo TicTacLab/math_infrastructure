@@ -1,4 +1,4 @@
-- name: User exists?
+- name: user exists?
   command: cqlsh -u malt -p {{cassandra_password}} -e "LIST USERS" {{config[ansible_hostname].cassandra_listen_address}}
   register: user_check
   ignore_errors: yes

@@ -1,8 +1,8 @@
-#- name: Setup Cassandra
-#  hosts: tag_Cassandra_Yes
-#  roles:
-#    - java
-#    - cassandra
+- name: Setup Cassandra
+  hosts: tag_Cassandra_Yes
+  roles:
+    - java
+    - cassandra
 
 - name: Load data
   hosts: tag_Cassandra_Yes[0]

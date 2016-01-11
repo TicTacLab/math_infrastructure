@@ -21,8 +21,8 @@
 [tag_Name_middleman_landing]
 192.168.167.120
 
-[zabbix]
-192.168.167.141
+#[zabbix]
+#192.168.167.141
 
 [ci]
 192.168.167.2
@@ -34,5 +34,5 @@ tag_Cassandra_Yes
 tag_CassandraSeed_Yes
 tag_Nginx_Yes
 tag_Name_middleman_landing
-zabbix
+#zabbix
 ci
