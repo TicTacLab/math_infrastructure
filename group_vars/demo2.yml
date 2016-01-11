@@ -1,21 +1,21 @@
-demo_password: ''
+demo_password: 'Daipeaj6'
 
 cassandra_password: 'DorHu3slie'
 cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 1
-cassandra_seed_nodes: '172.31.25.186'
-cassandra_nodes: ['172.31.25.186']
+cassandra_seed_nodes: '172.31.20.235'
+cassandra_nodes: ['172.31.20.235']
 
-nginx_listen_address: '52.28.168.64'
+nginx_listen_address: '52.28.183.30'
 
-malt_admin_host: '172.31.25.186'
+malt_admin_host: '172.31.20.235'
 
 config:
-  "ip-172-31-25-186":
-    cassandra_listen_address: '172.31.25.186'
-    cassandra_rmi_host: '172.31.25.186'
-    malt_engine_rmi_host: '172.31.25.186'
-    malt_engine_host: '172.31.25.186'
+  "ip-172-31-20-235":
+    cassandra_listen_address: '172.31.20.235'
+    cassandra_rmi_host: '172.31.20.235'
+    malt_engine_rmi_host: '172.31.20.235'
+    malt_engine_host: '172.31.20.235'
 
 malt_engine_config:
   "cache-on": true
