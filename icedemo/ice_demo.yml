@@ -1,0 +1,4 @@
+- name: Setup Ice Demo
+  hosts: tag_IceDemo_Yes
+  roles:
+    - icedemo

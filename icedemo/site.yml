@@ -1,9 +1,9 @@
 - name: Common
-  hosts: tag_Demo1_Yes
+  hosts: tag_IceDemo_Yes
   roles:
     - common
 
 - include: cassandra.yml
 - include: malt_admin.yml
 - include: malt_engine.yml
-- include: load_balancer.yml
+- include: ice_demo.yml

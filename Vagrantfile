@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "192.168.167.144"
     node.vm.hostname = "vmalt01.local"
     node.vm.provider "virtualbox" do |v|
-      v.memory = 4096
+      v.memory = 2096
       v.cpus = 2
     end
   end
@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "192.168.167.145"
     node.vm.hostname = "vmalt02.local"
     node.vm.provider "virtualbox" do |v|
-      v.memory = 4096
+      v.memory = 2096
       v.cpus = 2
     end
   end
@@ -31,11 +31,19 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "192.168.167.146"
     node.vm.hostname = "vmalt03.local"
     node.vm.provider "virtualbox" do |v|
-      v.memory = 4096
+      v.memory = 2096
       v.cpus = 2
     end
   end
 
+  config.vm.define("icedemo") do |node|
+    node.vm.network "private_network", ip: "192.168.167.143"
+    node.vm.hostname = "icedemo.local"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 4096
+      v.cpus = 2
+    end
+  end
 
   config.vm.define("nginx") do |node|
     node.vm.network "private_network", ip: "192.168.167.140"

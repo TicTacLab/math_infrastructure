@@ -71,7 +71,7 @@ cassandra_max_heap_size: '500m'
 cassandra_new_heap_size: '100m'
 cassandra_max_new_size: '100m'
 
-malt_engine_heap_size: '2g'
-malt_admin_heap_size: '1g'
+malt_engine_heap_size: '1g'
+malt_admin_heap_size: '500m'
 
 git_ref: master

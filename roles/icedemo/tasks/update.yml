@@ -1,0 +1,40 @@
+- name: Clone project
+  git: repo="git@github.com:TicTacLab/ice-demo.git"
+       key_file=.ssh/icedemo
+       force=yes
+       dest=new_ice_demo
+       update=yes
+       version="{{git_ref}}"
+       accept_hostkey=yes
+  register: project
+
+- name: Write config
+  copy: dest=new_ice_demo/config.json
+        content="{{ice_demo_config|to_json|safe}}"
+
+- name: Build cljs
+  command: lein cljsbuild once
+  environment:
+    LEIN_JVM_OPTS: "-Xmx150m"
+  args:
+    chdir: new_ice_demo
+
+
+- name: Stop Service
+  service: name=icedemo state=stopped
+  sudo: yes
+
+- name: Remove old dir
+  command: rm -rf ice_demo
+  sudo: yes
+
+- name: Move to the latest version
+  command: mv new_ice_demo ice_demo
+  sudo: yes
+
+- name: Start Service
+  service: name=icedemo state=started
+  sudo: yes
+
+- name: Wait for service to start
+  wait_for: port="{{ice_demo_config.port}}" host="{{config[ansible_hostname].ice_demo_host}}" state=present
