@@ -20,5 +20,9 @@
   service: name=malt_engine enabled=yes
   sudo: yes
 
+- name: Create log dir
+  file: path=/var/log/malt_engine state=directory owner="{{ansible_ssh_user}}"
+  sudo: yes
+
 - include: poi.yml
   when: rebuild_poi|default(false)
