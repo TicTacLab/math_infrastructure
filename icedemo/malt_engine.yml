@@ -1,0 +1,5 @@
+- name: Setup Malt Engine
+  hosts: tag_IceDemo_Yes
+  serial: 1
+  roles:
+    - malt_engine

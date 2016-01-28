@@ -1,0 +1,47 @@
+- name: Build schema release
+  hosts: ci
+  roles: [ci]
+  vars:
+    dist_name: "schema-{{ schema_version | mandatory }}"
+  tasks:
+    - name: Print version
+      debug: msg="NEW VERSION STRING {{ schema_version | mandatory }}"
+
+    - name: Create dist dir
+      file: path="{{item}}" state=directory
+      with_items:
+        - dist/{{dist_name}}
+
+    - name: Copy database schema
+      copy: src="roles/cassandra/templates/schema/{{item}}"
+                dest="dist/{{dist_name}}/{{item}}"
+      with_items:
+        - keyspace.cql
+        - schema.cql
+
+    - name: Set replication factor
+      replace: dest="dist/{{dist_name}}/keyspace.cql"
+               regexp='\{\{cassandra_replication_factor\}\}'
+               replace='2'
+
+    - name: Set cluster size stub
+      replace: dest="dist/{{dist_name}}/keyspace.cql"
+               regexp='\{\{groups\.tag_Cassandra_Yes.length\}\}'
+               replace='<cluster-size>'
+
+    - name: Clean old zip dist
+      file: path="dist/{{dist_name}}.zip" state=absent
+
+    - name: Zip dist
+      command: zip -r {{dist_name}}.zip {{dist_name}}
+      args:
+        chdir: dist
+
+    - name: PUT dist to S3
+      command: >
+        aws s3 cp --region eu-central-1
+         dist/{{dist_name}}.zip
+         s3://com.betengines.releases/schema/{{dist_name}}.zip
+      environment:
+          AWS_ACCESS_KEY_ID: "{{access_key}}"
+          AWS_SECRET_ACCESS_KEY: "{{secret_key}}"

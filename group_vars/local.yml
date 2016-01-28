@@ -49,7 +49,7 @@ malt_engine_config:
 malt_admin_config:
   "host": "{{malt_admin_host}}"
   "port": 8080
-  "api-addr": "{{nginx_listen_address}}/api"
+  "m-engine-api-addr": "{{nginx_listen_address}}/api"
   "app-env": "production"
   "noilly-port": 1301
   "session-ttl": 3600
@@ -83,6 +83,6 @@ cassandra_new_heap_size: '100m'
 cassandra_max_new_size: '100m'
 
 malt_engine_heap_size: '1g'
-malt_admin_heap_size: '300m'
+malt_admin_heap_size: '500m'
 
 git_ref: master

@@ -6,20 +6,36 @@
   with_items:
     - landing
     - landing.pub
+  
+
+- name: Add ruby repo
+  apt_repository: repo='ppa:brightbox/ruby-ng'
+  sudo: yes
 
 - name: Install packets
   apt: name="{{item}}" state=installed
   with_items:
     - git
-    - ruby
-    - ruby-dev
+    - ruby2.1
+    - ruby2.1-dev
     - nodejs
+    - build-essential
+    - libxml2-dev
+    - libxslt1-dev
+    - zlib1g-dev
   sudo: yes
 
 - name: Clean nginx dir
   file: path=/usr/share/nginx/html state=absent
   sudo: yes
 
-- name: Install jekyll
-  shell: gem install jekyll --no-rdoc --no-ri
+- name: Check middleman
+  shell: "which middleman"
+  ignore_errors: True
+  register: middleman_present
+
+- name: Install middleman
+  shell: gem install middleman -v 3.4.0 --no-rdoc --no-ri
   sudo: yes
+  when: middleman_present|failed
+

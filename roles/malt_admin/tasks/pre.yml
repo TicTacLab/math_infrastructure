@@ -12,6 +12,25 @@
   sudo: yes
   register: service_file
 
+- name: Install nodejs
+  apt: name="{{item}}" state=installed
+  sudo: yes
+  with_items:
+    - nodejs
+    - npm
+
+- name: Link nodejs to node
+  file: src=/usr/bin/nodejs
+        dest=/usr/bin/node
+        state=link
+  sudo: yes
+
+- name: install grunt
+  npm: name=grunt-cli
+       global=yes
+       state=present
+  sudo: yes
+
 - name: Set autostart
   service: name=malt_admin enabled=yes
   sudo: yes

@@ -1,13 +1,18 @@
-- name: User exists?
+- name: user exists?
   command: cqlsh -u malt -p {{cassandra_password}} -e "LIST USERS" {{config[ansible_hostname].cassandra_listen_address}}
   register: user_check
   ignore_errors: yes
 
 - name: Create malt user
   shell: >
-    cqlsh -u cassandra -p cassandra -e "CONSISTENCY ALL; CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{config[ansible_hostname].cassandra_listen_address}} &&
+    cqlsh -u cassandra -p cassandra -e "CONSISTENCY ALL; CREATE USER malt WITH PASSWORD '{{cassandra_password}}' SUPERUSER"  {{config[ansible_hostname].cassandra_listen_address}}
+  when: user_check|failed
+
+- name: Remove cassandra user
+  shell: >
     cqlsh -u malt -p {{cassandra_password}} -e "CONSISTENCY ALL; ALTER USER cassandra WITH PASSWORD 'vedCucokvod7' NOSUPERUSER" {{config[ansible_hostname].cassandra_listen_address}}
   when: user_check|failed
+  ignore_errors: yes
 
 - name: Create schema dir
   file: path=/tmp/schema state=directory

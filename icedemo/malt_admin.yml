@@ -1,0 +1,4 @@
+- name: Setup Malt Admin
+  hosts: tag_IceDemo_Yes
+  roles:
+    - malt_admin

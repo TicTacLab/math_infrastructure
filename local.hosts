@@ -18,9 +18,25 @@
 [tag_Nginx_Yes]
 192.168.167.140
 
+[tag_Name_middleman_landing]
+192.168.167.120
+
+[tag_IceDemo_Yes]
+192.168.167.143
+
+#[zabbix]
+#192.168.167.141
+
+[ci]
+192.168.167.2
+
 [local:children]
 tag_MaltEngine_Yes
 tag_MaltAdmin_Yes
 tag_Cassandra_Yes
 tag_CassandraSeed_Yes
 tag_Nginx_Yes
+tag_Name_middleman_landing
+tag_IceDemo_Yes
+#zabbix
+ci

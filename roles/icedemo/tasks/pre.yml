@@ -1,0 +1,16 @@
+- name: Create keys dir
+  file: path=.ssh state=directory
+
+- name: Copy Keys
+  copy: src="keys/{{item}}" dest=".ssh/{{item}}" mode="600"
+  with_items:
+    - icedemo
+    - icedemo.pub
+
+- name: Copy service file
+  template: src=icedemo.upstart.conf dest=/etc/init/icedemo.conf
+  sudo: yes
+
+- name: Set autotstart
+  service: name=icedemo enabled=yes
+  sudo: yes

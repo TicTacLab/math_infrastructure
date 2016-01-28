@@ -1,0 +1,100 @@
+- name: Bulid MathAdmin release
+  hosts: ci
+  roles: [ci]
+  vars:
+    dist_name: "math_engine-{{ math_engine_version | mandatory }}"
+  tasks:
+    - name: Print version
+      debug: msg="NEW VERSION STRING {{ math_engine_version | mandatory }}"
+
+    - name: Create keys dir
+      file: path=.ssh state=directory
+
+    - name: Copy Keys
+      copy: src="roles/malt_engine/files/keys/{{item}}"
+            dest=".ssh/{{item}}"
+            mode="600"
+      with_items:
+        - math_engine
+        - math_engine.pub
+
+    - name: Clone project
+      git: repo=git@github.com:TicTacLab/math_engine.git
+           key_file=.ssh/math_engine
+           force=yes
+           dest=math_engine
+           update=yes
+           version="{{git_ref}}"
+           accept_hostkey=yes
+      register: project
+
+    - name: Clean dir
+      shell: lein clean
+      environment:
+        LEIN_USERNAME: admin
+        LEIN_PASSWORD: NeOpBac8
+      args:
+        chdir: math_engine
+
+    - name: Download deps for obfuscating
+      shell: ./boot fetch-obfuscating-deps
+      args:
+        chdir: math_engine
+
+    - name: Build Uberjar
+      shell: ./boot build
+      environment:
+        LEIN_USERNAME: admin
+        LEIN_PASSWORD: NeOpBac8
+      args:
+        chdir: math_engine
+
+    - name: Bump version
+      replace: dest=math_engine/project.clj
+               regexp='^(\(defproject malt_engine ).*$'
+               replace='\1"{{math_engine_version}}"'
+
+    - name: Create dist dir
+      file: path="{{item}}" state=directory
+      with_items:
+        - dist/{{dist_name}}
+        - dist/{{dist_name}}/conf
+        - dist/{{dist_name}}/bin
+        - dist/{{dist_name}}/lib
+
+    - name: Copy config.json
+      command: >
+        cp math_engine/config.example.json
+           dist/{{dist_name}}/conf/config.json
+
+    - name: Copy logger-conf.xml
+      command: >
+        cp math_engine/resources/logback.production.xml
+           dist/{{dist_name}}/conf/logger-conf.xml
+
+    - name: Copy executable script
+      copy: src=roles/common/files/math_engine.sh
+            dest=dist/{{dist_name}}/bin/math_engine.sh
+            mode='a+x'
+
+    - name: Copy jar
+      command: >
+        cp math_engine/target/math_engine_standalone.jar
+           dist/{{dist_name}}/lib/math_engine.jar
+
+    - name: Clean old zip dist
+      file: path="dist/{{dist_name}}.zip" state=absent
+
+    - name: Zip dist
+      command: zip -r {{dist_name}}.zip {{dist_name}}
+      args:
+        chdir: dist
+
+    #- name: PUT dist to S3
+    #  command: >
+    #    aws s3 cp --region eu-central-1
+    #     dist/{{dist_name}}.zip
+    #     s3://com.betengines.releases/math_engine/{{dist_name}}.zip
+    #  environment:
+    #      AWS_ACCESS_KEY_ID: "{{access_key}}"
+    #      AWS_SECRET_ACCESS_KEY: "{{secret_key}}"

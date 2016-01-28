@@ -3,19 +3,19 @@ demo_password: ''
 cassandra_password: 'CrasErjud3'
 cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 1
-cassandra_seed_nodes: '172.31.30.168'
-cassandra_nodes: ['172.31.30.168']
+cassandra_seed_nodes: '172.31.30.19'
+cassandra_nodes: ['172.31.30.19']
 
-nginx_listen_address: '52.29.54.210'
+nginx_listen_address: '52.29.176.133'
 
-malt_admin_host: '172.31.30.168'
+malt_admin_host: '172.31.30.19'
 
 config:
-  "ip-172-31-30-168":
-    cassandra_listen_address: '172.31.30.168'
-    cassandra_rmi_host: '172.31.30.168'
-    malt_engine_rmi_host: '172.31.30.168'
-    malt_engine_host: '172.31.30.168'
+  "ip-172-31-30-19":
+    cassandra_listen_address: '172.31.30.19'
+    cassandra_rmi_host: '172.31.30.19'
+    malt_engine_rmi_host: '172.31.30.19'
+    malt_engine_host: '172.31.30.19'
 
 malt_engine_config:
   "cache-on": true
@@ -34,7 +34,7 @@ malt_engine_config:
 malt_admin_config:
   "host": "{{malt_admin_host}}"
   "port": 8080
-  "api-addr": "{{nginx_listen_address}}/api"
+  "m-engine-api-addr": "{{nginx_listen_address}}/api"
   "app-env": "production"
   "noilly-port": 1301
   "session-ttl": 3600

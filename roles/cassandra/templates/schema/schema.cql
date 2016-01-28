@@ -20,6 +20,13 @@ CREATE TABLE IF NOT EXISTS models (
        rev varchar
 );
 
+CREATE TABLE IF NOT EXISTS sengine_files (
+       id int PRIMARY KEY,
+       raw_file blob,
+       file_name varchar,
+       last_modified timestamp
+);
+
 CREATE TABLE IF NOT EXISTS users (
        login varchar PRIMARY KEY,
        name varchar,
@@ -74,4 +81,9 @@ CREATE TABLE IF NOT EXISTS calculation_log (
       in_params varchar,
       out_params blob,
       PRIMARY KEY ((session_id, model_id))
+);
+
+CREATE TABLE IF NOT EXISTS event_log (
+      id varchar PRIMARY KEY,
+      log_item list<text>
 );
