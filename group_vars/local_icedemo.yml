@@ -1,0 +1,67 @@
+demo_password: ''
+
+cassandra_password: 'Mor0frerc'
+cassandra_data_dir: '/data/cassandra'
+cassandra_replication_factor: 1
+cassandra_seed_nodes: '192.168.167.143'
+cassandra_nodes: ['192.168.167.143']
+
+malt_admin_host: '192.168.167.143'
+
+config:
+  "icedemo":
+    cassandra_listen_address: '192.168.167.143'
+    cassandra_rmi_host: '192.168.167.143'
+    malt_engine_rmi_host: '192.168.167.143'
+    malt_engine_host: '192.168.167.143'
+#'192.168.167.143'
+    ice_demo_host: '192.168.167.143'
+
+malt_engine_config:
+  "cache-on": true
+  "port": 3000
+  "host": "{{config[ansible_hostname].malt_engine_host}}"
+  "session-ttl": 900
+  "storage-keyspace": malt
+  "storage-nodes": "{{cassandra_nodes}}"
+  "storage-password": "{{cassandra_password}}"
+  "storage-user": malt
+  "monitoring-hostname": "{{ansible_nodename}}"
+  "zabbix-host": null
+  "zabbix-port": 10051
+  "noilly-port": 1300
+
+malt_admin_config:
+  "host": "{{malt_admin_host}}"
+  "port": 8080
+  "m-engine-api-addr": "{{malt_engine_config.host}}/api"
+  "app-env": "production"
+  "noilly-port": 1301
+  "session-ttl": 3600
+  "settings-table": "settings"
+  "offload-repo": null
+  "storage-keyspace": malt
+  "storage-nodes": "{{cassandra_nodes}}"
+  "storage-password": "{{cassandra_password}}"
+  "storage-user": malt
+  "monitoring-hostname": "{{ansible_nodename}}"
+  "zabbix-host": null
+  "zabbix-port": 10051
+
+ice_demo_config:
+  "host": "192.168.167.143"
+  "port": 8888
+  "mengine-addr": "192.168.167.143:{{malt_engine_config.port}}"
+
+malt_engine_jmx_port: 7198
+
+cassandra_jmx_port: 7199
+cassandra_max_heap_size: '500m'
+cassandra_new_heap_size: '100m'
+cassandra_max_new_size: '100m'
+
+malt_engine_heap_size: '1500m'
+malt_admin_heap_size: '600m'
+ice_demo_heap_size: '500m'
+
+git_ref: master
