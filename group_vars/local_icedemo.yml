@@ -3,19 +3,19 @@ demo_password: ''
 cassandra_password: 'Mor0frerc'
 cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 1
-cassandra_seed_nodes: '172.31.23.140'
-cassandra_nodes: ['172.31.23.140']
+cassandra_seed_nodes: '192.168.167.143'
+cassandra_nodes: ['192.168.167.143']
 
-malt_admin_host: '52.29.183.146'
+malt_admin_host: '192.168.167.143'
 
 config:
-  "ip-172-31-23-140":
-    cassandra_listen_address: '172.31.23.140'
-    cassandra_rmi_host: '172.31.23.140'
-    malt_engine_rmi_host: '52.29.183.146'
-    malt_engine_host: '172.31.23.140'
-#'52.29.183.146'
-    ice_demo_host: '52.29.183.146'
+  "icedemo":
+    cassandra_listen_address: '192.168.167.143'
+    cassandra_rmi_host: '192.168.167.143'
+    malt_engine_rmi_host: '192.168.167.143'
+    malt_engine_host: '192.168.167.143'
+#'192.168.167.143'
+    ice_demo_host: '192.168.167.143'
 
 malt_engine_config:
   "cache-on": true
@@ -49,9 +49,9 @@ malt_admin_config:
   "zabbix-port": 10051
 
 ice_demo_config:
-  "host": "52.29.183.146"
+  "host": "192.168.167.143"
   "port": 8888
-  "mengine-addr": "52.29.183.146:{{malt_engine_config.port}}"
+  "mengine-addr": "192.168.167.143:{{malt_engine_config.port}}"
 
 malt_engine_jmx_port: 7198
 

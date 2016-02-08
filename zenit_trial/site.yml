@@ -1,0 +1,9 @@
+- name: Common
+  hosts: tag_Name_Zenit_Trial
+  roles:
+    - common
+
+- include: cassandra.yml
+- include: malt_admin.yml
+- include: malt_engine.yml
+- include: load_balancer.yml
