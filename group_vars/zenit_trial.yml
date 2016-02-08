@@ -1,21 +1,21 @@
-demo_password: ''
+demo_password: 'wonUkDej1'
 
-cassandra_password: 'Mor0frerc'
+cassandra_password: 'lyetGailbIs4'
 cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 1
-cassandra_seed_nodes: '172.31.23.140'
-cassandra_nodes: ['172.31.23.140']
+cassandra_seed_nodes: '172.31.17.4'
+cassandra_nodes: ['172.31.17.4']
 
-malt_admin_host: '52.29.157.51'
+nginx_listen_address: '52.29.224.53'
+
+malt_admin_host: '172.31.17.4'
 
 config:
-  "ip-172-31-23-140":
-    cassandra_listen_address: '172.31.23.140'
-    cassandra_rmi_host: '172.31.23.140'
-    malt_engine_rmi_host: '52.29.157.51'
-    malt_engine_host: '172.31.23.140'
-#'52.29.157.51'
-    ice_demo_host: '52.29.157.51'
+  "ip-172-31-17-4":
+    cassandra_listen_address: '172.31.17.4'
+    cassandra_rmi_host: '172.31.17.4'
+    malt_engine_rmi_host: '172.31.17.4'
+    malt_engine_host: '172.31.17.4'
 
 malt_engine_config:
   "cache-on": true
@@ -34,7 +34,7 @@ malt_engine_config:
 malt_admin_config:
   "host": "{{malt_admin_host}}"
   "port": 8080
-  "m-engine-api-addr": "{{malt_engine_config.host}}:{{malt_engine_config.port}}"
+  "m-engine-api-addr": "{{nginx_listen_address}}/api"
   "app-env": "production"
   "noilly-port": 1301
   "session-ttl": 3600
@@ -48,20 +48,15 @@ malt_admin_config:
   "zabbix-host": null
   "zabbix-port": 10051
 
-ice_demo_config:
-  "host": "52.29.157.51"
-  "port": 8888
-  "mengine-addr": "52.29.157.51:{{malt_engine_config.port}}"
 
 malt_engine_jmx_port: 7198
 
 cassandra_jmx_port: 7199
-cassandra_max_heap_size: '500m'
-cassandra_new_heap_size: '100m'
-cassandra_max_new_size: '100m'
+cassandra_max_heap_size: '2500m'
+cassandra_new_heap_size: '1g'
+cassandra_max_new_size: '625m'
 
-malt_engine_heap_size: '1500m'
-malt_admin_heap_size: '600m'
-ice_demo_heap_size: '500m'
+malt_engine_heap_size: '2500m'
+malt_admin_heap_size: '1g'
 
-git_ref: master
+git_ref: stable
