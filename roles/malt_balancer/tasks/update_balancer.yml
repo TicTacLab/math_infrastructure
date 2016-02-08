@@ -26,6 +26,7 @@
 - name: Write config
   copy: dest=/etc/nginx/conf/math-balancer.json
         content="{{malt_balancer_config|to_json|safe}}"
+        owner=nginx
   sudo: yes
 
 - name: Remove old dir
