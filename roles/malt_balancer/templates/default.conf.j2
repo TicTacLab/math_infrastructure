@@ -18,6 +18,14 @@ http {
   jvm_var other_jars '/etc/nginx/jars/math_balancer.jar';
   jvm_options "-Djava.class.path=/etc/nginx/jars/nginx-clojure-0.4.2.jar:#{other_jars}";
   jvm_options "-Dmath_balancer.config_file=/etc/nginx/conf/math-balancer.json";
+  jvm_options "-Djava.net.preferIPv4Stack=true";
+  jvm_options "-Dcom.sun.management.jmxremote";
+  jvm_options "-Dcom.sun.management.jmxremote.local.only=false";
+  jvm_options "-Dcom.sun.management.jmxremote.port={{malt_balancer_jxm_port}}";
+  jvm_options "-Dcom.sun.management.jmxremote.rmi.port={{malt_balancer_jxm_port}}";
+  jvm_options "-Dcom.sun.management.jmxremote.ssl=false";
+  jvm_options "-Dcom.sun.management.jmxremote.authenticate=false";
+  jvm_options "-Djava.rmi.server.hostname=localhost";
 
   server {
     listen 80;
