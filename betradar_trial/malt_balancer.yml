@@ -1,0 +1,4 @@
+- name: Setup Malt Balancer
+  hosts: tag_Name_Betradar_Trial
+  roles:
+    - malt_balancer

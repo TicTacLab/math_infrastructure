@@ -1,0 +1,5 @@
+- name: Setup Malt Engine
+  hosts: tag_Name_Betradar_Trial:&tag_MaltEngine_Yes
+  serial: 1
+  roles:
+    - malt_engine

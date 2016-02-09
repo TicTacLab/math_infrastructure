@@ -1,5 +1,5 @@
 - name: Common
-  hosts: tag_Name_Zenit_Trial
+  hosts: tag_Name_Betradar_Trial
   roles:
     - common
 
