@@ -1,0 +1,74 @@
+- name: Ensure utils
+  apt: name={{item}} state=installed
+  sudo: yes
+  with_items:
+    - curl
+    - tar
+    - libjpeg62
+    - libfontconfig1
+
+- name: Create group
+  group: name=nginx state=present
+  sudo: yes
+
+- name: Create nginx user
+  user: name=nginx group=nginx state=present
+  sudo: yes
+
+- name: Download nginx-clojure binaries
+  command: curl -o nginx-clojure.tar.gz -L downloads.sourceforge.net/project/nginx-clojure/nginx-clojure-0.4.2.tar.gz
+  args:
+    creates: nginx-clojure.tar.gz
+
+- name: Extract archive
+  command: "tar xzf {{ansible_env.HOME}}/nginx-clojure.tar.gz"
+  args:
+    chdir: "{{ansible_env.HOME}}"
+    creates: nginx-clojure-0.4.2
+  sudo: yes
+
+- name: Create nginx directory
+  file: path=/etc/nginx state=directory owner=nginx
+  sudo: yes
+
+- name: Install conf dir
+  command: 'cp -ra conf/. /etc/nginx'
+  sudo: yes
+  args:
+    chdir: "{{ansible_env.HOME}}/nginx-clojure-0.4.2/nginx-1.8.0"
+
+- name: Set init
+  template: src=default.init.d dest=/etc/init.d/nginx mode=u+rwx
+  sudo: yes
+
+- name: Stop nginx
+  command: 'service nginx stop'
+  sudo: yes
+
+- name: Install correct executable
+  command: 'cp nginx-linux-x64 /usr/sbin/nginx'
+  sudo: yes
+  args:
+    chdir: "{{ansible_env.HOME}}/nginx-clojure-0.4.2/nginx-1.8.0"
+
+- name: Create app config directory
+  file: path=/etc/nginx/conf state=directory mode=644 owner=nginx
+  sudo: yes
+
+- name: Create jars directory
+  file: path=/etc/nginx/jars state=directory mode=644 owner=nginx
+  sudo: yes
+
+- name: Create logs directory
+  file: path=/var/log/nginx state=directory mode=644 owner=nginx
+  sudo: yes
+
+- name: Create temp directory
+  file: path=/etc/nginx/temp state=directory mode=644 owner=nginx
+  sudo: yes
+
+- name: Create jars directory
+  command: 'cp -r jars/. /etc/nginx/jars'
+  sudo: yes
+  args:
+    chdir: "{{ansible_env.HOME}}/nginx-clojure-0.4.2/nginx-1.8.0"

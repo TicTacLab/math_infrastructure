@@ -2,4 +2,4 @@
 dependencies:
   - role: java
   - role: lein
-  - role: nginx
+  - role: nginx_clojure
