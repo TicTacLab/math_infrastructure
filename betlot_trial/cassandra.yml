@@ -1,0 +1,10 @@
+- name: Setup Cassandra
+  hosts: tag_Name_BetLot_Trial:&tag_Cassandra_Yes
+  roles:
+    - java
+    - cassandra
+
+- name: Load data
+  hosts: tag_Name_BetLot_Trial:&tag_Cassandra_Yes
+  tasks:
+    - include: ../roles/cassandra/tasks/load_schema.yml

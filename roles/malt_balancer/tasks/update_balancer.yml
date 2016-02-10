@@ -37,6 +37,10 @@
   command: mv new_malt_balancer malt_balancer
   sudo: yes
 
-- name: Reload nginx
-  service: name=nginx state=reloaded enabled=yes
+- name: Stop nginx
+  service: name=nginx state=stop
   sudo: yes
+
+ - name: Start nginx
+   service: name=nginx state=start enabled=yes
+   sudo: yes
