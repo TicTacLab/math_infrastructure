@@ -35,6 +35,13 @@
             mode=755
   sudo: yes
 
+- name: Copy cassandra dc options
+  template: src=cassandra-rackdc.properties
+            dest=/etc/cassandra/cassandra-rackdc.properties
+            owner=cassandra
+            group=cassandra
+  sudo: yes
+
 - name: Create cassandra data dir
   file: path={{cassandra_data_dir}} state=directory owner=cassandra
   sudo: yes
@@ -48,9 +55,9 @@
   copy: src=cassandra dest=/etc/init.d/cassandra
   sudo: yes
 
-- name: Run Cassandra
-  service: name=cassandra state=restarted enabled=yes
-  sudo: yes
-
-- name: Wait for Cassandra to start
-  wait_for: path=/var/log/cassandra/system.log timeout=180 search_regex='.*Listening for thrift clients.*' state=present
+#- name: Run Cassandra
+#  service: name=cassandra state=restarted enabled=yes
+#  sudo: yes
+#
+#- name: Wait for Cassandra to start
+#  wait_for: path=/var/log/cassandra/system.log timeout=180 search_regex='.*Listening for thrift clients.*' state=present

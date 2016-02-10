@@ -1,0 +1,24 @@
+#- name: Try cassandra
+#  hosts: cass
+#  roles: [cassandra]
+#
+#
+#- name: Start seed nodes
+#  hosts: cass_seeds
+#  serial: 1
+#  tasks:
+#    - name: Start seed nodes
+#      service: name=cassandra state=restarted
+#      sudo: yes
+#
+#- name: Start other nodes
+#  hosts: cass:!cass_seeds
+#  tasks:
+#    - name: Start other nodes
+#      service: name=cassandra state=restarted
+#      sudo: yes
+
+- name: Load data
+  hosts: cass[0]
+  tasks:
+    - include: roles/cassandra/tasks/load_schema.yml

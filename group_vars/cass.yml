@@ -1,0 +1,108 @@
+ansible_ssh_user: malt_deploy
+ansible_ssh_port: 22
+ansible_ssh_pass: WynorOpt8
+
+cassandra_password: 'CacNeck5'
+cassandra_data_dir: '/data/cassandra'
+cassandra_replication_factor: 2
+cassandra_seed_nodes: '192.168.160.101,192.168.161.101'
+cassandra_nodes: ['192.168.160.101', '192.168.160.102', '192.168.160.103', '192.168.161.101', '192.168.161.102', '192.168.161.103']
+
+nginx_listen_address: '192.168.167.140'
+
+malt_admin_host: '192.168.167.145'
+
+config:
+  "dc01cas01":
+    cassandra_listen_address: '192.168.160.101'
+    cassandra_rmi_host: '192.168.160.101'
+    cassandra_dc: DC01
+    cassandra_rack: RACK01
+
+  "dc01cas02":
+    cassandra_listen_address: '192.168.160.102'
+    cassandra_rmi_host: '192.168.160.102'
+    cassandra_dc: DC01
+    cassandra_rack: RACK01
+
+  "dc01cas03":
+    cassandra_listen_address: '192.168.160.103'
+    cassandra_rmi_host: '192.168.160.103'
+    cassandra_dc: DC01
+    cassandra_rack: RACK01
+
+  "dc02cas01":
+    cassandra_listen_address: '192.168.161.101'
+    cassandra_rmi_host: '192.168.161.101'
+    cassandra_dc: DC02
+    cassandra_rack: RACK02
+
+  "dc02cas02":
+    cassandra_listen_address: '192.168.161.102'
+    cassandra_rmi_host: '192.168.161.102'
+    cassandra_dc: DC02
+    cassandra_rack: RACK02
+
+  "dc02cas03":
+    cassandra_listen_address: '192.168.161.103'
+    cassandra_rmi_host: '192.168.161.103'
+    cassandra_dc: DC02
+    cassandra_rack: RACK02
+
+
+
+
+malt_engine_config:
+  "cache-on": false
+  "port": 3000
+  "host": "{{config[ansible_hostname].malt_engine_host}}"
+  "session-ttl": 900
+  "storage-keyspace": malt
+  "storage-nodes": "{{cassandra_nodes}}"
+  "storage-password": "{{cassandra_password}}"
+  "storage-user": malt
+  "monitoring-hostname": "{{ansible_nodename}}"
+  "zabbix-host": null
+  "zabbix-port": 10051
+  "noilly-port": 1300
+
+malt_admin_config:
+  "host": "{{malt_admin_host}}"
+  "port": 8080
+  "m-engine-api-addr": "{{nginx_listen_address}}/api"
+  "app-env": "production"
+  "noilly-port": 1301
+  "session-ttl": 3600
+  "settings-table": "settings"
+  "offload-repo": null
+  "storage-keyspace": malt
+  "storage-nodes": "{{cassandra_nodes}}"
+  "storage-password": "{{cassandra_password}}"
+  "storage-user": malt
+  "monitoring-hostname": "{{ansible_nodename}}"
+  "zabbix-host": null
+  "zabbix-port": 10051
+
+malt_balancer_config:
+  "poll-interval-ms": 5000
+  "poll-timeout-ms": 1000
+  "engines":
+   - "server": "192.168.167.144:3000"
+     "sessions-limit": 2
+   - "server": "192.168.167.145:3000"
+     "sessions-limit": 2
+   - "server": "192.168.167.146:3000"
+     "sessions-limit": 2
+
+
+malt_engine_jmx_port: 7198
+
+cassandra_jmx_port: 7199
+cassandra_max_heap_size: '300m'
+cassandra_new_heap_size: '100m'
+cassandra_max_new_size: '50m'
+
+malt_engine_heap_size: '1g'
+malt_admin_heap_size: '500m'
+
+git_ref: master
