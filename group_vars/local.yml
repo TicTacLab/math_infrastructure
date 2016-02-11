@@ -81,6 +81,12 @@ malt_admin_config:
 malt_balancer_config:
   "poll-interval-ms": 5000
   "poll-timeout-ms": 1000
+  "storage-keyspace": malt
+  "storage-nodes": "{{cassandra_nodes}}"
+  "storage-password": "{{cassandra_password}}"
+  "white-list-ttl": 900
+  "black-list-ttl": 900
+  "storage-user": malt
   "engines":
    - "server": "192.168.167.144:3000"
      "sessions-limit": 2
