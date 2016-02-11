@@ -20,12 +20,10 @@
 - name: Copy schema settings files
   template: src="schema/{{item}}" dest="/tmp/schema/{{item}}"
   with_items:
-    #- settings.cql
     - keyspace.cql
     - schema.cql
 
 - name: Initialize schema
   shell: >
     cqlsh -u cassandra -p cassandra -f /tmp/schema/keyspace.cql {{config[ansible_hostname].cassandra_listen_address}} &&
-    cqlsh -u cassandra -p cassandra -f /tmp/schema/schema.cql -k malt  {{config[ansible_hostname].cassandra_listen_address}} &&
-    cqlsh -u cassandra -p cassandra -f /tmp/schema/settings.cql -k malt {{config[ansible_hostname].cassandra_listen_address}}
+    cqlsh -u cassandra -p cassandra -f /tmp/schema/schema.cql -k malt  {{config[ansible_hostname].cassandra_listen_address}}

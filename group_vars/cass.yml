@@ -7,6 +7,14 @@ cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 2
 cassandra_seed_nodes: '192.168.160.101,192.168.161.101'
 cassandra_nodes: ['192.168.160.101', '192.168.160.102', '192.168.160.103', '192.168.161.101', '192.168.161.102', '192.168.161.103']
+cassandra_malt_ks_replication_strategy:
+  "class": "NetworkTopologyStrategy"
+  "DC01": "{{cassandra_replication_factor}}"
+  "DC02": "{{cassandra_replication_factor}}"
+cassandra_system_ks_replication_strategy:
+  "class": "NetworkTopologyStrategy"
+  "DC01": "{{groups.cass_dc01|length}}"
+  "DC02": "{{groups.cass_dc02|length}}"
 
 nginx_listen_address: '192.168.167.140'
 
@@ -79,6 +87,7 @@ malt_admin_config:
   "storage-nodes": "{{cassandra_nodes}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
+  "storage-default-dc": "DC01"
   "monitoring-hostname": "{{ansible_nodename}}"
   "zabbix-host": null
   "zabbix-port": 10051

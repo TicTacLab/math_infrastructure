@@ -1,9 +1,9 @@
 CONSISTENCY ALL;
 
 CREATE KEYSPACE IF NOT EXISTS malt
-WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC01' : {{cassandra_replication_factor}}, 'DC02' : {{cassandra_replication_factor}}};
+WITH REPLICATION = {{ cassandra_malt_ks_replication_strategy|to_json|safe|replace("\"", "'") }};
 
 ALTER KEYSPACE system_auth
-WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC01' : {{groups.cass_dc01|length}}, 'DC02' : {{groups.cass_dc02|length}};
+WITH REPLICATION = {{ cassandra_system_ks_replication_strategy|to_json|safe|replace("\"", "'") }};
 
 USE malt;

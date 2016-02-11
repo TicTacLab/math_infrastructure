@@ -55,9 +55,9 @@
   copy: src=cassandra dest=/etc/init.d/cassandra
   sudo: yes
 
-#- name: Run Cassandra
-#  service: name=cassandra state=restarted enabled=yes
-#  sudo: yes
-#
+- name: Enable Cassandra on startup
+  service: name=cassandra enabled=yes
+  sudo: yes
+
 #- name: Wait for Cassandra to start
 #  wait_for: path=/var/log/cassandra/system.log timeout=180 search_regex='.*Listening for thrift clients.*' state=present

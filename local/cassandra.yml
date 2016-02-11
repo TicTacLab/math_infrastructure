@@ -4,6 +4,28 @@
     - java
     - cassandra
 
+- name: Start seed nodes
+  hosts: tag_CassandraSeed_Yes
+  serial: 1
+  tasks:
+    - name: Start seed nodes
+      service: name=cassandra state=restarted
+      sudo: yes
+
+    - name: Wait for Cassandra to start
+      wait_for: path=/var/log/cassandra/system.log timeout=180 search_regex='.*Listening for thrift clients.*' state=present
+
+- name: Start other nodes
+  hosts: tag_Cassandra_Yes:!tag_CassandraSeed_Yes
+  tasks:
+    - name: Start other nodes
+      service: name=cassandra state=restarted
+      sudo: yes
+
+    - name: Wait for Cassandra to start
+      wait_for: path=/var/log/cassandra/system.log timeout=180 search_regex='.*Listening for thrift clients.*' state=present
+
+
 - name: Load data
   hosts: tag_Cassandra_Yes[0]
   tasks:

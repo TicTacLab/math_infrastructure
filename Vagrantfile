@@ -48,31 +48,55 @@ Vagrant.configure(2) do |config|
   config.vm.define("dc01cas01") do |node|
     node.vm.network "private_network", ip: "192.168.160.101"
     node.vm.hostname = "dc01cas01.local"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 2
+    end
   end
 
   config.vm.define("dc01cas02") do |node|
     node.vm.network "private_network", ip: "192.168.160.102"
     node.vm.hostname = "dc01cas02.local"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 2
+    end
   end
 
   config.vm.define("dc01cas03") do |node|
     node.vm.network "private_network", ip: "192.168.160.103"
     node.vm.hostname = "dc01cas03.local"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 2
+    end
   end
 
   config.vm.define("dc02cas01") do |node|
     node.vm.network "private_network", ip: "192.168.161.101"
     node.vm.hostname = "dc02cas01.local"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 2
+    end
   end
 
   config.vm.define("dc02cas02") do |node|
     node.vm.network "private_network", ip: "192.168.161.102"
     node.vm.hostname = "dc02cas02.local"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 2
+    end
   end
 
   config.vm.define("dc02cas03") do |node|
     node.vm.network "private_network", ip: "192.168.161.103"
     node.vm.hostname = "dc02cas03.local"
+    node.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 2
+    end
   end
 
   config.vm.define("nginx") do |node|
