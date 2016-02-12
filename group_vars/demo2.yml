@@ -35,6 +35,7 @@ malt_engine_config:
   "storage-nodes": "{{cassandra_nodes}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
+  "storage-default-dc": "DC01"
   "monitoring-hostname": "{{ansible_nodename}}"
   "zabbix-host": null
   "zabbix-port": 10051

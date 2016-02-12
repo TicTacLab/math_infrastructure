@@ -35,6 +35,7 @@ malt_engine_config:
   "storage-nodes": "{{cassandra_nodes}}"
   "storage-password": "{{cassandra_password}}"
   "storage-user": malt
+  "storage-default-dc": "DC01"
   "monitoring-hostname": "{{ansible_nodename}}"
   "zabbix-host": null
   "zabbix-port": 10051
@@ -69,6 +70,7 @@ malt_balancer_config:
   "white-list-ttl": 900
   "black-list-ttl": 900
   "storage-user": malt
+  "storage-default-dc": "DC01"
   "engines":
    - "server": "{{config[ansible_hostname].malt_engine_host}}:{{malt_engine_config.port}}"
      "sessions-limit": 10

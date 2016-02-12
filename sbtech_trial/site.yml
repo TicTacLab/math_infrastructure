@@ -1,0 +1,9 @@
+#- name: Common
+#  hosts: tag_Name_SBTech_Trial
+#  roles:
+#    - common
+#
+#- include: cassandra.yml
+#- include: malt_admin.yml
+#- include: malt_engine.yml
+- include: malt_balancer.yml

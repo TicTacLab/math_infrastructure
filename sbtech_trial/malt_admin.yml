@@ -1,0 +1,4 @@
+- name: Setup Malt Admin
+  hosts: tag_Name_SBTech_Trial:&tag_MaltAdmin_Yes
+  roles:
+    - malt_admin

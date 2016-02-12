@@ -1,0 +1,20 @@
+- name: Setup Cassandra
+  hosts: tag_Name_SBTech_Trial:&tag_Cassandra_Yes
+  roles:
+    - java
+    - cassandra
+
+- name: Start Cassandra
+  hosts: tag_Name_SBTech_Trial:&tag_Cassandra_Yes
+  tasks:
+    - name: start cassandra
+      service: name=cassandra state=restarted
+      sudo: yes
+
+    - name: Wait for Cassandra to start
+      wait_for: path=/var/log/cassandra/system.log timeout=180 search_regex='.*Listening for thrift clients.*' state=present
+
+- name: Load data
+  hosts: tag_Name_SBTech_Trial:&tag_Cassandra_Yes
+  tasks:
+    - include: ../roles/cassandra/tasks/load_schema.yml

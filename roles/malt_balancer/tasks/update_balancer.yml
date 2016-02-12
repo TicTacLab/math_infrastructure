@@ -38,7 +38,7 @@
   sudo: yes
 
 - name: Stop nginx
-  service: name=nginx state=stoped
+  service: name=nginx state=stopped
   sudo: yes
 
 - name: Start nginx
