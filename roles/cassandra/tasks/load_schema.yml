@@ -18,7 +18,7 @@
   file: path=/tmp/schema state=directory
 
 - name: Copy schema settings files
-  template: src="schema/{{item}}" dest="/tmp/schema/{{item}}"
+  template: src="../roles/cassandra/templates/schema/{{item}}" dest="/tmp/schema/{{item}}"
   with_items:
     - keyspace.cql
     - schema.cql

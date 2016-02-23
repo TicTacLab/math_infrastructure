@@ -15,6 +15,9 @@
 192.168.167.144
 192.168.167.145
 
+[tag_Memcached_Yes]
+192.168.167.143
+
 [tag_Nginx_Yes]
 192.168.167.140
 
@@ -38,5 +41,6 @@ tag_CassandraSeed_Yes
 tag_Nginx_Yes
 tag_Name_middleman_landing
 tag_IceDemo_Yes
+tag_Memcached_Yes
 #zabbix
 ci

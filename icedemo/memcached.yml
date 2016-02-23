@@ -1,0 +1,11 @@
+- name: Setup Memecached
+  hosts: tag_IceDemo_Yes
+  roles:
+    - memcached
+
+- name: Start memcached
+  hosts: tag_IceDemo_Yes
+  tasks:
+    - name: Start memcached node
+      service: name=memcached state=restarted
+      sudo: yes

@@ -1,0 +1,9 @@
+- name: Install memcached
+  apt: name=memcached state=installed update_cache=yes
+  sudo: yes
+
+- name: Copy memcached config
+  template: src=memcached.conf
+            dest=/etc/memcached.conf
+            mode=644
+  sudo: yes
