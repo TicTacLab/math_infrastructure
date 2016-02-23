@@ -3,8 +3,8 @@ demo_password: 'Unvash0OvOl6'
 cassandra_password: 'DofyelHon6'
 cassandra_data_dir: '/data/cassandra'
 cassandra_replication_factor: 1
-cassandra_seed_nodes: '172.31.29.168'
-cassandra_nodes: ['172.31.29.168']
+cassandra_seed_nodes: '172.31.28.54'
+cassandra_nodes: ['172.31.28.54']
 cassandra_malt_ks_replication_strategy:
   "class": "NetworkTopologyStrategy"
   "DC01": "{{cassandra_replication_factor}}"
@@ -13,18 +13,18 @@ cassandra_system_ks_replication_strategy:
   "class": "NetworkTopologyStrategy"
   "DC01": "{{groups.tag_Cassandra_Yes|length}}"
 
-nginx_listen_address: '52.29.225.155'
+nginx_listen_address: '52.29.252.51'
 
-malt_admin_host: '172.31.29.168'
+malt_admin_host: '172.31.28.54'
 
 config:
-  "ip-172-31-29-168":
-    cassandra_listen_address: '172.31.29.168'
-    cassandra_rmi_host: '172.31.29.168'
+  "ip-172-31-28-54":
+    cassandra_listen_address: '172.31.28.54'
+    cassandra_rmi_host: '172.31.28.54'
     cassandra_dc: DC01
     cassandra_rack: RACK01
-    malt_engine_rmi_host: '172.31.29.168'
-    malt_engine_host: '172.31.29.168'
+    malt_engine_rmi_host: '172.31.28.54'
+    malt_engine_host: '172.31.28.54'
 
 malt_engine_config:
   "cache-on": true
@@ -44,7 +44,7 @@ malt_engine_config:
 malt_admin_config:
   "host": "{{malt_admin_host}}"
   "port": 8080
-  "m-engine-api-addr": "{{nginx_listen_address}}/api"
+  "m-engine-api-addr": "{{config[ansible_hostname].malt_engine_host}}:3000"
   "app-env": "production"
   "noilly-port": 1301
   "session-ttl": 3600
@@ -87,16 +87,16 @@ malt_balancer_config:
   "storage-user": malt
   "engines":
    - "server": "{{config[ansible_hostname].malt_engine_host}}:{{malt_engine_config.port}}"
-     "sessions-limit": 10
+     "sessions-limit": 2
 
 malt_engine_jmx_port: 7198
 
 cassandra_jmx_port: 7199
-cassandra_max_heap_size: '10g'
-cassandra_new_heap_size: '3g'
-cassandra_max_new_size: '2m'
+cassandra_max_heap_size: '2g'
+cassandra_new_heap_size: '600m'
+cassandra_max_new_size: '400m'
 
-malt_engine_heap_size: '15g'
+malt_engine_heap_size: '3g'
 malt_admin_heap_size: '1g'
 
 git_ref: stable
