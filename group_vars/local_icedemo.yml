@@ -16,6 +16,10 @@ cassandra_system_ks_replication_strategy:
 memcached_nodes: ['192.168.167.143:11211']
 memcached_memory: 512
 
+pg_password: "necDoidJeuc6"
+pg_hba_subnet: "192.168.167.1/24"
+pg_listen_address: '192.168.167.143'
+
 malt_admin_host: '192.168.167.143'
 
 config:

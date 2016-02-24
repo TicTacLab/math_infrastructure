@@ -1,0 +1,70 @@
+- name: Add apt key for pg repo
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc
+           state=present
+  sudo: yes
+
+- name: Add pg repo
+  apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+                  state=present
+                  update_cache=yes
+  sudo: yes
+
+- name: Install pg
+  apt: name="{{item}}" state=present
+  sudo: yes
+  with_items:
+    - postgresql-9.5
+    - postgresql-contrib-9.5
+    - postgresql-server-dev-9.5
+    - python-dev
+
+- name: Install psycopg2 (for ansible)
+  pip: name=psycopg2 state=present
+  sudo: yes
+
+- name: Ensure postgres is running
+  service: name=postgresql state=started
+  sudo: yes
+
+- name: Create database
+  postgresql_db: name=math_engine state=present
+  sudo: yes
+  sudo_user: postgres
+
+- name: Change postgres user password
+  postgresql_user: name=postgres
+                   password="{{pg_password}}"
+                   state=present
+  sudo: yes
+  sudo_user: postgres
+
+- name: Copy schema file
+  copy: src=schema.sql dest=/tmp/schema.sql owner=postgres
+  sudo: yes
+
+- name: Create schema
+  command: psql -f /tmp/schema.sql math_engine
+  sudo: yes
+  sudo_user: postgres
+
+- name: Update pg_hba
+  lineinfile: regexp="^host\s+all\s+postgres\s+{{pg_hba_subnet}}\s+trust"
+              line="host    all             postgres        {{pg_hba_subnet}}     trust"
+              dest=/etc/postgresql/9.5/main/pg_hba.conf
+              state=present
+  sudo: yes
+  sudo_user: postgres
+  notify: Restart postgres
+
+- name: Set listen address
+  lineinfile: regexp="^listen_addresses\s+=\s+'{{pg_listen_address}}'.*$"
+              line="listen_addresses = '{{pg_listen_address}}'"
+              dest=/etc/postgresql/9.5/main/postgresql.conf
+              state=present
+  sudo: yes
+  sudo_user: postgres
+  notify: Restart postgres
+
+- name: Enable postgres at startup
+  service: name=postgresql enabled=yes
+  sudo: yes

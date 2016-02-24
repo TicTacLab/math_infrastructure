@@ -1,0 +1,4 @@
+- name: Setup Postgres
+  hosts: tag_IceDemo_Yes
+  roles:
+    - postgres
