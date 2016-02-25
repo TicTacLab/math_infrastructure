@@ -1,9 +1,16 @@
 - name: Install memcached
-  apt: name=memcached state=installed update_cache=yes
+  apt: name="memcached=1.4.*"
+       state=installed
+       update_cache=yes
   sudo: yes
 
 - name: Copy memcached config
   template: src=memcached.conf
             dest=/etc/memcached.conf
             mode=644
+  sudo: yes
+  notify: Restart memcached
+
+- name: Enable memcached on startup
+  service: name=memcached enabled=yes
   sudo: yes
