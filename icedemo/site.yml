@@ -4,6 +4,7 @@
     - common
 
 - include: cassandra.yml
+- include: postgres.yml
 - include: memcached.yml
 - include: malt_admin.yml
 - include: malt_engine.yml

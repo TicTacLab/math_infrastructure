@@ -11,4 +11,6 @@
     - automake
     - git
     - zip
+    - python
+    - python-pip
   sudo: yes
