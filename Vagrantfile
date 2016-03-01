@@ -40,7 +40,7 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "192.168.167.143"
     node.vm.hostname = "icedemo.local"
     node.vm.provider "virtualbox" do |v|
-      v.memory = 4096
+      v.memory = 2048
       v.cpus = 2
     end
   end

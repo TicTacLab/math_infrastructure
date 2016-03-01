@@ -3,7 +3,6 @@
   roles:
     - common
 
-- include: cassandra.yml
 - include: postgres.yml
 - include: memcached.yml
 - include: malt_admin.yml
